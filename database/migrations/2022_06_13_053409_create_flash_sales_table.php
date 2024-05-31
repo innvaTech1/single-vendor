@@ -17,6 +17,7 @@ class CreateFlashSalesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
+            $table->string('homepage_image')->nullable();
             $table->date('date');
             $table->double('offer');
             $table->integer('status')->default(0);

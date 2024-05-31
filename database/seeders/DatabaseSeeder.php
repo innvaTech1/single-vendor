@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminTableSeeder::class,
             BannerImagesTableSeeder::class,
-            SettingsSeeder::class
+            SettingsSeeder::class,
+            FlashSaleSeeder::class,
         ]);
     }
 }
