@@ -23,6 +23,11 @@ class CreateBannerImagesTable extends Migration
             $table->string('banner_location')->nullable();
             $table->string('header')->nullable();
             $table->tinyInteger('status')->default(0);
+            $table->integer('after_product_qty')->default(0);
+            $table->string('title_one')->nullable();
+            $table->string('title_two')->nullable();
+            $table->string('badge')->nullable();
+            $table->text('product_slug')->nullable();
             $table->timestamps();
         });
     }

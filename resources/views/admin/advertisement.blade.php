@@ -79,7 +79,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Current Banner')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($sliderSidebarBannerOne->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($sliderSidebarBannerOne?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
 
@@ -90,17 +90,17 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_one" class="form-control" value="{{ $sliderSidebarBannerOne->title_one }}">
+                                                                <input type="text" name="title_one" class="form-control" value="{{ $sliderSidebarBannerOne?->title_one }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_two" class="form-control" value="{{ $sliderSidebarBannerOne->title_two }}">
+                                                                <input type="text" name="title_two" class="form-control" value="{{ $sliderSidebarBannerOne?->title_two }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Badge')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="badge" class="form-control" value="{{ $sliderSidebarBannerOne->badge }}">
+                                                                <input type="text" name="badge" class="form-control" value="{{ $sliderSidebarBannerOne?->badge }}">
                                                             </div>
 
 
@@ -111,7 +111,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $sliderSidebarBannerOne->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $sliderSidebarBannerOne?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -121,8 +121,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $sliderSidebarBannerOne->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $sliderSidebarBannerOne->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $sliderSidebarBannerOne?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $sliderSidebarBannerOne?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
 
@@ -146,7 +146,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Current Banner')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($sliderSidebarBannerTwo->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($sliderSidebarBannerTwo?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -157,17 +157,17 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_one" class="form-control" value="{{ $sliderSidebarBannerTwo->title_one }}">
+                                                                <input type="text" name="title_one" class="form-control" value="{{ $sliderSidebarBannerTwo?->title_one }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_two" class="form-control" value="{{ $sliderSidebarBannerTwo->title_two }}">
+                                                                <input type="text" name="title_two" class="form-control" value="{{ $sliderSidebarBannerTwo?->title_two }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Badge')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="badge" class="form-control" value="{{ $sliderSidebarBannerTwo->badge }}">
+                                                                <input type="text" name="badge" class="form-control" value="{{ $sliderSidebarBannerTwo?->badge }}">
                                                             </div>
 
 
@@ -176,7 +176,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $sliderSidebarBannerTwo->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $sliderSidebarBannerTwo?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -184,8 +184,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $sliderSidebarBannerTwo->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $sliderSidebarBannerTwo->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $sliderSidebarBannerTwo?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $sliderSidebarBannerTwo?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -208,7 +208,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Banner One')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($popularCategorySidebarBanner->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($popularCategorySidebarBanner?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -221,7 +221,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $popularCategorySidebarBanner->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $popularCategorySidebarBanner?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -247,7 +247,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Banner One')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($homepageTwoColumnBannerOne->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($homepageTwoColumnBannerOne?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -257,17 +257,17 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_one" class="form-control" value="{{ $homepageTwoColumnBannerOne->title_one }}">
+                                                                <input type="text" name="title_one" class="form-control" value="{{ $homepageTwoColumnBannerOne?->title_one }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_two" class="form-control" value="{{ $homepageTwoColumnBannerOne->title_two }}">
+                                                                <input type="text" name="title_two" class="form-control" value="{{ $homepageTwoColumnBannerOne?->title_two }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Badge')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="badge" class="form-control" value="{{ $homepageTwoColumnBannerOne->badge }}">
+                                                                <input type="text" name="badge" class="form-control" value="{{ $homepageTwoColumnBannerOne?->badge }}">
                                                             </div>
 
 
@@ -276,7 +276,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $homepageTwoColumnBannerOne->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $homepageTwoColumnBannerOne?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -284,8 +284,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $homepageTwoColumnBannerOne->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $homepageTwoColumnBannerOne->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $homepageTwoColumnBannerOne?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $homepageTwoColumnBannerOne?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
 
@@ -309,7 +309,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Banner One')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($homepageTwoColumnBannerTwo->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($homepageTwoColumnBannerTwo?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -319,17 +319,17 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_one" class="form-control" value="{{ $homepageTwoColumnBannerTwo->title_one }}">
+                                                                <input type="text" name="title_one" class="form-control" value="{{ $homepageTwoColumnBannerTwo?->title_one }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_two" class="form-control" value="{{ $homepageTwoColumnBannerTwo->title_two }}">
+                                                                <input type="text" name="title_two" class="form-control" value="{{ $homepageTwoColumnBannerTwo?->title_two }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Badge')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="badge" class="form-control" value="{{ $homepageTwoColumnBannerTwo->badge }}">
+                                                                <input type="text" name="badge" class="form-control" value="{{ $homepageTwoColumnBannerTwo?->badge }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
@@ -337,7 +337,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $homepageTwoColumnBannerTwo->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $homepageTwoColumnBannerTwo?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -345,8 +345,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $homepageTwoColumnBannerTwo->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $homepageTwoColumnBannerTwo->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $homepageTwoColumnBannerTwo?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $homepageTwoColumnBannerTwo?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -369,7 +369,7 @@
                                                         <div class="form-group">
                                                             <label for="">{{__('admin.Existing Banner')}}</label>
                                                             <div>
-                                                                <img src="{{ asset($homepageSingleBannerOne->image) }}" width="200px" alt="">
+                                                                <img src="{{ asset($homepageSingleBannerOne?->image) }}" width="200px" alt="">
                                                             </div>
                                                         </div>
 
@@ -380,12 +380,12 @@
 
                                                         <div class="form-group">
                                                             <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                                            <input type="text" name="title_one" class="form-control" value="{{ $homepageSingleBannerOne->title_one }}">
+                                                            <input type="text" name="title_one" class="form-control" value="{{ $homepageSingleBannerOne?->title_one }}">
                                                         </div>
 
                                                         <div class="form-group">
                                                             <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
-                                                            <input type="text" name="title_two" class="form-control" value="{{ $homepageSingleBannerOne->title_two }}">
+                                                            <input type="text" name="title_two" class="form-control" value="{{ $homepageSingleBannerOne?->title_two }}">
                                                         </div>
 
                                                         <div class="form-group col-12">
@@ -393,7 +393,7 @@
                                                             <select name="product_slug" id="" class="form-control select2">
                                                                 <option value="">{{__('admin.Select Product')}}</option>
                                                                 @foreach ($products as $product)
-                                                                    <option {{ $homepageSingleBannerOne->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                    <option {{ $homepageSingleBannerOne?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -401,8 +401,8 @@
                                                         <div class="form-group col-12">
                                                             <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                             <select name="status" class="form-control">
-                                                                <option {{ $homepageSingleBannerOne->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                <option {{ $homepageSingleBannerOne->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                <option {{ $homepageSingleBannerOne?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                <option {{ $homepageSingleBannerOne?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                             </select>
                                                         </div>
 
@@ -422,7 +422,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Existing Banner')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($homepageSingleBannerTwo->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($homepageSingleBannerTwo?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -432,7 +432,7 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title" class="form-control" value="{{ $homepageSingleBannerTwo->title_one }}">
+                                                                <input type="text" name="title" class="form-control" value="{{ $homepageSingleBannerTwo?->title_one }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
@@ -440,7 +440,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $homepageSingleBannerTwo->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $homepageSingleBannerTwo?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -448,8 +448,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $homepageSingleBannerTwo->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $homepageSingleBannerTwo->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $homepageSingleBannerTwo?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $homepageSingleBannerTwo?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -473,7 +473,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Existing Banner')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($homepageFlashSaleSidebarBanner->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($homepageFlashSaleSidebarBanner?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -483,12 +483,12 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Play store link')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="link"  class="form-control" value="{{ $homepageFlashSaleSidebarBanner->link }}">
+                                                                <input type="text" name="link"  class="form-control" value="{{ $homepageFlashSaleSidebarBanner?->link }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.App store link')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="link_two"  class="form-control" value="{{ $homepageFlashSaleSidebarBanner->title }}">
+                                                                <input type="text" name="link_two"  class="form-control" value="{{ $homepageFlashSaleSidebarBanner?->title }}">
                                                             </div>
 
 
@@ -496,8 +496,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $homepageFlashSaleSidebarBanner->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $homepageFlashSaleSidebarBanner->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $homepageFlashSaleSidebarBanner?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $homepageFlashSaleSidebarBanner?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -522,7 +522,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Banner One')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($shopPageCenterBanner->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($shopPageCenterBanner?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -532,7 +532,7 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title" class="form-control" value="{{ $shopPageCenterBanner->title_one }}">
+                                                                <input type="text" name="title" class="form-control" value="{{ $shopPageCenterBanner?->title_one }}">
                                                             </div>
 
 
@@ -541,14 +541,14 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $shopPageCenterBanner->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $shopPageCenterBanner?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.After Product Qty')}} <span class="text-danger">*</span></label>
-                                                                <input type="number" name="after_product_qty"  class="form-control" value="{{ $shopPageCenterBanner->after_product_qty }}">
+                                                                <input type="number" name="after_product_qty"  class="form-control" value="{{ $shopPageCenterBanner?->after_product_qty }}">
                                                             </div>
 
 
@@ -556,8 +556,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $shopPageCenterBanner->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $shopPageCenterBanner->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $shopPageCenterBanner?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $shopPageCenterBanner?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
 
@@ -583,7 +583,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Banner One')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($shopPageSidebarBanner->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($shopPageSidebarBanner?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -593,12 +593,12 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_one" class="form-control" value="{{ $shopPageSidebarBanner->title_one }}">
+                                                                <input type="text" name="title_one" class="form-control" value="{{ $shopPageSidebarBanner?->title_one }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_two" class="form-control" value="{{ $shopPageSidebarBanner->title_two }}">
+                                                                <input type="text" name="title_two" class="form-control" value="{{ $shopPageSidebarBanner?->title_two }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
@@ -606,7 +606,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $shopPageSidebarBanner->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $shopPageSidebarBanner?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -615,8 +615,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $shopPageSidebarBanner->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $shopPageSidebarBanner->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $shopPageSidebarBanner?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $shopPageSidebarBanner?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
 
@@ -642,7 +642,7 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Banner One')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($megaMenuBanner->image) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($megaMenuBanner?->image) }}" alt="" width="200px">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-12">
@@ -652,12 +652,12 @@
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_one" class="form-control" value="{{ $megaMenuBanner->title_one }}">
+                                                                <input type="text" name="title_one" class="form-control" value="{{ $megaMenuBanner?->title_one }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title_two" class="form-control" value="{{ $megaMenuBanner->title_two }}">
+                                                                <input type="text" name="title_two" class="form-control" value="{{ $megaMenuBanner?->title_two }}">
                                                             </div>
 
                                                             <div class="form-group col-12">
@@ -665,7 +665,7 @@
                                                                 <select name="product_slug" id="" class="form-control select2">
                                                                     <option value="">{{__('admin.Select Product')}}</option>
                                                                     @foreach ($products as $product)
-                                                                        <option {{ $megaMenuBanner->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
+                                                                        <option {{ $megaMenuBanner?->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -674,8 +674,8 @@
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                                 <select name="status" class="form-control">
-                                                                    <option {{ $megaMenuBanner->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                                                    <option {{ $megaMenuBanner->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
+                                                                    <option {{ $megaMenuBanner?->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
+                                                                    <option {{ $megaMenuBanner?->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
                                                                 </select>
                                                             </div>
 
@@ -691,17 +691,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
-
-
-
-
-
-
-
                                     </div>
                                 </div>
                             </div>
