@@ -28,6 +28,7 @@
                                             <th width="50%">{{__('admin.Default')}}</th>
                                             <th width="50%">{{__('admin.Changable')}}</th>
                                         </tr>
+                                        @if ($sections?->count() > 0)
                                         @foreach ($sections as $index => $value)
                                             <tr>
                                                 <td width="50%">{{ $value->default }}</td>
@@ -40,6 +41,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @endif
                                     </table>
                                 <button type="submit" class="btn btn-primary">{{__('admin.Update')}}</button>
                             </form>
