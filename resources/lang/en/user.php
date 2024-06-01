@@ -257,7 +257,7 @@
   'Choose Product' => 'Choose Product',
   'Make Your Payment' => 'Make Your Payment',
   'Fast Delivery' => 'Fast Delivery',
-  'on boarding subtitle' => 'Topcommerce is a online store. Its has  50k+ Products. you can buy every into a products in easy way.',
+  'on boarding subtitle' => 'InnvaCart is a online store. Its has  50k+ Products. you can buy every into a products in easy way.',
   'next' => 'Next',
   'see all' => 'See all',
   'See all Reviews' => 'See all Reviews',
