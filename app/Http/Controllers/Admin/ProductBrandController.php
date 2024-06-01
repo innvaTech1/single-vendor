@@ -36,7 +36,6 @@ class ProductBrandController extends Controller
             'name' => 'required|unique:brands',
             'slug' => 'required|unique:brands',
             'status' => 'required',
-            'logo' => 'required'
         ];
         $customMessages = [
             'name.required' => trans('Name is required'),
@@ -86,7 +85,6 @@ class ProductBrandController extends Controller
         $rules = [
             'name' => 'required|unique:brands,name,'.$brand->id,
             'slug' => 'required|unique:brands,slug,'.$brand->id,
-            'rating' => 'required',
             'status' => 'required'
         ];
         $customMessages = [
@@ -94,8 +92,6 @@ class ProductBrandController extends Controller
             'name.unique' => trans('Name already exist'),
             'slug.required' => trans('Slug is required'),
             'slug.unique' => trans('Slug already exist'),
-            'rating.required' => trans('Rating is required'),
-            'logo.required' => trans('Logo is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 

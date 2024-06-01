@@ -24,7 +24,7 @@
                             @csrf
                             <div class="row">
                                 <div class="form-group col-12">
-                                    <label>{{__('admin.Logo')}} <span class="text-danger">*</span></label>
+                                    <label>{{__('admin.Logo')}}</label>
                                     <input type="file" class="form-control-file"  name="logo">
                                 </div>
                                 <div class="form-group col-12">

@@ -128,52 +128,6 @@
 
                                                                     <div class="form-group">
                                                                         <label
-                                                                            for="">{{ __('admin.Default Phone Code') }}</label>
-                                                                        <select name="default_phone_code"
-                                                                            id="default_phone_code"
-                                                                            class="form-control select2">
-
-                                                                        </select>
-                                                                    </div>
-
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="">{{ __('admin.Multi Vendor System') }}</label>
-                                                                        <select name="multivendor" id=""
-                                                                            class="form-control">
-                                                                            <option
-                                                                                {{ $setting?->enable_multivendor == 1 ? 'selected' : '' }}
-                                                                                value="1">{{ __('admin.Enable') }}
-                                                                            </option>
-                                                                            <option
-                                                                                {{ $setting?->enable_multivendor == 0 ? 'selected' : '' }}
-                                                                                value="0">{{ __('admin.Disable') }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-
-
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="">{{ __('admin.Layout') }}</label>
-                                                                        <select name="layout" id=""
-                                                                            class="form-control">
-                                                                            <option
-                                                                                {{ $setting?->text_direction == 'rtl' ? 'selected' : '' }}
-                                                                                value="rtl">
-                                                                                {{ __('admin.RTL (right to left)') }}
-                                                                            </option>
-                                                                            <option
-                                                                                {{ $setting?->text_direction == 'ltr' ? 'selected' : '' }}
-                                                                                value="ltr">
-                                                                                {{ __('admin.LTR (left to right)') }}
-                                                                            </option>
-                                                                        </select>
-                                                                    </div>
-
-
-                                                                    <div class="form-group">
-                                                                        <label
                                                                             for="">{{ __('admin.Sidebar Large Header') }}</label>
                                                                         <input type="text" name="lg_header"
                                                                             class="form-control"

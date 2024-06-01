@@ -448,10 +448,6 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::put('update-database', [SettingController::class, 'update_database'])->name('update-database');
 
-
-        Route::get('clear-database', [SettingController::class, 'showClearDatabasePage'])->name('clear-database');
-        Route::delete('clear-database', [SettingController::class, 'clearDatabase'])->name('clear-database');
-
         Route::get('subscriber', [SubscriberController::class, 'index'])->name('subscriber');
         Route::delete('delete-subscriber/{id}', [SubscriberController::class, 'destroy'])->name('delete-subscriber');
         Route::post('specification-subscriber-email/{id}', [SubscriberController::class, 'specificationSubscriberEmail'])->name('specification-subscriber-email');

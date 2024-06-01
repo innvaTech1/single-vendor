@@ -36,19 +36,17 @@ class ProductBrandController extends Controller
             'name' => 'required|unique:brands',
             'slug' => 'required|unique:brands',
             'status' => 'required',
-            'logo' => 'required'
         ];
         $customMessages = [
             'name.required' => trans('admin_validation.Name is required'),
             'name.unique' => trans('admin_validation.Name already exist'),
             'slug.required' => trans('admin_validation.Slug is required'),
             'slug.unique' => trans('admin_validation.Slug already exist'),
-            'logo.required' => trans('admin_validation.Logo is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $brand = new Brand();
-        if($request->logo){
+        if($request->has('logo')){
             $extention = $request->logo->getClientOriginalExtension();
             $logo_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
             $logo_name = 'uploads/custom-images/'.$logo_name;
@@ -94,7 +92,6 @@ class ProductBrandController extends Controller
             'name.unique' => trans('admin_validation.Name already exist'),
             'slug.required' => trans('admin_validation.Slug is required'),
             'slug.unique' => trans('admin_validation.Slug already exist'),
-            'logo.required' => trans('admin_validation.Logo is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
