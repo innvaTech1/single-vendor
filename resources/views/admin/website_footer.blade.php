@@ -19,35 +19,35 @@
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('admin.footer.update', $footer->id) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.footer.update', $footer?->id ?? 1) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row">
                                 <div class="form-group col-12">
                                     <label>{{__('admin.About Us')}} <span class="text-danger">*</span></label>
-                                    <textarea name="about_us" id="" cols="30" rows="10" class="form-control text-area-5">{{ $footer->about_us }}</textarea>
+                                    <textarea name="about_us" id="" cols="30" rows="10" class="form-control text-area-5">{{ $footer?->about_us }}</textarea>
                                 </div>
 
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Email')}} <span class="text-danger">*</span></label>
-                                    <input type="email" name="email" class="form-control" value="{{ $footer->email }}">
+                                    <input type="email" name="email" class="form-control" value="{{ $footer?->email }}">
                                 </div>
 
 
 
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Phone')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="phone" class="form-control" value="{{ $footer->phone }}">
+                                    <input type="text" name="phone" class="form-control" value="{{ $footer?->phone }}">
                                 </div>
 
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Address')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="address" class="form-control" value="{{ $footer->address }}">
+                                    <input type="text" name="address" class="form-control" value="{{ $footer?->address }}">
                                 </div>
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Existing Image')}}</label>
                                     <div>
-                                        <img src="{{ asset($footer->payment_image) }}" alt="" width="220px">
+                                        <img src="{{ asset($footer?->payment_image) }}" alt="" width="220px">
                                     </div>
                                 </div>
                                 <div class="form-group col-12">
@@ -57,17 +57,17 @@
 
                                 <div class="form-group col-12">
                                     <label>{{__('admin.First Column Title')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="first_column" class="form-control" value="{{ $footer->first_column }}">
+                                    <input type="text" name="first_column" class="form-control" value="{{ $footer?->first_column }}">
                                 </div>
 
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Second Column Title')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="second_column" class="form-control" value="{{ $footer->second_column }}">
+                                    <input type="text" name="second_column" class="form-control" value="{{ $footer?->second_column }}">
                                 </div>
 
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Third Column Title')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="third_column" class="form-control" value="{{ $footer->third_column }}">
+                                    <input type="text" name="third_column" class="form-control" value="{{ $footer?->third_column }}">
                                 </div>
 
 
@@ -76,7 +76,7 @@
 
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Copyright')}} <span class="text-danger">*</span></label>
-                                    <input type="text" name="copyright" class="form-control" value="{{ $footer->copyright }}">
+                                    <input type="text" name="copyright" class="form-control" value="{{ $footer?->copyright }}">
                                 </div>
                             </div>
                             <div class="row">
