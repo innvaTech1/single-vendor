@@ -23,8 +23,6 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-3">
                                             <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
-
-
                                                 <li class="nav-item border rounded mb-1">
                                                     <a class="nav-link active" id="general-setting-tab" data-toggle="tab"
                                                         href="#generalSettingTab" role="tab"
@@ -43,14 +41,6 @@
                                                         href="#themeColorTab" role="tab" aria-controls="themeColorTab"
                                                         aria-selected="true">{{ __('admin.Theme color') }}</a>
                                                 </li>
-
-
-                                                <li class="nav-item border rounded mb-1">
-                                                    <a class="nav-link" id="cookie-tab" data-toggle="tab" href="#cookieTab"
-                                                        role="tab" aria-controls="cookieTab"
-                                                        aria-selected="true">{{ __('admin.Cookie Consent') }}</a>
-                                                </li>
-
                                                 <li class="nav-item border rounded mb-1">
                                                     <a class="nav-link" id="recaptcha-tab" data-toggle="tab"
                                                         href="#recaptchaTab" role="tab" aria-controls="recaptchaTab"
@@ -61,13 +51,6 @@
                                                     <a class="nav-link" id="pusher-tab" data-toggle="tab" href="#pusherTab"
                                                         role="tab" aria-controls="pusherTab"
                                                         aria-selected="true">{{ __('admin.Pusher Credential') }}</a>
-                                                </li>
-
-
-                                                <li class="nav-item border rounded mb-1">
-                                                    <a class="nav-link" id="blog-comment-tab" data-toggle="tab"
-                                                        href="#blogCommentTab" role="tab" aria-controls="blogCommentTab"
-                                                        aria-selected="true">{{ __('admin.Blog Comment') }}</a>
                                                 </li>
 
                                                 <li class="nav-item border rounded mb-1">
@@ -103,15 +86,6 @@
                                                         aria-controls="facebookPixelTab"
                                                         aria-selected="true">{{ __('admin.Facebook Pixel') }}</a>
                                                 </li>
-
-                                                <li class="nav-item border rounded mb-1">
-                                                    <a class="nav-link" id="database-generate-tab" data-toggle="tab"
-                                                        href="#databaseTab" role="tab" aria-controls="databaseTab"
-                                                        aria-selected="true">{{ __('Database generate') }}</a>
-                                                </li>
-
-
-
                                             </ul>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-9">
@@ -459,48 +433,6 @@
                                                                     <button
                                                                         class="btn btn-primary">{{ __('admin.Update') }}</button>
 
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="tab-pane fade" id="blogCommentTab" role="tabpanel"
-                                                        aria-labelledby="blog-comment-tab">
-                                                        <div class="card m-0">
-                                                            <div class="card-body">
-                                                                <form
-                                                                    action="{{ route('admin.update-facebook-comment') }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('PUT')
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="">{{ __('admin.Blog Comment Type') }}</label>
-                                                                        <select name="comment_type" id="comment_type"
-                                                                            class="form-control">
-                                                                            <option
-                                                                                {{ $facebookComment?->comment_type == 1 ? 'selected' : '' }}
-                                                                                value="1">
-                                                                                {{ __('admin.Menual Comment') }}</option>
-                                                                            <option
-                                                                                {{ $facebookComment?->comment_type == 0 ? 'selected' : '' }}
-                                                                                value="0">
-                                                                                {{ __('admin.Facebook Comment') }}</option>
-                                                                        </select>
-                                                                    </div>
-
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="">{{ __('admin.Facebook App Id') }}</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="app_id"
-                                                                            value="{{ $facebookComment?->app_id }}">
-                                                                    </div>
-
-                                                                    <button
-                                                                        class="btn btn-primary">{{ __('admin.Update') }}</button>
                                                                 </form>
                                                             </div>
                                                         </div>
