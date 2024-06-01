@@ -23,7 +23,7 @@
                             <div class="form-group">
                                 <label for="">{{__('admin.Announcement Status')}}</label>
                                 <div>
-                                    @if ($announcement->status == 1)
+                                    @if ($announcement?->status == 1)
                                         <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Enable')}}" data-off="{{__('admin.Disable')}}" data-onstyle="success" data-offstyle="danger" name="status">
                                         @else
                                         <input id="status_toggle" type="checkbox" data-toggle="toggle" data-on="{{__('admin.Enable')}}" data-off="{{__('admin.Disable')}}" data-onstyle="success" data-offstyle="danger" name="status">
@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label for="">{{__('admin.Existing Image')}}</label>
                                 <div>
-                                    <img src="{{ asset($announcement->image) }}" width="200px" alt="">
+                                    <img src="{{ asset($announcement?->image) }}" width="200px" alt="">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -43,18 +43,18 @@
                             </div>
                             <div class="form-group">
                                 <label for="">{{__('admin.Title')}}</label>
-                                <input type="text" class="form-control" name="title" value="{{ $announcement->title }}">
+                                <input type="text" class="form-control" name="title" value="{{ $announcement?->title }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="">{{__('admin.Description')}}</label>
-                                <textarea name="description" id="" cols="30" rows="10" class="form-control text-area-5">{{ $announcement->description }}</textarea>
+                                <textarea name="description" id="" cols="30" rows="10" class="form-control text-area-5">{{ $announcement?->description }}</textarea>
                             </div>
 
 
                             <div class="form-group">
                                 <label for="">{{__('admin.Session Expired Date Quantity')}}</label>
-                                <input type="number" class="form-control" name="expired_date" value="{{ $announcement->expired_date }}">
+                                <input type="number" class="form-control" name="expired_date" value="{{ $announcement?->expired_date }}">
                             </div>
 
 
