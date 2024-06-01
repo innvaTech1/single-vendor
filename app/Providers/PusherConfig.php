@@ -27,7 +27,7 @@ class PusherConfig extends ServiceProvider
             $shouldSetCustomConfig = true;
             if($shouldSetCustomConfig) {
 
-                $pusher = PusherCredentail::first();
+                // $pusher = PusherCredentail::first();
                 // $pusherConfig = [
                 //     'driver' => 'pusher',
                 //     'key' => $pusher->app_key,

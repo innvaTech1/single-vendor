@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="">{{__('admin.Existing Banner')}}</label>
                                 <div>
-                                    <img width="250px" src="{{ asset($subscription_banner->image) }}" alt="">
+                                    <img width="250px" src="{{ asset($subscription_banner?->image) }}" alt="">
                                 </div>
                             </div>
 
@@ -35,12 +35,12 @@
 
                             <div class="form-group">
                                 <label for="">{{__('admin.Title')}}</label>
-                                <input type="text" name="title" class="form-control" value="{{ $subscription_banner->title }}">
+                                <input type="text" name="title" class="form-control" value="{{ $subscription_banner?->title }}">
                             </div>
 
                             <div class="form-group">
                                 <label for="">{{__('admin.Header')}}</label>
-                                <input type="text" name="header" class="form-control" value="{{ $subscription_banner->header }}">
+                                <input type="text" name="header" class="form-control" value="{{ $subscription_banner?->header }}">
                             </div>
 
                             <button type="submit" class="btn btn-primary">{{__('admin.Update')}}</button>
