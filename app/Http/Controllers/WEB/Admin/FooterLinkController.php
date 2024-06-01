@@ -17,7 +17,7 @@ class FooterLinkController extends Controller
         $column = 1;
         $title = trans('admin_validation.First Column Link');
         $footer = Footer::first();
-        $columnTitle = $footer->first_column;
+        $columnTitle = $footer?->first_column;
 
         return view('admin.footer_link', compact('links','column','title','columnTitle'));
 
@@ -28,7 +28,7 @@ class FooterLinkController extends Controller
         $column = 2;
         $title = trans('admin_validation.Second Column Link');
         $footer = Footer::first();
-        $columnTitle = $footer->second_column;
+        $columnTitle = $footer?->second_column;
 
         return view('admin.footer_link', compact('links','column','title','columnTitle'));
     }
@@ -38,7 +38,7 @@ class FooterLinkController extends Controller
         $column = 3;
         $title = trans('admin_validation.Third Column Link');
         $footer = Footer::first();
-        $columnTitle = $footer->third_column;
+        $columnTitle = $footer?->third_column;
 
         return view('admin.footer_link', compact('links','column','title','columnTitle'));
     }
