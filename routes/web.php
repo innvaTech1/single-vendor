@@ -540,9 +540,6 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::resource('error-page', ErrorPageController::class);
 
-        Route::get('maintainance-mode', [ContentController::class, 'maintainanceMode'])->name('maintainance-mode');
-        Route::put('maintainance-mode-update', [ContentController::class, 'maintainanceModeUpdate'])->name('maintainance-mode-update');
-
         Route::get('announcement', [ContentController::class, 'announcementModal'])->name('announcement');
         Route::post('announcement-update', [ContentController::class, 'announcementModalUpdate'])->name('announcement-update');
 
