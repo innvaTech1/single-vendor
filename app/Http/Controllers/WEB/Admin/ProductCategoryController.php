@@ -41,14 +41,12 @@ class ProductCategoryController extends Controller
             'name'=>'required|unique:categories',
             'slug'=>'required|unique:categories',
             'status'=>'required',
-            'icon'=>'required',
         ];
         $customMessages = [
             'name.required' => trans('admin_validation.Name is required'),
             'name.unique' => trans('admin_validation.Name already exist'),
             'slug.required' => trans('admin_validation.Slug is required'),
-            'slug.unique' => trans('admin_validation.Slug already exist'),
-            'icon.required' => trans('admin_validation.Icon is required'),
+            'slug.unique' => trans('admin_validation.Slug already exist')
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -57,10 +55,9 @@ class ProductCategoryController extends Controller
         $category->name = $request->name;
         $category->slug = $request->slug;
         $category->status = $request->status;
-        $category->icon = $request->icon;
         $category->save();
 
-        if($request->image){
+        if($request->file('image')){
             $extention = $request->image->getClientOriginalExtension();
             $logo_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
             $logo_name = 'uploads/custom-images/'.$logo_name;
@@ -95,7 +92,6 @@ class ProductCategoryController extends Controller
             'name'=>'required|unique:categories,name,'.$category->id,
             'slug'=>'required|unique:categories,name,'.$category->id,
             'status'=>'required',
-            'icon'=>'required'
         ];
 
         $customMessages = [
@@ -103,17 +99,14 @@ class ProductCategoryController extends Controller
             'name.unique' => trans('admin_validation.Name already exist'),
             'slug.required' => trans('admin_validation.Slug is required'),
             'slug.unique' => trans('admin_validation.Slug already exist'),
-            'icon.required' => trans('admin_validation.Icon is required'),
         ];
         $this->validate($request, $rules,$customMessages);
-
-        $category->icon = $request->icon;
         $category->name = $request->name;
         $category->slug = $request->slug;
         $category->status = $request->status;
         $category->save();
 
-        if($request->image){
+        if($request->file('image')){
             $old_logo = $category->image;
             $extention = $request->image->getClientOriginalExtension();
             $logo_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;

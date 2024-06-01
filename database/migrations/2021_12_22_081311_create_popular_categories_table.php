@@ -16,6 +16,7 @@ class CreatePopularCategoriesTable extends Migration
         Schema::create('popular_categories', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->integer('first_category_id')->default(0);
             $table->integer('first_sub_category_id')->default(0);
             $table->integer('first_child_category_id')->default(0);

@@ -27,7 +27,6 @@
                                     <th>{{__('admin.SN')}}</th>
                                     <th>{{__('admin.Name')}}</th>
                                     <th>{{__('admin.Image')}}</th>
-                                    <th>{{__('admin.Icon')}}</th>
                                     <th>{{__('admin.Status')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
@@ -40,7 +39,6 @@
                                         <td>
                                             <img src="{{ asset($category->image) }}" alt="" width="150px">
                                         </td>
-                                        <td> <i class="{{ $category->icon }}"></i></td>
                                         <td>
                                             @if($category->status == 1)
                                             <a href="javascript:;" onclick="changeProductCategoryStatus({{ $category->id }})">

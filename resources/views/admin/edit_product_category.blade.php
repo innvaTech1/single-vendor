@@ -26,20 +26,15 @@
                             <div class="row">
 
                                 <div class="form-group col-12">
-                                    <label>{{__('admin.Existing Image')}} <span class="text-danger">*</span></label>
+                                    <label>{{__('admin.Existing Image')}}</label>
                                     <div>
                                         <img src="{{ asset($category->image) }}" alt="" width="200px">
                                     </div>
                                 </div>
 
                                 <div class="form-group col-12">
-                                    <label>{{__('admin.Image')}} <span class="text-danger">*</span></label>
+                                    <label>{{__('admin.Image')}}</label>
                                     <input type="file" class="form-control"  name="image">
-                                </div>
-
-                                <div class="form-group col-12">
-                                    <label>{{__('admin.Icon')}} <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control custom-icon-picker"  name="icon" value="{{ $category->icon }}">
                                 </div>
 
                                 <div class="form-group col-12">
