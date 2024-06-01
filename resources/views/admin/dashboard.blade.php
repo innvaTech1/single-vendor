@@ -306,22 +306,6 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>{{__('admin.Total Seller')}}</h4>
-                  </div>
-                  <div class="card-body">
-                    {{ $sellers }}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <div class="card card-statistic-1">
-                <div class="card-icon bg-success">
-                  <i class="far fa-user"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
                     <h4>{{__('admin.Total User')}}</h4>
                   </div>
                   <div class="card-body">
@@ -330,37 +314,6 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <div class="card card-statistic-1">
-                <div class="card-icon bg-primary">
-                  <i class="far fa-user"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>{{__('admin.Total Subscriber')}}</h4>
-                  </div>
-                  <div class="card-body">
-                    {{ $subscribers }}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <div class="card card-statistic-1">
-                <div class="card-icon bg-primary">
-                  <i class="far fa-check-circle"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>{{__('admin.Total Blog')}}</h4>
-                  </div>
-                  <div class="card-body">
-                    {{ $blogs }}
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="card card-statistic-1">
                 <div class="card-icon bg-primary">
