@@ -33,21 +33,19 @@ class CityController extends Controller
 
     public function create()
     {
-        $countries = Country::all();
-        return view('admin.create_city', compact('countries'));
+        $states = CountryState::all();
+        return view('admin.create_city', compact('states'));
     }
 
     public function store(Request $request)
     {
         $rules = [
-            'country'=>'required',
             'state'=>'required',
             'name'=>'required|unique:cities',
             'status'=>'required',
         ];
 
         $customMessages = [
-            'country.required' => trans('admin_validation.Country is required'),
             'state.required' => trans('admin_validation.State is required'),
             'name.required' => trans('admin_validation.Name is required'),
             'name.unique' => trans('admin_validation.Name already exist'),
@@ -81,13 +79,11 @@ class CityController extends Controller
     {
         $city = City::find($id);
         $rules = [
-            'country'=>'required',
             'state'=>'required',
             'name'=>'required|unique:cities,name,'.$city->id,
             'status'=>'required',
         ];
         $customMessages = [
-            'country.required' => trans('admin_validation.Country is required'),
             'state.required' => trans('admin_validation.State is required'),
             'name.required' => trans('admin_validation.Name is required'),
             'name.unique' => trans('admin_validation.Name already exist'),

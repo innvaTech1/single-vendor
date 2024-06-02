@@ -31,8 +31,7 @@ class CountryStateController extends Controller
 
     public function create()
     {
-        $countries=Country::all();
-        return view('admin.create_state', compact('countries'));
+        return view('admin.create_state');
     }
 
 
@@ -71,8 +70,7 @@ class CountryStateController extends Controller
     public function edit($id)
     {
         $state = CountryState::find($id);
-        $countries=Country::all();
-        return view('admin.edit_state', compact('state','countries'));
+        return view('admin.edit_state', compact('state'));
     }
 
     public function update(Request $request, $id)

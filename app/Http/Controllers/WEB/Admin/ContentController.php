@@ -198,7 +198,7 @@ class ContentController extends Controller
         return response()->json(['page' => $page], 200);
     }
 
-    public function updateSeoSetup(Request $request, $id){
+    public function reupdateSeoSetup(Request $request, $id){
         $rules = [
             'seo_title' => 'required',
             'seo_description' => 'required'
