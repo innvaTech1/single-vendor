@@ -392,7 +392,7 @@ class HomeController extends Controller
 
         $sliderVisibilty = HomePageOneVisibility::find(1);
 
-        $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
+        $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty?->qty);
 
         $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
 
@@ -406,9 +406,9 @@ class HomeController extends Controller
 
         $serviceVisibilty = HomePageOneVisibility::find(2);
 
-        $services = Service::where('status',1)->get()->take($serviceVisibilty->qty);
+        $services = Service::where('status',1)->get()->take($serviceVisibilty?->qty);
 
-        $serviceVisibilty = $serviceVisibilty->status == 1 ? true : false;
+        $serviceVisibilty = $serviceVisibilty?->status == 1 ? true : false;
 
 
 
