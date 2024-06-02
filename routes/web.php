@@ -609,15 +609,6 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('get-seo-setup/{id}', [ContentController::class, 'getSeoSetup'])->name('get-seo-setup');
 
 
-
-        Route::resource('country', CountryController::class);
-        Route::put('country-status/{id}', [CountryController::class, 'changeStatus'])->name('country-status');
-
-        Route::get('country-import-page', [CountryController::class, 'country_import_page'])->name('country-import-page');
-        Route::get('country-export', [CountryController::class, 'country_export'])->name('country-export');
-        Route::get('country-demo-export', [CountryController::class, 'demo_country_export'])->name('country-demo-export');
-        Route::post('country-import', [CountryController::class, 'country_import'])->name('country-import');
-
         Route::resource('state', CountryStateController::class);
         Route::put('state-status/{id}', [CountryStateController::class, 'changeStatus'])->name('state-status');
 
