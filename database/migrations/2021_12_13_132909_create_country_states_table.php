@@ -15,7 +15,7 @@ class CreateCountryStatesTable extends Migration
     {
         Schema::create('country_states', function (Blueprint $table) {
             $table->id();
-            $table->integer('country_id');
+            $table->integer('country_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->tinyInteger('status');

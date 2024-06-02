@@ -45,30 +45,30 @@
                                                     </a>
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="col-md-4 pt-1">
                                                 <div class="product-taitel">
                                                     <h3>{{__('admin.Product Section')}}</h3>
                                                 </div>
                                             </div>
-                                        
+
                                             <div class="col-md-4 pt-2">
                                                     <button style=" background-color: #6777ef; color: #fff;" type="button" class="btn btn-info btn-primary-two" data-toggle="modal"
                                                             data-target="#exampleModalLong-2">
                                                          {{__('admin.Add Product') }}
                                                     </button>
                                             </div>
-                                            
-                                           
-                                            
+
+
+
                                         </div>
 
-                                       
-                                        
+
+
                                     </div>
                                 </div>
                             </div>
-                            
+
                              <!-- Modal -->
                             <div class="modal fade" id="exampleModalLong-2"  role="dialog"
                                 aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -90,29 +90,29 @@
                                                         <div>
                                                             <img id="preview-img" class="admin-img" src="{{ asset('uploads/website-images/preview.png') }}" alt="">
                                                         </div>
-                    
+
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Thumnail Image')}} <span class="text-danger">*</span></label>
                                                         <input type="file" class="form-control-file"  name="thumb_image" onchange="previewThumnailImage(event)" required>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Short Name')}} <span class="text-danger">*</span></label>
                                                         <input type="text" id="short_name" class="form-control"  name="short_name" value="{{ old('short_name') }}" required>
                                                     </div>
-                    
+
                                                     <div class="form-group col-12">
                                                         <label>{{__('admin.Name')}} <span class="text-danger">*</span></label>
                                                         <input type="text" id="name" class="form-control"  name="name" value="{{ old('name') }}" required>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Slug')}} <span class="text-danger">*</span></label>
                                                         <input type="text" id="slug" class="form-control"  name="slug" value="{{ old('slug') }}">
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Category')}} <span class="text-danger">*</span></label>
                                                         <select name="category" class="form-control select2" id="category" required>
@@ -122,21 +122,21 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Sub Category')}}</label>
                                                         <select name="sub_category" class="form-control select2" id="sub_category">
                                                             <option value="">{{__('admin.Select Sub Category')}}</option>
                                                         </select>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Child Category')}}</label>
                                                         <select name="child_category" class="form-control select2" id="child_category">
                                                             <option value="">{{__('admin.Select Child Category')}}</option>
                                                         </select>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Brand')}} </label>
                                                         <select name="brand" class="form-control select2" id="brand">
@@ -146,12 +146,12 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.SKU')}} </label>
                                                        <input type="text" class="form-control" name="sku">
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('Price')}} <span class="text-danger">*</span></label>
                                                        <input type="text" class="form-control" name="price" value="{{ old('price') }}" required>
@@ -160,24 +160,24 @@
                                                         <label>{{__('admin.Offer Price')}}</label>
                                                        <input type="text" class="form-control" name="offer_price" value="{{ old('offer_price') }}">
                                                     </div>
-                    
-                    
-                    
+
+
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Stock Quantity')}} <span class="text-danger">*</span></label>
                                                        <input type="number" class="form-control" name="quantity" value="{{ old('quantity') }}" required>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Weight')}} <span class="text-danger">*</span></label>
                                                        <input type="text" class="form-control" name="weight" value="{{ old('weight') }}" required>
                                                     </div>
-                    
+
                                                     <div class="form-group col-6">
                                                         <label>{{__('admin.Short Description')}} <span class="text-danger">*</span></label>
                                                         <textarea name="short_description" id="" cols="30" rows="10" class="form-control text-area-5">{{ old('short_description') }}</textarea>
                                                     </div>
-                                                    
+
                                                    <div class="form-group col-6">
                                                         <label>{{__('admin.Long Description')}} <span class="text-danger">*</span></label>
                                                         <textarea name="long_description" id="" cols="30" rows="10" class="form-control text-area-5">{{ old('long_description') }}</textarea>
@@ -187,15 +187,15 @@
                                                         <label>{{__('admin.Highlight')}}</label>
                                                         <div>
                                                             <input type="checkbox"name="top_product" id="top_product"> <label for="top_product" class="mr-3" >{{__('admin.Top Product')}}</label>
-                    
+
                                                             <input type="checkbox" name="new_arrival" id="new_arrival"> <label for="new_arrival" class="mr-3" >{{__('admin.New Arrival')}}</label>
-                    
+
                                                             <input type="checkbox" name="best_product" id="best_product"> <label for="best_product" class="mr-3" >{{__('admin.Best Product')}}</label>
-                    
+
                                                             <input type="checkbox" name="is_featured" id="is_featured"> <label for="is_featured" class="mr-3" >{{__('admin.Featured Product')}}</label>
                                                         </div>
                                                     </div>
-                    
+
                                                     <div class="form-group col-12">
                                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                                         <select name="status" class="form-control" required>
@@ -203,15 +203,15 @@
                                                             <option value="0">{{__('admin.Inactive')}}</option>
                                                         </select>
                                                     </div>
-                    
-                    
-                    
-                    
+
+
+
+
                                                     <div class="form-group col-12">
                                                         <label>{{__('admin.SEO Title')}}</label>
                                                        <input type="text" class="form-control" name="seo_title" value="{{ old('seo_title') }}">
                                                     </div>
-                    
+
                                                     <div class="form-group col-12">
                                                         <label>{{__('admin.SEO Description')}}</label>
                                                         <textarea name="seo_description" id="" cols="30" rows="10" class="form-control text-area-5">{{ old('seo_description') }}</textarea>
@@ -223,7 +223,7 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                                                   
+
                                             </div>
                                         </div>
                                     </div>
@@ -582,7 +582,7 @@
                                                                         </div>
                                                                         <div class="modal-from-item modal-from-item-two">
                                                                             <div class="modal-from-inner">
-                                                                            <label for="exampleFormControlInput1" class="form-label">{{__('admin.Email Address') }} <span style="color: red;">*</span></label>
+                                                                            <label for="exampleFormControlInput1" class="form-label">{{__('admin.Email Address') }}</label>
                                                                             <input type="email" class="form-control" name="email" id="exampleFormControlInput5"
                                                                                 placeholder="infoyour@gmail.com" required>
                                                                             </div>
@@ -595,9 +595,9 @@
 
                                                                         <div class="from-select-main">
                                                                             <div class="from-select-main-item">
-                                                                                <label for="exampleFormControlInput1" class="form-label">{{__('admin.Country') }} <span style="color: red;">*</span></label>
+                                                                                <label for="exampleFormControlInput1" class="form-label">{{__('admin.Country') }}</label>
                                                                                 <div class="from-select-main">
-                                                                                    <select class="form-control select2"  name="country" required>
+                                                                                    <select class="form-control select2"  name="country">
                                                                                         @foreach ($countries as $key => $country)
                                                                                             <option value="{{$country->id}}">{{$country->name}}</option>
                                                                                         @endforeach
@@ -611,8 +611,6 @@
                                                                             <div class="from-select-main-item">
                                                                                 <label for="exampleFormControlInput1" class="form-label">{{__('admin.State') }} <span style="color: red;">*</span></label>
                                                                                 <div class="from-select-main">
-
-
                                                                                     <select class="form-control select2" name="state" aria-label="Default select example"@required(true)>
                                                                                         <option value="" disabled selected>{{ __('Select a Country') }}</option>
                                                                                         @php
@@ -631,8 +629,6 @@
                                                                             <div class="from-select-main-item">
                                                                                 <label for="exampleFormControlInput1" class="form-label">{{__('admin.City') }} <span style="color: red;">*</span></label>
                                                                                 <div class="from-select-main">
-
-
                                                                                     <select class="form-control select2" name="city" aria-label="Default select example" required>
                                                                                         <option value="" disabled selected>{{ __('Select a Country') }}</option>
                                                                                         @php

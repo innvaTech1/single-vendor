@@ -25,18 +25,6 @@
                             @csrf
                             @method('PUT')
                             <div class="row">
-
-                                <div class="form-group col-12">
-                                    <label>{{__('admin.Country')}} <span class="text-danger">*</span></label>
-                                    <select name="country" id="" class="form-control select2">
-                                        <option value="">{{__('admin.Select Country')}}</option>
-                                        @foreach ($countries as $country)
-                                        <option {{ $state->country_id == $country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ $country->name }}</option>
-                                        @endforeach
-
-                                    </select>
-                                </div>
-
                                 <div class="form-group col-12">
                                     <label>{{__('admin.State Name')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="name" class="form-control"  name="name" value="{{ $state->name }}">

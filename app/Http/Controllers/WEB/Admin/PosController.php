@@ -49,7 +49,7 @@ class PosController extends Controller
     public function Index()
     {
         Paginator::useBootstrap();
-        
+
         $data['brands'] = Brand::all();
         $data['products'] = Product::with('activeVariants')->where(['vendor_id' => 0])->where(['status' => 1])->orderBy('id','desc')->paginate(18);
         $data['setting'] = Setting::first();
@@ -287,12 +287,11 @@ class PosController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|unique:users',
+            'email' => 'nullable|unique:users',
             'phone' => 'required',
         ];
         $customMessages = [
             'name.required' => trans('admin_validation.Name is required'),
-            'email.required' => trans('admin_validation.Email is required'),
             'email.unique' => trans('admin_validation.Email already exist'),
             'phone.required' => trans('admin_validation.Phone Number is required'),
         ];
@@ -323,7 +322,7 @@ class PosController extends Controller
             $address->default_billing = 1;
             $address->save();
 
-            
+
             MailHelper::setMailConfig();
             $template=EmailTemplate::where('id',9)->first();
             $subject=$template->subject;

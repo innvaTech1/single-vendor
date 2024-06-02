@@ -39,19 +39,16 @@ class CountryStateController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'country'=>'required',
             'name'=>'required|unique:country_states',
             'status' => 'required',
         ];
         $customMessages = [
-            'country.required' => trans('admin_validation.Country is required'),
             'name.required' => trans('admin_validation.Name is required'),
             'name.unique' => trans('admin_validation.Name already exist'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $state=new CountryState();
-        $state->country_id=$request->country;
         $state->name=$request->name;
         $state->slug=Str::slug($request->name);
         $state->status=$request->status;
@@ -82,18 +79,15 @@ class CountryStateController extends Controller
     {
         $state = CountryState::find($id);
         $rules = [
-            'country'=>'required',
             'name'=>'required|unique:country_states,name,'.$state->id,
             'status' => 'required'
         ];
         $customMessages = [
-            'country.required' => trans('admin_validation.Country is required'),
             'name.required' => trans('admin_validation.Name is required'),
             'name.unique' => trans('admin_validation.Name already exist'),
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $state->country_id=$request->country;
         $state->name=$request->name;
         $state->slug=Str::slug($request->name);
         $state->status=$request->status;
