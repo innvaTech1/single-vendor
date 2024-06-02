@@ -20,7 +20,6 @@ class BannerImagesTableSeeder extends Seeder
         $list = [
             [
                 'title' => 'Up To - 35% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/Mega-menu-2022-02-13-07-53-14-1062.png',
                 'button_text' => 'Shop Now',
@@ -30,7 +29,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Up To -20% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner--2022-02-10-10-24-47-2663.jpg',
                 'button_text' => 'Shop Now',
@@ -40,7 +38,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Up To -35% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-03-42-16-1335.png',
                 'button_text' => 'Shop Now',
@@ -50,7 +47,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Up To -40% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-03-42-16-1434.png',
                 'button_text' => 'Shop Now',
@@ -60,7 +56,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Up To -28% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-04-18-01-2862.jpg',
                 'button_text' => 'Shop Now',
@@ -70,7 +65,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Up To -22% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-04-18-01-6995.jpg',
                 'button_text' => 'Shop Now',
@@ -80,7 +74,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Up To -35% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-13-04-57-46-4114.jpg',
                 'button_text' => 'Shop Now',
@@ -90,7 +83,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Up To -15% Off',
-                'description' => 'Hot Deals',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-13-04-58-43-7437.jpg',
                 'button_text' => 'Shop Now',
@@ -100,7 +92,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'This is Tittle',
-                'description' => 'This is Description',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-04-24-44-6895.jpg',
                 'button_text' => 'dd',
@@ -110,7 +101,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'This is Title',
-                'description' => 'This is Description',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-04-25-59-9719.jpg',
                 'button_text' => null,
@@ -120,7 +110,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'This is Tittle',
-                'description' => 'This is Description',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-04-26-46-8505.jpg',
                 'button_text' => 'dd',
@@ -130,7 +119,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'This is Tittle',
-                'description' => 'This is Description',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-01-30-06-21-06-4562.png',
                 'button_text' => 'dd',
@@ -140,7 +128,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'This is Tittle',
-                'description' => 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
                 'link' => 'Shop Now',
                 'image' => 'uploads/website-images/banner-2022-02-07-10-48-37-9226.jpg',
                 'button_text' => 'dd',
@@ -150,7 +137,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Black Friday Sale',
-                'description' => 'Up To -70% Off',
                 'link' => 'product',
                 'image' => 'uploads/website-images/banner-2022-02-06-04-24-02-9777.jpg',
                 'button_text' => null,
@@ -160,7 +146,6 @@ class BannerImagesTableSeeder extends Seeder
             ],
             [
                 'title' => 'Default Profile Image',
-                'description' => null,
                 'link' => null,
                 'image' => 'uploads/website-images/default-avatar-2022-02-07-10-10-46-1477.jpg',
                 'button_text' => null,
