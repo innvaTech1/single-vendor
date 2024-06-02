@@ -185,7 +185,7 @@ class HomeController extends Controller
 
         $shop_page = ShopPage::first();
 
-        $filter_price_range = $shop_page->filter_price_range;
+        $filter_price_range = $shop_page?->filter_price_range;
 
 
 
@@ -195,7 +195,7 @@ class HomeController extends Controller
 
         $footer = Footer::first();
 
-        $columnTitle = $footer->first_column;
+        $columnTitle = $footer?->first_column;
 
         $footer_first_col = array(
 
@@ -211,7 +211,7 @@ class HomeController extends Controller
 
         $second_col_links = FooterLink::where('column',2)->get();
 
-        $columnTitle = $footer->second_column;
+        $columnTitle = $footer?->second_column;
 
         $footer_second_col = array(
 
@@ -227,7 +227,7 @@ class HomeController extends Controller
 
         $third_col_links = FooterLink::where('column',3)->get();
 
-        $columnTitle = $footer->third_column;
+        $columnTitle = $footer?->third_column;
 
         $footer_third_col = array(
 

@@ -250,8 +250,6 @@ Route::group([], function () {
             Route::post('/cash-on-delivery', [PaymentController::class, 'cashOnDelivery'])->name('cash-on-delivery');
             Route::post('/pay-with-stripe', [PaymentController::class, 'payWithStripe'])->name('pay-with-stripe');
 
-
-
             Route::post('/pay-with-bank', [PaymentController::class, 'payWithBank'])->name('pay-with-bank');
         });
 
@@ -347,7 +345,7 @@ Route::group([], function () {
 
     Route::post('deliveryman/password/reset/email',[DeliveryManResetPasswordController::class,'passwrodResetEmail'])->name('deliveryman.password.reset.email');
     Route::put('deliveryman/password/update',[DeliveryManResetPasswordController::class,'passwrodUpdate'])->name('deliveryman.pasword.update');
- 
+
     Route::group(['as'=> 'deliveryman.', 'prefix' => 'deliveryman', 'middleware'=>'deliverymanapi'],function (){
          Route::get('dashboard',[DeliveryManDashboardController::class,'index'])->name('dashboard');
          Route::get('my-profile',[DeliveryManProfileController::class,'index'])->name('my-profile');
@@ -357,10 +355,10 @@ Route::group([], function () {
          Route::get('orders',[DeliveryManOrderController::class,'index'])->name('orders');
          Route::get('order-request',[DeliveryManOrderController::class,'orderRequest'])->name('order-request');
          Route::put('order-request-status/{id}',[DeliveryManOrderController::class,'orderRequestStatus'])->name('order-request-status');
-         
+
          Route::get('completed-order',[DeliveryManOrderController::class,'completedOrder'])->name('completed-order');
          Route::get('order-show/{id}',[DeliveryManOrderController::class,'show'])->name('order-show');
-         
+
          Route::put('update-order-status/{id}',[DeliveryManOrderController::class,'updateOrderStatus'])->name('update-order-status');
 
          Route::resource('withdraw', MyWithdrawController::class);
