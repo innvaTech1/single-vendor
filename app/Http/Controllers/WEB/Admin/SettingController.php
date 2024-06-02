@@ -194,6 +194,9 @@ class SettingController extends Controller
         Artisan::call('migrate');
 
         $setting = Setting::first();
+        if (!$setting) {
+            $setting = new Setting();
+        }
         $setting->current_version = '3.9.4';
         $setting->save();
 
@@ -204,6 +207,11 @@ class SettingController extends Controller
     }
     public function updateThemeColor(Request $request){
         $setting = Setting::first();
+
+        if(!$setting){
+            $setting = new Setting();
+        }
+
         $setting->theme_one = $request->theme_one;
         $setting->theme_two = $request->theme_two;
         $setting->save();
@@ -253,6 +261,11 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $setting = Setting::first();
+
+        if(!$setting){
+            $setting = new Setting();
+        }
+
         $setting->frontend_url = $request->frontend_url;
         $setting->phone_number_required = $request->phone_number_required;
         $setting->default_phone_code = $request->default_phone_code;
@@ -282,6 +295,11 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $cookieConsent = CookieConsent::first();
+
+        if(!$cookieConsent){
+            $cookieConsent = new CookieConsent();
+        }
+
         $cookieConsent->status = $request->allow;
         $cookieConsent->message = $request->message;
         $cookieConsent->save();
@@ -302,6 +320,10 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $facebookComment = FacebookComment::first();
+
+        if(!$facebookComment){
+            $facebookComment = new FacebookComment();
+        }
         $facebookComment->comment_type = $request->comment_type;
         $facebookComment->app_id = $request->app_id;
         $facebookComment->save();
@@ -325,6 +347,10 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $tawkChat = TawkChat::first();
+
+        if(!$tawkChat){
+            $tawkChat = new TawkChat();
+        }
         $tawkChat->status = $request->allow;
         $tawkChat->widget_id = $request->widget_id;
         $tawkChat->property_id = $request->property_id;
@@ -375,6 +401,10 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $googleRecaptcha = GoogleRecaptcha::first();
+
+        if(!$googleRecaptcha){
+            $googleRecaptcha = new GoogleRecaptcha();
+        }
         $googleRecaptcha->status = $request->allow;
         $googleRecaptcha->site_key = $request->site_key;
         $googleRecaptcha->secret_key = $request->secret_key;
@@ -427,9 +457,6 @@ class SettingController extends Controller
         return view('admin.clear_database');
     }
 
-
-
-
     public function updateSocialLogin(Request $request){
 
         $rules = [
@@ -451,6 +478,11 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $socialLogin = SocialLoginInformation::first();
+
+        if(!$socialLogin){
+            $socialLogin = new SocialLoginInformation();
+        }
+
         $socialLogin->is_facebook = $request->allow_facebook_login ? 1 : 0;
         $socialLogin->facebook_client_id = $request->facebook_app_id;
         $socialLogin->facebook_secret_id = $request->facebook_app_secret;
@@ -478,6 +510,10 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $facebookPixel = FacebookPixel::first();
+
+        if(!$facebookPixel){
+            $facebookPixel = new FacebookPixel();
+        }
         $facebookPixel->app_id = $request->app_id;
         $facebookPixel->status = $request->allow_facebook_pixel ? 1 : 0;
         $facebookPixel->save();
@@ -503,6 +539,10 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $pusher = PusherCredentail::first();
+
+        if(!$pusher){
+            $pusher = new PusherCredentail();
+        }
         $pusher->app_id = $request->app_id;
         $pusher->app_key = $request->app_key;
         $pusher->app_secret = $request->app_secret;
