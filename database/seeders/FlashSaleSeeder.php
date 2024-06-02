@@ -15,10 +15,10 @@ class FlashSaleSeeder extends Seeder
     public function run()
     {
         FlashSale::create([
-            'name' => 'Flash Sale',
-            'image' => 'uploads/website-images/flash_sale-2022-06-13-053409-9999.jpg',
+            'title' => 'Flash Sale',
+            'flashsale_page_image' => 'uploads/website-images/flash_sale-2022-06-13-053409-9999.jpg',
             'homepage_image' => 'uploads/website-images/flash_sale-2022-06-13-053409-9999.jpg',
-            'date' => '2022-06-13',
+            'end_time' => '2022-06-13',
             'offer' => 10,
             'status' => 1,
         ]);
