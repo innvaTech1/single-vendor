@@ -237,7 +237,7 @@ class SettingController extends Controller
     }
 
     public function updateGeneralSetting(Request $request){
-        
+
         $rules = [
             'frontend_url' => 'required',
             'lg_header' => 'required',
@@ -347,6 +347,9 @@ class SettingController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $googleAnalytic = GoogleAnalytic::first();
+        if(!$googleAnalytic){
+            $googleAnalytic = new GoogleAnalytic();
+        }
         $googleAnalytic->status = $request->allow;
         $googleAnalytic->analytic_id = $request->analytic_id;
         $googleAnalytic->save();
