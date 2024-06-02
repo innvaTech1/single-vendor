@@ -26,6 +26,7 @@ class SettingsSeeder extends Seeder
                 'enable_save_contact_message' => 0,
                 'text_direction' => 'ltr',
                 'timezone' => 'Asia/Dhaka',
+                'enable_multivendor' => 0,
                 'sidebar_lg_header' => 'InnvaCart',
                 'sidebar_sm_header' => 'IC',
                 'topbar_phone' =>

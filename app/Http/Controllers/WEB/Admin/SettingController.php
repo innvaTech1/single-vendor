@@ -237,23 +237,18 @@ class SettingController extends Controller
     }
 
     public function updateGeneralSetting(Request $request){
+        
         $rules = [
             'frontend_url' => 'required',
-            'multivendor' => 'required',
-            'layout' => 'required',
             'lg_header' => 'required',
             'sm_header' => 'required',
             'contact_email' => 'required',
-            'timezone' => 'required',
         ];
         $customMessages = [
             'frontend_url.required' => trans('admin_validation.Frontend url is required'),
-            'multivendor.required' => trans('admin_validation.Multivendor is required'),
-            'layout.required' => trans('admin_validation.Layout is required'),
             'lg_header.required' => trans('admin_validation.Sidebar large header is required'),
             'sm_header.required' => trans('admin_validation.Sidebar small header is required'),
             'contact_email.required' => trans('admin_validation.Contact email is required'),
-            'timezone.required' => trans('admin_validation.Timezone is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
