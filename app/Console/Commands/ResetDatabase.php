@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -25,6 +26,7 @@ class ResetDatabase extends Command
             $tableName = $table->$dbName;
             DB::table($tableName)->truncate();
         }
+        Artisan::call('db:seed');
         Schema::enableForeignKeyConstraints();
         $this->info('All tables truncated successfully.');
     }

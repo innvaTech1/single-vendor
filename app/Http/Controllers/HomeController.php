@@ -394,7 +394,7 @@ class HomeController extends Controller
 
         $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty?->qty);
 
-        $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
+        $sliderVisibilty = $sliderVisibilty?->status == 1 ? true : false;
 
 
 
@@ -428,9 +428,9 @@ class HomeController extends Controller
 
 
 
-        $popularCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where('status',1)->where('approve_by_admin', 1)->orderBy('id','desc')->get()->take($popularCategoryVisibilty->qty);
+        $popularCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where('status',1)->where('approve_by_admin', 1)->orderBy('id','desc')->get()->take($popularCategoryVisibilty?->qty);
 
-        $popularCategoryVisibilty = $popularCategoryVisibilty->status == 1 ? true : false;
+        $popularCategoryVisibilty = $popularCategoryVisibilty?->status == 1 ? true : false;
 
         $popularCategorySidebarBanner = $setting->popular_category_banner;
 
@@ -438,9 +438,9 @@ class HomeController extends Controller
 
         $brandVisibility = HomePageOneVisibility::find(5);
 
-        $brands = Brand::where(['status' => 1])->get()->take($brandVisibility->qty);
+        $brands = Brand::where(['status' => 1])->get()->take($brandVisibility?->qty);
 
-        $brandVisibility = $brandVisibility->status == 1 ? true : false;
+        $brandVisibility = $brandVisibility?->status == 1 ? true : false;
 
 
 
@@ -452,17 +452,17 @@ class HomeController extends Controller
 
         $topRatedVisibility = HomePageOneVisibility::find(6);
 
-        $topRatedProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['is_top' => 1, 'status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($topRatedVisibility->qty);
+        $topRatedProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['is_top' => 1, 'status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($topRatedVisibility?->qty);
 
-        $topRatedVisibility = $topRatedVisibility->status == 1 ? true : false;
+        $topRatedVisibility = $topRatedVisibility?->status == 1 ? true : false;
 
 
 
         $sellerVisibility = HomePageOneVisibility::find(7);
 
-        $sellers = Vendor::where(['status' => 1])->select('id','logo','banner_image','shop_name','slug')->get()->take($sellerVisibility->qty);
+        $sellers = Vendor::where(['status' => 1])->select('id','logo','banner_image','shop_name','slug')->get()->take($sellerVisibility?->qty);
 
-        $sellerVisibility = $sellerVisibility->status == 1 ? true : false;
+        $sellerVisibility = $sellerVisibility?->status == 1 ? true : false;
 
 
 
@@ -492,9 +492,9 @@ class HomeController extends Controller
 
 
 
-        $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where(['status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($featuredProductVisibility->qty);
+        $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where(['status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($featuredProductVisibility?->qty);
 
-        $featuredProductVisibility = $featuredProductVisibility->status == 1 ? true : false;
+        $featuredProductVisibility = $featuredProductVisibility?->status == 1 ? true : false;
 
 
 
@@ -504,9 +504,9 @@ class HomeController extends Controller
 
         $newArrivalProductVisibility = HomePageOneVisibility::find(9);
 
-        $newArrivalProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['new_product' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($newArrivalProductVisibility->qty);
+        $newArrivalProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['new_product' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($newArrivalProductVisibility?->qty);
 
-        $newArrivalProductVisibility = $newArrivalProductVisibility->status == 1 ? true : false;
+        $newArrivalProductVisibility = $newArrivalProductVisibility?->status == 1 ? true : false;
 
 
 
@@ -516,9 +516,9 @@ class HomeController extends Controller
 
         $bestProductVisibility = HomePageOneVisibility::find(10);
 
-        $bestProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['is_best' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($bestProductVisibility->qty);
+        $bestProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['is_best' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($bestProductVisibility?->qty);
 
-        $bestProductVisibility = $bestProductVisibility->status == 1 ? true : false;
+        $bestProductVisibility = $bestProductVisibility?->status == 1 ? true : false;
 
 
 
