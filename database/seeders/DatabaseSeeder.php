@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
             FlashSaleSeeder::class,
             EmailConfigSeeder::class,
+            SeoSettingsSeeder::class,
         ]);
     }
 }
