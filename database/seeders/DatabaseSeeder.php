@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             BannerImagesTableSeeder::class,
             SettingsSeeder::class,
             FlashSaleSeeder::class,
-            EmailConfiguration::class,
+            EmailConfigSeeder::class,
         ]);
     }
 }
