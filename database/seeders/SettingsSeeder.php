@@ -29,8 +29,8 @@ class SettingsSeeder extends Seeder
                 'enable_multivendor' => 0,
                 'sidebar_lg_header' => 'InnvaCart',
                 'sidebar_sm_header' => 'IC',
-                'topbar_phone' =>
-                '125-874-9658',
+                'topbar_phone' =>'125-874-9658',
+                'homepage_section_title' => "[{\"key\":\"Trending_Category\",\"default\":\"Trending Category\",\"custom\":\"Trending Category\"},{\"key\":\"Popular_Category\",\"default\":\"Popular Category\",\"custom\":\"Popular Category\"},{\"key\":\"Shop_by_Brand\",\"default\":\"Shop by Brand\",\"custom\":\"Shop by Brand\"},{\"key\":\"Top_Rated_Products\",\"default\":\"Top Rated Products\",\"custom\":\"Top Rated Products\"},{\"key\":\"Best_Seller\",\"default\":\"Best Seller\",\"custom\":\"Best Seller\"},{\"key\":\"Featured_Products\",\"default\":\"Featured Products\",\"custom\":\"Featured Products\"},{\"key\":\"New_Arrivals\",\"default\":\"New Arrivals\",\"custom\":\"New Arrivals\"},{\"key\":\"Best_Products\",\"default\":\"Best Products\",\"custom\":\"Best Products\"}]",
                 'topbar_email' =>'contact@gmail.com',
                 'currency_name' =>'BDT',
                 'currency_icon' => '৳',

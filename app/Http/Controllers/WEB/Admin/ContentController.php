@@ -181,6 +181,11 @@ class ContentController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $shop_page = ShopPage::first();
+
+        if(!$shop_page){
+            $shop_page = new ShopPage();
+        }
+
         $shop_page->filter_price_range = $request->filter_price_range;
         $shop_page->save();
         $notification = trans('admin_validation.Update Successfully');
