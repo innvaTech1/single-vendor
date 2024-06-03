@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EmailConfiguration;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BannerImagesTableSeeder::class,
             SettingsSeeder::class,
             FlashSaleSeeder::class,
+            EmailConfiguration::class,
         ]);
     }
 }
