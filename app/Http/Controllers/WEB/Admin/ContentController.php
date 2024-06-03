@@ -316,6 +316,13 @@ class ContentController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $subscription_banner = BannerImage::find(27);
+
+        if(!$subscription_banner)
+        {
+            $subscription_banner = new BannerImage();
+
+        }
+
         if($request->image){
             $existing_banner = $subscription_banner->image;
             $extention = $request->image->getClientOriginalExtension();
