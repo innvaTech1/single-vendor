@@ -85,6 +85,12 @@ class ContentController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $announcement = AnnouncementModal::first();
+
+        if(!$announcement)
+        {
+            $announcement = new AnnouncementModal();
+        }
+
         if($request->image){
             $old_image=$announcement->image;
             $image=$request->image;
