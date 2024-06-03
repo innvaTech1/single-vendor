@@ -19,7 +19,6 @@ class EmailConfigSeeder extends Seeder
             'mail_host' => 'smtp.mailtrap.io',
             'mail_port' => '2525',
             'email' => 'your-email',
-            'email_password' => 'your-password',
             'smtp_username' => 'your-username',
             'smtp_password' => 'your-password',
             'mail_encryption' => 'tls',

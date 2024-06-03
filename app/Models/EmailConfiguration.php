@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class EmailConfiguration extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'mail_type',
+        'mail_host',
+        'mail_port',
+        'email',
+        'smtp_username',
+        'smtp_password',
+        'mail_encryption',
+    ];
 }
