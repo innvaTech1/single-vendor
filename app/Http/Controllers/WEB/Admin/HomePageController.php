@@ -51,9 +51,8 @@ class HomePageController extends Controller
         $sections = json_encode($sections);
 
         $setting = Setting::first();
-        $str = "[{\"key\":\"Trending_Category\",\"default\":\"Trending Category\",\"custom\":\"Trending Category\"},{\"key\":\"Popular_Category\",\"default\":\"Popular Category\",\"custom\":\"Popular Category\"},{\"key\":\"Shop_by_Brand\",\"default\":\"Shop by Brand\",\"custom\":\"Shop by Brand\"},{\"key\":\"Top_Rated_Products\",\"default\":\"Top Rated Products\",\"custom\":\"Top Rated Products\"},{\"key\":\"Best_Seller\",\"default\":\"Best Seller\",\"custom\":\"Best Seller\"},{\"key\":\"Featured_Products\",\"default\":\"Featured Products\",\"custom\":\"Featured Products\"},{\"key\":\"New_Arrivals\",\"default\":\"New Arrivals\",\"custom\":\"New Arrivals\"},{\"key\":\"Best_Products\",\"default\":\"Best Products\",\"custom\":\"Best Products\"}]";
 
-        $setting->homepage_section_title = $str;
+        $setting->homepage_section_title = $sections;
         $setting->save();
 
 
