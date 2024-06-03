@@ -14,6 +14,7 @@ class SeoSettingsSeeder extends Seeder
      */
     public function run()
     {
+        SeoSetting::truncate();
         $list = [
             [
                 'id' => 1,
@@ -32,12 +33,6 @@ class SeoSettingsSeeder extends Seeder
                 'page_name' => 'Contact Us',
                 'seo_title' => 'Contact Us - Ecommerce',
                 'seo_description' => 'Contact Us',
-            ],
-            [
-                'id' => 5,
-                'page_name' => 'Seller Page',
-                'seo_title' => 'Our Seller - Ecommerce',
-                'seo_description' => 'Seller Page',
             ],
             [
                 'id' => 8,
