@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             FlashSaleSeeder::class,
             EmailConfigSeeder::class,
             SeoSettingsSeeder::class,
+            CustomPaginationSeeder::class,
         ]);
     }
 }

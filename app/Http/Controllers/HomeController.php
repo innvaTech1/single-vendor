@@ -1586,8 +1586,6 @@ class HomeController extends Controller
 
         $product = Product::with('category','brand','activeVariants.activeVariantItems','avgReview')->where(['status' => 1, 'slug' => $slug])->first();
 
-
-
         if(!$product){
 
             $notification = trans('user_validation.Something went wrong');
@@ -1598,7 +1596,7 @@ class HomeController extends Controller
 
 
 
-        $paginateQty = CustomPagination::whereId('5')->first()->qty;
+        $paginateQty = CustomPagination::where('page_name', 'Product Review')->first()?->qty;
 
         $productReviews = ProductReview::with('user')->where(['status' => 1, 'product_id' =>$product->id])->get()->take(10);
 
