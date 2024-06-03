@@ -37,6 +37,10 @@ class NotificationController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $twilio = TwilioSms::first();
+
+        if($twilio == null){
+            $twilio = new TwilioSms();
+        }
         $twilio->account_sid = $request->account_sid;
         $twilio->auth_token = $request->auth_token;
         $twilio->twilio_phone_number = $request->twilio_phone_number;
@@ -64,6 +68,10 @@ class NotificationController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $biztech = BiztechSms::first();
+
+        if($biztech == null){
+            $biztech = new BiztechSms();
+        }
         $biztech->api_key = $request->api_key;
         $biztech->client_id = $request->client_id;
         $biztech->sender_id = $request->sender_id;

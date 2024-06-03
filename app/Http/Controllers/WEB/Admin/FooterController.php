@@ -43,6 +43,11 @@ class FooterController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $footer = Footer::first();
+
+        if($footer == null){
+            $footer = new Footer();
+        }
+
         $footer->about_us = $request->about_us;
         $footer->email = $request->email;
         $footer->phone = $request->phone;
