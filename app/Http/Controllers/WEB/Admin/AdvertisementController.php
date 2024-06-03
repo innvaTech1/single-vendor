@@ -19,27 +19,27 @@ class AdvertisementController extends Controller
 
     public function index(){
 
-        $sliderSidebarBannerOne = BannerImage::whereId('16')->select('product_slug','image','id','banner_location','title_one','title_two','badge','status')->first();
+        $sliderSidebarBannerOne = BannerImage::where('type', 'sliderSidebarBannerOne')->select('product_slug','image','id','banner_location','title_one','title_two','badge','status')->first();
 
-        $sliderSidebarBannerTwo = BannerImage::whereId('17')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
+        $sliderSidebarBannerTwo = BannerImage::where('type','sliderSidebarBannerTwo')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
 
-        $popularCategorySidebarBanner = BannerImage::whereId('18')->select('product_slug','image','id','banner_location','status')->first();
+        $popularCategorySidebarBanner = BannerImage::where('type','popularCategorySidebarBanner')->select('product_slug','image','id','banner_location','status')->first();
 
-        $homepageTwoColumnBannerOne = BannerImage::whereId('19')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
+        $homepageTwoColumnBannerOne = BannerImage::where('type','homepageTwoColumnBannerOne')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
 
-        $homepageTwoColumnBannerTwo = BannerImage::whereId('20')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
+        $homepageTwoColumnBannerTwo = BannerImage::where('type','homepageTwoColumnBannerTwo')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
 
-        $homepageSingleBannerOne = BannerImage::whereId('21')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
+        $homepageSingleBannerOne = BannerImage::where('type','homepageSingleBannerOne')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
 
-        $homepageSingleBannerTwo = BannerImage::whereId('22')->select('product_slug','image','id','banner_location','status','title_one')->first();
+        $homepageSingleBannerTwo = BannerImage::where('type','homepageSingleBannerTwo')->select('product_slug','image','id','banner_location','status','title_one')->first();
 
-        $megaMenuBanner = BannerImage::whereId('23')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
+        $megaMenuBanner = BannerImage::where('type','megaMenuBanner')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
 
-        $homepageFlashSaleSidebarBanner = BannerImage::whereId('24')->select('product_slug','image','id','banner_location','status','title')->first();
+        $homepageFlashSaleSidebarBanner = BannerImage::where('type','homepageFlashSaleSidebarBanner')->select('product_slug','image','id','banner_location','status','title')->first();
 
-        $shopPageCenterBanner = BannerImage::whereId('25')->select('product_slug','image','id','banner_location','after_product_qty','status','title_one')->first();
+        $shopPageCenterBanner = BannerImage::where('type','shopPageCenterBanner')->select('product_slug','image','id','banner_location','after_product_qty','status','title_one')->first();
 
-        $shopPageSidebarBanner = BannerImage::whereId('26')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
+        $shopPageSidebarBanner = BannerImage::where('type','shopPageSidebarBanner')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
 
         $products = Category::where(['status' => 1])->select('id','name','slug')->get();
 
@@ -59,8 +59,6 @@ class AdvertisementController extends Controller
         ]);
     }
 
-
-
     public function megaMenuBannerUpdate(Request $request){
         $rules = [
             'product_slug' => 'required',
@@ -74,7 +72,11 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $megaMenuBanner = BannerImage::whereId('23')->select('link','image','id','banner_location')->first();
+        $megaMenuBanner = BannerImage::where('type','megaMenuBanner')->select('type','link','image','id','banner_location')->first();
+
+        if (!$megaMenuBanner) {
+            $megaMenuBanner = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $megaMenuBanner->image;
@@ -91,6 +93,7 @@ class AdvertisementController extends Controller
         }
         $megaMenuBanner->product_slug = $request->product_slug;
         $megaMenuBanner->status = $request->status;
+        $megaMenuBanner->type = 'megaMenuBanner';
         $megaMenuBanner->title_one = $request->title_one;
         $megaMenuBanner->title_two = $request->title_two;
         $megaMenuBanner->save();
@@ -114,7 +117,11 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $sliderSidebarBannerOne = BannerImage::whereId('16')->select('link','image','id','banner_location')->first();
+        $sliderSidebarBannerOne = BannerImage::where('type','sliderSidebarBannerOne')->select('link','image','id','banner_location','type')->first();
+
+        if(!$sliderSidebarBannerOne){
+            $sliderSidebarBannerOne = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $sliderSidebarBannerOne->image;
@@ -135,6 +142,7 @@ class AdvertisementController extends Controller
         $sliderSidebarBannerOne->title_one = $request->title_one;
         $sliderSidebarBannerOne->title_two = $request->title_two;
         $sliderSidebarBannerOne->badge = $request->badge;
+        $sliderSidebarBannerOne->type = 'sliderSidebarBannerOne';
         $sliderSidebarBannerOne->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -156,8 +164,11 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $sliderSidebarBannerTwo = BannerImage::whereId('17')->select('link','image','id','banner_location')->first();
+        $sliderSidebarBannerTwo = BannerImage::where('type','sliderSidebarBannerTwo')->select('link','image','id','banner_location', 'type')->first();
 
+        if (!$sliderSidebarBannerTwo) {
+            $sliderSidebarBannerTwo = new BannerImage();
+        }
         if($request->banner_image){
             $existing_banner = $sliderSidebarBannerTwo->image;
             $extention = $request->banner_image->getClientOriginalExtension();
@@ -176,6 +187,7 @@ class AdvertisementController extends Controller
         $sliderSidebarBannerTwo->title_one = $request->title_one;
         $sliderSidebarBannerTwo->title_two = $request->title_two;
         $sliderSidebarBannerTwo->badge = $request->badge;
+        $sliderSidebarBannerTwo->type = 'sliderSidebarBannerTwo';
         $sliderSidebarBannerTwo->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -193,7 +205,11 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $popularCategorySidebarBanner = BannerImage::whereId('18')->select('link','image','id','banner_location')->first();
+        $popularCategorySidebarBanner = BannerImage::where('type','popularCategorySidebarBanner')->select('link','image','id','banner_location', 'type')->first();
+
+        if (!$popularCategorySidebarBanner) {
+            $popularCategorySidebarBanner = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $popularCategorySidebarBanner->image;
@@ -210,6 +226,7 @@ class AdvertisementController extends Controller
         }
         $popularCategorySidebarBanner->product_slug = $request->product_slug;
         $popularCategorySidebarBanner->status = 1;
+        $popularCategorySidebarBanner->type = 'popularCategorySidebarBanner';
         $popularCategorySidebarBanner->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -231,7 +248,11 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $homepageTwoColumnBannerOne = BannerImage::whereId('19')->select('link','image','id','banner_location')->first();
+        $homepageTwoColumnBannerOne = BannerImage::where('type','homepageTwoColumnBannerOne')->select('link','image','id','banner_location', 'type')->first();
+
+        if (!$homepageTwoColumnBannerOne) {
+            $homepageTwoColumnBannerOne = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $homepageTwoColumnBannerOne->image;
@@ -251,6 +272,7 @@ class AdvertisementController extends Controller
         $homepageTwoColumnBannerOne->title_one = $request->title_one;
         $homepageTwoColumnBannerOne->title_two = $request->title_two;
         $homepageTwoColumnBannerOne->badge = $request->badge;
+        $homepageTwoColumnBannerOne->type = 'homepageTwoColumnBannerOne';
         $homepageTwoColumnBannerOne->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -272,7 +294,12 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $homepageTwoColumnBannerTwo = BannerImage::whereId('20')->select('link','image','id','banner_location')->first();
+        $homepageTwoColumnBannerTwo = BannerImage::where('type','homepageTwoColumnBannerTwo')->select('link','image','id','banner_location', 'type')->first();
+
+
+        if (!$homepageTwoColumnBannerTwo) {
+            $homepageTwoColumnBannerTwo = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $homepageTwoColumnBannerTwo->image;
@@ -292,6 +319,7 @@ class AdvertisementController extends Controller
         $homepageTwoColumnBannerTwo->title_one = $request->title_one;
         $homepageTwoColumnBannerTwo->title_two = $request->title_two;
         $homepageTwoColumnBannerTwo->badge = $request->badge;
+        $homepageTwoColumnBannerTwo->type = 'homepageTwoColumnBannerTwo';
         $homepageTwoColumnBannerTwo->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -312,8 +340,12 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $homepageSingleBannerOne = BannerImage::whereId('21')->select('link','image','id','banner_location')->first();
+        $homepageSingleBannerOne = BannerImage::where('type','homepageSingleBannerOne')->select('link','image','id','banner_location', 'type')->first();
 
+
+        if (!$homepageSingleBannerOne) {
+            $homepageSingleBannerOne = new BannerImage();
+        }
         if($request->banner_image){
             $existing_banner = $homepageSingleBannerOne->image;
             $extention = $request->banner_image->getClientOriginalExtension();
@@ -331,6 +363,7 @@ class AdvertisementController extends Controller
         $homepageSingleBannerOne->status = $request->status;
         $homepageSingleBannerOne->title_one = $request->title_one;
         $homepageSingleBannerOne->title_two = $request->title_two;
+        $homepageSingleBannerOne->type = 'homepageSingleBannerOne';
         $homepageSingleBannerOne->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -351,7 +384,11 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $homepageSingleBannerTwo = BannerImage::whereId('22')->select('link','image','id','banner_location')->first();
+        $homepageSingleBannerTwo = BannerImage::where('type','homepageSingleBannerTwo')->select('link','image','id','banner_location', 'type')->first();
+
+        if (!$homepageSingleBannerTwo) {
+            $homepageSingleBannerTwo = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $homepageSingleBannerTwo->image;
@@ -369,6 +406,7 @@ class AdvertisementController extends Controller
         $homepageSingleBannerTwo->product_slug = $request->product_slug;
         $homepageSingleBannerTwo->status = $request->status;
         $homepageSingleBannerTwo->title_one = $request->title;
+        $homepageSingleBannerTwo->type = 'homepageSingleBannerTwo';
         $homepageSingleBannerTwo->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -389,7 +427,12 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $homepageFlashSaleSidebarBanner = BannerImage::whereId('24')->select('link','image','id','banner_location')->first();
+        $homepageFlashSaleSidebarBanner = BannerImage::where('type','homepageFlashSaleSidebarBanner')->select('link','image','id','banner_location', 'type')->first();
+
+
+        if (!$homepageFlashSaleSidebarBanner) {
+            $homepageFlashSaleSidebarBanner = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $homepageFlashSaleSidebarBanner->image;
@@ -407,6 +450,7 @@ class AdvertisementController extends Controller
         $homepageFlashSaleSidebarBanner->link = $request->link;
         $homepageFlashSaleSidebarBanner->title = $request->link_two;
         $homepageFlashSaleSidebarBanner->status = $request->status;
+        $homepageFlashSaleSidebarBanner->type = 'homepageFlashSaleSidebarBanner';
         $homepageFlashSaleSidebarBanner->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -428,7 +472,13 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-         $shopPageCenterBanner = BannerImage::whereId('25')->first();
+         $shopPageCenterBanner = BannerImage::where('type','shopPageCenterBanner')->first();
+
+
+
+        if (!$shopPageCenterBanner) {
+            $shopPageCenterBanner = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $shopPageCenterBanner->image;
@@ -447,6 +497,7 @@ class AdvertisementController extends Controller
         $shopPageCenterBanner->product_slug = $request->product_slug;
         $shopPageCenterBanner->status = $request->status;
         $shopPageCenterBanner->title_one = $request->title;
+        $shopPageCenterBanner->type = 'shopPageCenterBanner';
         $shopPageCenterBanner->save();
 
         $notification= trans('admin_validation.Update Successfully');
@@ -467,7 +518,11 @@ class AdvertisementController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $shopPageSidebarBanner = BannerImage::whereId('26')->select('link','image','id','banner_location')->first();
+        $shopPageSidebarBanner = BannerImage::where('type','shopPageSidebarBanner')->select('link','image','id','banner_location', 'type')->first();
+
+        if (!$shopPageSidebarBanner) {
+            $shopPageSidebarBanner = new BannerImage();
+        }
 
         if($request->banner_image){
             $existing_banner = $shopPageSidebarBanner->image;
@@ -487,6 +542,7 @@ class AdvertisementController extends Controller
         $shopPageSidebarBanner->status = $request->status;
         $shopPageSidebarBanner->title_one = $request->title_one;
         $shopPageSidebarBanner->title_two = $request->title_two;
+        $shopPageSidebarBanner->type = 'shopPageSidebarBanner';
         $shopPageSidebarBanner->save();
 
         $notification= trans('admin_validation.Update Successfully');
