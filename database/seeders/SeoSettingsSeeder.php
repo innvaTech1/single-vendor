@@ -14,7 +14,6 @@ class SeoSettingsSeeder extends Seeder
      */
     public function run()
     {
-        SeoSetting::truncate();
         $list = [
             [
                 'id' => 1,
