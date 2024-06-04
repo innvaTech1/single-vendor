@@ -238,8 +238,8 @@ class UserProfileController extends Controller
         }
     }
 
-    public function stateByCountry($id){
-        $states = CountryState::select('id','name')->where(['status' => 1, 'country_id' => $id])->get();
+    public function stateByCountry(){
+        $states = CountryState::select('id','name')->get();
         return response()->json(['states'=>$states]);
     }
 

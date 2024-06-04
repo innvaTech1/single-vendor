@@ -253,7 +253,7 @@ Route::group([], function () {
             Route::post('/pay-with-bank', [PaymentController::class, 'payWithBank'])->name('pay-with-bank');
         });
 
-        Route::get('state-by-country/{id}', [UserProfileController::class, 'stateByCountry'])->name('state-by-country');
+        Route::get('state-by-country', [UserProfileController::class, 'stateByCountry'])->name('state-by-country');
         Route::get('city-by-state/{id}', [UserProfileController::class, 'cityByState'])->name('city-by-state');
     });
 
