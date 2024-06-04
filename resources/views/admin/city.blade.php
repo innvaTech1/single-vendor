@@ -29,7 +29,6 @@
                                     <th>{{__('admin.SN')}}</th>
                                     <th>{{__('admin.City')}}</th>
                                     <th>{{__('admin.State')}}</th>
-                                    <th>{{__('admin.Country')}}</th>
                                     <th>{{__('admin.Status')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
@@ -40,7 +39,6 @@
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $city->name }}</td>
                                         <td>{{ $city->countryState->name }}</td>
-                                        <td>{{ $city->countryState->country->name }}</td>
                                         <td>
                                             @if($city->status == 1)
                                                 <a href="javascript:;" onclick="changeStateStatus({{ $city->id }})">

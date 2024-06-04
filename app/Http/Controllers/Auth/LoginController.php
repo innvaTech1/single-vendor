@@ -294,9 +294,6 @@ class LoginController extends Controller
             \Config::set('services.google.client_secret', $googleInfo->gmail_secret_id);
             \Config::set('services.google.redirect', $googleInfo->gmail_redirect_url);
 
-
-
-
         try {
             /** @var SocialiteUser $socialiteUser */
             $socialiteUser = Socialite::driver('google')->stateless()->user();
@@ -328,9 +325,6 @@ class LoginController extends Controller
         }else {
             return $this->respondWithToken($token,0,$user);
         }
-
-
-
     }
 
     public function redirectToFacebook(){
