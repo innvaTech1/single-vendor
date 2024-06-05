@@ -215,6 +215,7 @@ Route::group([], function () {
         Route::post('update-password', [UserProfileController::class, 'updatePassword'])->name('update-password');
 
 
+        Route::post('address/store', [AddressCotroller::class,'store']);
         Route::resource('address', AddressCotroller::class);
 
         Route::get('compare-product', [UserProfileController::class, 'compareProducts'])->name('compare-product');
