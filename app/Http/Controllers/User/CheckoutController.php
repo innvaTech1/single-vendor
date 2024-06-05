@@ -23,6 +23,7 @@ use App\Models\PaypalPayment;
 use App\Models\SslcommerzPayment;
 use App\Models\ShoppingCart;
 use App\Models\Coupon;
+use App\Models\MobilePayment;
 use App\Models\Shipping;
 use App\Models\MyfatoorahPayment;
 use Cart;
@@ -63,6 +64,9 @@ class CheckoutController extends Controller
 
         $sslcommerz = SslcommerzPayment::first();
 
+        $bkash = MobilePayment::where('name', 'bkash')->first();
+        $rocket = MobilePayment::where('name', 'rocket')->first();
+        $nagad = MobilePayment::where('name', 'nagad')->first();
 
         return response()->json([
             'cartProducts' => $cartProducts,
@@ -71,6 +75,9 @@ class CheckoutController extends Controller
             'couponOffer' => $couponOffer,
             'bankPaymentInfo' => $bankPaymentInfo,
             'sslcommerz' => $sslcommerz,
+            'bkash' => $bkash,
+            'rocket' => $rocket,
+            'nagad' => $nagad,
         ], 200);
     }
 }
