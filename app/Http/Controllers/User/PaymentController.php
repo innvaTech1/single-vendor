@@ -141,8 +141,6 @@ class PaymentController extends Controller
         $shipping = $total['shipping'];
 
         $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-=======
         $setting = Setting::first();
 
         $amount_real_currency = $total_price;
@@ -151,7 +149,6 @@ class PaymentController extends Controller
         $currency_rate = $setting->currency->currency_rate;
         $currency_icon = $setting->currency->currency_icon;
         $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
         $stripe = StripePayment::first();
         $payableAmount = round($total_price * $stripe->currency->currency_rate,2);
@@ -305,9 +302,6 @@ class PaymentController extends Controller
             $shipping = $total['shipping'];
 
             $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-
-=======
             $setting = Setting::first();
 
             $amount_real_currency = $total_price;
@@ -315,7 +309,6 @@ class PaymentController extends Controller
             $currency_rate = $setting->currency->currency_rate;
             $currency_icon = $setting->currency->currency_icon;
             $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
             $transaction_id = $request->razorpay_payment_id;
             $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Razorpay', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0,$request->billing_address_id, $request->shipping_address_id);
@@ -404,9 +397,6 @@ class PaymentController extends Controller
 
 
             $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-
-=======
             $setting = Setting::first();
 
             $amount_real_currency = $total_price;
@@ -414,7 +404,6 @@ class PaymentController extends Controller
             $currency_rate = $setting->currency->currency_rate;
             $currency_icon = $setting->currency->currency_icon;
             $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
             $transaction_id = $request->tnx_id;
             $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Flutterwave', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0,$request->billing_address_id, $request->shipping_address_id);
@@ -507,8 +496,6 @@ class PaymentController extends Controller
             $shipping = $total['shipping'];
 
             $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-=======
             $setting = Setting::first();
 
             $amount_real_currency = $total_price;
@@ -516,7 +503,6 @@ class PaymentController extends Controller
             $currency_rate = $setting->currency->currency_rate;
             $currency_icon = $setting->currency->currency_icon;
             $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
             $transaction_id = $payment_id;
             $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Mollie', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0,$billing_address_id, $shipping_address_id);
@@ -607,8 +593,6 @@ class PaymentController extends Controller
             $shipping = $total['shipping'];
 
             $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-=======
             $setting = Setting::first();
 
             $amount_real_currency = $total_price;
@@ -616,7 +600,6 @@ class PaymentController extends Controller
             $currency_rate = $setting->currency->currency_rate;
             $currency_icon = $setting->currency->currency_icon;
             $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
             $transaction_id = $request->tnx_id;
             $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Paystack', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0,$request->billing_address_id, $request->shipping_address_id);
@@ -766,8 +749,6 @@ class PaymentController extends Controller
                 $shipping = $total['shipping'];
 
                 $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-=======
                 $setting = Setting::first();
 
                 $amount_real_currency = $total_price;
@@ -775,7 +756,6 @@ class PaymentController extends Controller
                 $currency_rate = $setting->currency->currency_rate;
                 $currency_icon = $setting->currency->currency_icon;
                 $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
                 $transaction_id = $payment_id;
                 $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Instamojo', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0,$billing_address_id, $shipping_address_id);
@@ -826,8 +806,6 @@ class PaymentController extends Controller
         $shipping = $total['shipping'];
 
         $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-=======
         $setting = Setting::first();
 
         $amount_real_currency = $total_price;
@@ -835,7 +813,6 @@ class PaymentController extends Controller
         $currency_rate = $setting->currency->currency_rate;
         $currency_icon = $setting->currency->currency_icon;
         $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
         $transaction_id = $request->tnx_info;
         $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Bank Payment', $transaction_id , 0, $shipping, $shipping_fee, $coupon_price, 1, $request->billing_address_id, $request->shipping_address_id);
@@ -979,8 +956,6 @@ class PaymentController extends Controller
             $shipping = $total['shipping'];
 
             $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-=======
             $setting = Setting::first();
 
             $amount_real_currency = $total_price;
@@ -988,7 +963,6 @@ class PaymentController extends Controller
             $currency_rate = $setting->currency->currency_rate;
             $currency_icon = $setting->currency->currency_icon;
             $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
             $transaction_id = $payment_id;
             $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Instamojo', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0,$billing_address_id, $shipping_address_id);
@@ -1212,11 +1186,7 @@ class PaymentController extends Controller
 
             $order_details.='Product: '.$product->name. '<br>';
             $order_details.='Quantity: '. $cartProduct->qty .'<br>';
-<<<<<<< HEAD
             $order_details.='Price: '.$currency->currency_icon . $cartProduct->qty * $price .'<br>';
-=======
-            $order_details.='Price: '.$setting->currency->currency_icon . $cartProduct->qty * $price .'<br>';
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
         }
 
@@ -1264,11 +1234,7 @@ class PaymentController extends Controller
         $subject=$template->subject;
         $message=$template->description;
         $message = str_replace('{{user_name}}',$user->name,$message);
-<<<<<<< HEAD
         $message = str_replace('{{total_amount}}',$currency->currency_icon.$total_price,$message);
-=======
-        $message = str_replace('{{total_amount}}',$setting->currency->currency_icon.$total_price,$message);
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
         $message = str_replace('{{payment_method}}',$payment_method,$message);
         $message = str_replace('{{payment_status}}',$payment_status,$message);
         $message = str_replace('{{order_status}}','Pending',$message);
@@ -1422,16 +1388,6 @@ class PaymentController extends Controller
                 $shipping = $total['shipping'];
 
                 $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-<<<<<<< HEAD
-=======
-                $setting = Setting::first();
-
-                $amount_real_currency = $total_price;
-                $amount_usd = round($total_price / $setting->currency->currency_rate,2);
-                $currency_rate = $setting->currency->currency_rate;
-                $currency_icon = $setting->currency->currency_icon;
-                $currency_name = $setting->currency->currency_name;
->>>>>>> 63b5386d627cfca191299402fec270a766a23dad
 
                 $transaction_id = $paymentId;
                 $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Myfatoorah', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0,$billing_address_id, $shipping_address_id);

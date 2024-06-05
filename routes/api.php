@@ -248,7 +248,6 @@ Route::group([], function () {
             Route::get('/', [CheckoutController::class, 'checkout'])->name('checkout');
 
             Route::post('/cash-on-delivery', [PaymentController::class, 'cashOnDelivery'])->name('cash-on-delivery');
-            Route::post('/pay-with-stripe', [PaymentController::class, 'payWithStripe'])->name('pay-with-stripe');
 
             Route::post('/pay-with-bank', [PaymentController::class, 'payWithBank'])->name('pay-with-bank');
         });
@@ -648,14 +647,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::put('city-status/{id}',[CityController::class,'changeStatus'])->name('city-status');
 
     Route::get('payment-method',[PaymentMethodController::class,'index'])->name('payment-method');
-    Route::put('update-paypal',[PaymentMethodController::class,'updatePaypal'])->name('update-paypal');
-    Route::put('update-stripe',[PaymentMethodController::class,'updateStripe'])->name('update-stripe');
-    Route::put('update-razorpay',[PaymentMethodController::class,'updateRazorpay'])->name('update-razorpay');
     Route::put('update-bank',[PaymentMethodController::class,'updateBank'])->name('update-bank');
-    Route::put('update-mollie',[PaymentMethodController::class,'updateMollie'])->name('update-mollie');
-    Route::put('update-paystack',[PaymentMethodController::class,'updatePayStack'])->name('update-paystack');
-    Route::put('update-flutterwave',[PaymentMethodController::class,'updateflutterwave'])->name('update-flutterwave');
-    Route::put('update-instamojo',[PaymentMethodController::class,'updateInstamojo'])->name('update-instamojo');
     Route::put('update-cash-on-delivery',[PaymentMethodController::class,'updateCashOnDelivery'])->name('update-cash-on-delivery');
 
     Route::resource('mega-menu-category', MegaMenuController::class);
