@@ -594,6 +594,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('update-stripe', [PaymentMethodController::class, 'updateStripe'])->name('update-stripe');
         Route::put('update-razorpay', [PaymentMethodController::class, 'updateRazorpay'])->name('update-razorpay');
         Route::put('update-bank', [PaymentMethodController::class, 'updateBank'])->name('update-bank');
+        Route::put('update-mobile', [PaymentMethodController::class, 'updateMobile'])->name('update-mobile');
         Route::put('update-mollie', [PaymentMethodController::class, 'updateMollie'])->name('update-mollie');
         Route::put('update-paystack', [PaymentMethodController::class, 'updatePayStack'])->name('update-paystack');
         Route::put('update-flutterwave', [PaymentMethodController::class, 'updateflutterwave'])->name('update-flutterwave');

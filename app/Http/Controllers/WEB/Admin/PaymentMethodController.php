@@ -13,6 +13,7 @@ use App\Models\PaystackAndMollie;
 use App\Models\InstamojoPayment;
 use App\Models\CurrencyCountry;
 use App\Models\Currency;
+use App\Models\MobilePayment;
 use App\Models\MultiCurrency;
 use App\Models\Setting;
 use App\Models\PaymongoPayment;
@@ -35,8 +36,10 @@ class PaymentMethodController extends Controller
         $setting = Setting::first();
 
         $currencies = MultiCurrency::where('status',1)->orderBy('currency_name','asc')->get();
-
-        return view('admin.payment_method', compact('bank','currencies','setting','sslcommerz'));
+        $bkash = MobilePayment::where('name','bkash')->first();
+        $rocket = MobilePayment::where('name','rocket')->first();
+        $nagad = MobilePayment::where('name','nagad')->first();
+        return view('admin.payment_method', compact('bank','currencies','setting','sslcommerz', 'bkash','rocket','nagad'));
 
     }
 
@@ -163,6 +166,35 @@ class PaymentMethodController extends Controller
         return redirect()->back()->with($notification);
 
     }
+
+    public function updateMobile(Request $request){
+        $rules = [
+            'account_info' => 'required',
+            'instruction' => 'required'
+        ];
+        $customMessages = [
+            'account_info.required' => trans('admin_validation.Account information is required'),
+            'instruction.required' => "Instruction is required"
+        ];
+        $this->validate($request, $rules,$customMessages);
+
+
+        $mobile = MobilePayment::where('name',$request->name)->first();
+        if(!$mobile){
+            $mobile = new MobilePayment();
+            $mobile->name = $request->name;
+        }
+        $mobile->account_info = $request->account_info;
+        $mobile->instruction = $request->instruction;
+        $mobile->status = $request->status ? 1 : 0;
+        $mobile->save();
+
+        $notification=trans('admin_validation.Update Successfully');
+        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        return redirect()->back()->with($notification);
+
+    }
+
 
     public function updateMollie(Request $request){
         $rules = [
