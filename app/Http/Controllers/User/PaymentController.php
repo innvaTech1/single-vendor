@@ -51,6 +51,8 @@ use App\Models\TwilioSms;
 use App\Models\BiztechSms;
 use App\Models\MyfatoorahPayment;
 use App\Models\Setting;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use MyFatoorah\Library\PaymentMyfatoorahApiV2;
 
 class PaymentController extends Controller
@@ -128,8 +130,14 @@ class PaymentController extends Controller
 
         $user = Auth::guard('api')->user();
 
+
+        DB::beginTransaction();
+        // try {
         $total = $this->calculateCartTotal($user, $request->coupon, $request->shipping_method_id);
 
+        if ($total instanceof JsonResponse) {
+            return $total; // Return the JSON response directly
+        }
         $total_price = $total['total_price'];
         $coupon_price = $total['coupon_price'];
         $shipping_fee = $total['shipping_fee'];
@@ -141,16 +149,21 @@ class PaymentController extends Controller
         $transaction_id = $request->tnx_info;
         $order_result = $this->orderStore($user, $total_price, $totalProduct, $request->type, $transaction_id, 0, $shipping, $shipping_fee, $coupon_price, 1, $request->billing_address_id, $request->shipping_address_id);
 
-        $this->sendOrderSuccessMail($user, $total_price, $request->type, 0, $order_result['order'], $order_result['order_details']);
+        // $this->sendOrderSuccessMail($user, $total_price, $request->type, 0, $order_result['order'], $order_result['order_details']);
 
-        $this->sendOrderSuccessSms($user, $order_result['order']);
+        // $this->sendOrderSuccessSms($user, $order_result['order']);
 
         $notification = trans('user_validation.Order submited successfully. please wait for admin approval');
 
         $order = $order_result['order'];
         $order_id = $order->order_id;
 
+        DB::commit();
         return response()->json(['message' => $notification, 'order_id' => $order_id], 200);
+        // } catch (Exception $e) {
+        DB::rollBack();
+        // return response()->json(['message' => $e->getMessage()], 403);
+        // }
     }
 
     public function sslcommerzWebView(Request $request)
@@ -291,9 +304,9 @@ class PaymentController extends Controller
             $transaction_id = $payment_id;
             $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Instamojo', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0, $billing_address_id, $shipping_address_id);
 
-            $this->sendOrderSuccessMail($user, $total_price, 'Instamojo', 1, $order_result['order'], $order_result['order_details']);
+            // $this->sendOrderSuccessMail($user, $total_price, 'Instamojo', 1, $order_result['order'], $order_result['order_details']);
 
-            $this->sendOrderSuccessSms($user, $order_result['order']);
+            // $this->sendOrderSuccessSms($user, $order_result['order']);
 
             $frontend_success_url = Session::get('frontend_success_url');
             $request_from = Session::get('request_from');
@@ -552,11 +565,11 @@ class PaymentController extends Controller
         $currency = MultiCurrency::where('is_default', 'Yes')->first();
         MailHelper::setMailConfig();
 
-        $template = EmailTemplate::where('id', 6)->first();
+        $template = EmailTemplate::where('name', 'Order Successfully')->first();
         $subject = $template->subject;
         $message = $template->description;
         $message = str_replace('{{user_name}}', $user->name, $message);
-        $message = str_replace('{{total_amount}}', $currency->currency_icon . $total_price, $message);
+        $message = str_replace('{{total_amount}}', $currency?->currency_icon . $total_price, $message);
         $message = str_replace('{{payment_method}}', $payment_method, $message);
         $message = str_replace('{{payment_status}}', $payment_status, $message);
         $message = str_replace('{{order_status}}', 'Pending', $message);
