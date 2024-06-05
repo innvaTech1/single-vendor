@@ -151,6 +151,9 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
         $bank = BankPayment::first();
+        if(!$bank){
+            $bank = new BankPayment();
+        }
         $bank->account_info = $request->account_info;
         $bank->status = $request->status ? 1 : 0;
         $bank->save();
