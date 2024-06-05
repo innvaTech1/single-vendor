@@ -28,8 +28,6 @@ class AddressCotroller extends Controller
     }
 
     public function store(Request $request){
-
-        return $request->all();
         $rules = [
             'name'=>'required',
             'phone'=>'required',
