@@ -79,11 +79,7 @@
         $("#deleteForm").attr("action",'{{ url("admin/delivery-man/") }}'+"/"+id)
     }
     function manageDeliveryManStatus(id){
-        var isDemo = "{{ env('APP_VERSION') }}"
-        if(isDemo == 0){
-            toastr.error('This Is Demo Version. You Can Not Change Anything');
-            return;
-        }
+        
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },

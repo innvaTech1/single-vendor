@@ -85,11 +85,6 @@
         $("#deleteForm").attr("action",'{{ url("admin/currency/") }}'+"/"+id)
     }
     function changeProductCategoryStatus(id){
-        var isDemo = "{{ env('APP_MODE') }}"
-        if(isDemo == 'DEMO'){
-            toastr.error('This Is Demo Version. You Can Not Change Anything');
-            return;
-        }
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },
