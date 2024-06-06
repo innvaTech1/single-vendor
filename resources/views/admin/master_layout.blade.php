@@ -59,13 +59,6 @@
 
       @yield('admin-content')
 
-
-
-      <footer class="main-footer">
-        <div class="footer-left">
-          Current Version : {{ $setting->current_version }}
-        </div>
-      </footer>
     </div>
   </div>
 

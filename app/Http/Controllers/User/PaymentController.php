@@ -99,9 +99,9 @@ class PaymentController extends Controller
         $transaction_id = $request->razorpay_payment_id;
         $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Cash on Delivery', 'cash_on_delivery', 0, $shipping, $shipping_fee, $coupon_price, 1, $request->billing_address_id, $request->shipping_address_id);
 
-        $this->sendOrderSuccessMail($user, $total_price, 'Cash on Delivery', 0, $order_result['order'], $order_result['order_details']);
+        // $this->sendOrderSuccessMail($user, $total_price, 'Cash on Delivery', 0, $order_result['order'], $order_result['order_details']);
 
-        $this->sendOrderSuccessSms($user, $order_result['order']);
+        // $this->sendOrderSuccessSms($user, $order_result['order']);
 
         $notification = trans('user_validation.Order submited successfully. please wait for admin approval');
 
