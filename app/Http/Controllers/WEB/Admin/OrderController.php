@@ -127,19 +127,9 @@ class OrderController extends Controller
             $order->save();
         }
 
-        if($request->delivery_man_id == 0){
-            $order->delivery_man_id = 0;
-            $order->order_request = 0;
-            $order->save();
-        }else if($request->delivery_man_id > 0){
-            $order->delivery_man_id = $request->delivery_man_id;
-            $order->order_request = 0;
-            $order->order_req_date = date('Y-m-d');
-            $order->save();
-        }
-
-        
-
+        $order->order_request = 0;
+        $order->order_req_date = date('Y-m-d');
+    
         $notification = trans('admin_validation.Order Status Updated successfully');
         $notification = array('messege'=>$notification,'alert-type'=>'success');
         return redirect()->back()->with($notification);
