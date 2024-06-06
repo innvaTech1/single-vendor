@@ -41,11 +41,7 @@
         scrollToBottomFunc()
         $("#chat-form").on("submit", function(event){
             event.preventDefault()
-            var isDemo = "{{ env('APP_VERSION') }}"
-            if(isDemo == 0){
-                toastr.error('This Is Demo Version. You Can Not Change Anything');
-                return;
-            }
+            
 
             let customer_message = $("#customer_message").val();
             let customer_id = $("#customer_id").val();

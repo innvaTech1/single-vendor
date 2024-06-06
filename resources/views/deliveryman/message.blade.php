@@ -60,11 +60,7 @@
             
             $("#chat-form").on("submit", function(event){
                 event.preventDefault();
-                var isDemo = "{{ env('APP_VERSION') }}"
-                if(isDemo == 0){
-                    toastr.error('This Is Demo Version. You Can Not Change Anything');
-                    return;
-                }
+                
                 let message = $("#message").val();
                 let order_id = $("#order_id").val();
                 $("#message").val('');

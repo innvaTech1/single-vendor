@@ -1128,11 +1128,6 @@
                 $("#modalSubscribeForm").on('submit', function(e){
                     e.preventDefault();
 
-                    var isDemo = "{{ env('APP_VERSION') }}"
-                    if(isDemo == 0){
-                        toastr.error('This Is Demo Version. You Can Not Change Anything');
-                        return;
-                    }
 
                     $("#modal-subscribe-spinner").removeClass('d-none')
                     $("#modalSubscribeBtn").addClass('after_subscribe')
@@ -1188,11 +1183,7 @@
 
                 $("#subscriberForm").on('submit', function(e){
                     e.preventDefault();
-                    var isDemo = "{{ env('APP_VERSION') }}"
-                    if(isDemo == 0){
-                        toastr.error('This Is Demo Version. You Can Not Change Anything');
-                        return;
-                    }
+                    
 
                     $("#subscribe-spinner").removeClass('d-none')
                     $("#SubscribeBtn").addClass('after_subscribe')
@@ -1240,11 +1231,6 @@
 
         function addToWishlist(id){
 
-            var isDemo = "{{ env('APP_VERSION') }}"
-            if(isDemo == 0){
-                toastr.error('This Is Demo Version. You Can Not Change Anything');
-                return;
-            }
 
             let isAuth = "{{ $isAuth }}";
             if(!isAuth){

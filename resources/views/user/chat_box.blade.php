@@ -44,11 +44,6 @@
         scrollToBottomFunc()
         $("#customerToSellerMsgForm").on("submit", function(event){
             event.preventDefault()
-            var isDemo = "{{ env('APP_VERSION') }}"
-            if(isDemo == 0){
-                toastr.error('This Is Demo Version. You Can Not Change Anything');
-                return;
-            }
 
             let seller_msg = $("#seller_message").val();
             let seller_id = $("#seller_id").val();
