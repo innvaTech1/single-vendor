@@ -262,9 +262,7 @@ Route::group(['middleware' => ['XSS']], function () {
     // Route::post('/new/address/store', [AddressCotroller::class, 'store']);
 
 
-    Route::post('store/address/', function () {
-        return response()->json(['message' => 'good']);
-    });
+    Route::post('store/address/', [AddressCotroller::class, 'store']);
 
     Route::group(['as' => 'seller.', 'prefix' => 'seller', 'middleware' => ['checkseller']], function () {
         Route::get('dashboard', [SellerDashboardController::class, 'index'])->name('dashboard');
