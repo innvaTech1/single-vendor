@@ -215,10 +215,10 @@ Route::group([], function () {
         Route::post('update-password', [UserProfileController::class, 'updatePassword'])->name('update-password');
 
 
-        // Route::post('/new/address/store', [AddressCotroller::class,'store']);
-        Route::post('/new/address/store', function(){
-            return 'hello';
-        });
+
+        // Route::post('/new/address/store', function(){
+        //     return 'hello';
+        // });
         Route::resource('address', AddressCotroller::class);
 
         Route::get('compare-product', [UserProfileController::class, 'compareProducts'])->name('compare-product');
@@ -256,6 +256,7 @@ Route::group([], function () {
             Route::post('/pay-with-bank', [PaymentController::class, 'payWithBank'])->name('pay-with-bank');
         });
 
+        Route::post('/new/address/store', [AddressCotroller::class,'store']);
         Route::get('state-by-country', [UserProfileController::class, 'stateByCountry'])->name('state-by-country');
         Route::get('city-by-state/{id}', [UserProfileController::class, 'cityByState'])->name('city-by-state');
     });
