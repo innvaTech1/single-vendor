@@ -170,7 +170,6 @@ class UserProfileController extends Controller
             'name'=>'required',
             'email'=>'required|unique:users,email,'.$user->id,
             'phone'=>'required',
-            'country'=>'required',
             'address'=>'required',
         ];
         $customMessages = [
@@ -178,14 +177,12 @@ class UserProfileController extends Controller
             'email.required' => trans('user_validation.Email is required'),
             'email.unique' => trans('user_validation.Email already exist'),
             'phone.required' => trans('user_validation.Phone is required'),
-            'country.required' => trans('user_validation.Country is required'),
             'address.required' => trans('user_validation.Address is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $user->name = $request->name;
         $user->phone = $request->phone;
-        $user->country_id = $request->country;
         $user->state_id = $request->state;
         $user->city_id = $request->city;
         $user->address = $request->address;

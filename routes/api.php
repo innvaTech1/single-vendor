@@ -127,9 +127,6 @@ Route::group([
 
 
 Route::group(['middleware' => ['XSS']], function () {
-
-
-
     Route::get('/website-setup', [HomeController::class, 'websiteSetup'])->name('website-setup');
     Route::get('/subcategory-by-category/{id}', [HomeController::class, 'subCategoriesByCategory'])->name('subcategory-by-category');
     Route::get('/childcategory-by-subcategory/{id}', [HomeController::class, 'childCategoriesBySubCategory'])->name('childcategory-by-subcategory');
