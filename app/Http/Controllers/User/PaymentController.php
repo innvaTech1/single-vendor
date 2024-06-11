@@ -61,10 +61,14 @@ class PaymentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api')->except('molliePaymentSuccess', 'instamojoResponse', 'sslcommerz_success', 'sslcommerz_failed', 'myfatoorah_webview_callback');
+        $this->middleware('auth:api')->except('sslcommerz_success', 'sslcommerz_failed', 'myfatoorah_webview_callback', 'placeOrder');
     }
 
 
+    public function placeOrder(Request $request)
+    {
+        $total = $this->calculateCartTotal(null, $request->coupon, $request->shipping_method_id);
+    }
     public function cashOnDelivery(Request $request)
     {
         $currency = MultiCurrency::where('is_default', 'Yes')->first();
@@ -96,7 +100,6 @@ class PaymentController extends Controller
 
         $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
 
-        $transaction_id = $request->razorpay_payment_id;
         $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Cash on Delivery', 'cash_on_delivery', 0, $shipping, $shipping_fee, $coupon_price, 1, $request->billing_address_id, $request->shipping_address_id);
 
         // $this->sendOrderSuccessMail($user, $total_price, 'Cash on Delivery', 0, $order_result['order'], $order_result['order_details']);
@@ -346,19 +349,24 @@ class PaymentController extends Controller
 
 
 
-    public function calculateCartTotal($user, $request_coupon, $request_shipping_method_id)
+    public function calculateCartTotal($user, $request_coupon, $request_shipping_method_id, $cart = [])
     {
         $total_price = 0;
         $coupon_price = 0;
         $shipping_fee = 0;
         $productWeight = 0;
 
-        $cartProducts = ShoppingCart::with('product', 'variants.variantItem')->where('user_id', $user->id)->select('id', 'product_id', 'qty')->get();
-        if ($cartProducts->count() == 0) {
+        if ($user)
+            $cartProducts = ShoppingCart::with('product', 'variants.variantItem')->where('user_id', $user->id)->select('id', 'product_id', 'qty')->get();
+        else
+            $cartProducts = $cart;
+
+        if ((gettype($cartProducts) == 'array'&& count($cartProducts)  == 0) ||( $cartProducts->count() == 0)) {
             $notification = trans('user_validation.Your shopping cart is empty');
             return response()->json(['message' => $notification], 403);
         }
         foreach ($cartProducts as $index => $cartProduct) {
+            dd($cartProduct);
             $variantPrice = 0;
             if ($cartProduct->variants) {
                 foreach ($cartProduct->variants as $item_index => $var_item) {
@@ -703,94 +711,5 @@ class PaymentController extends Controller
             'CustomerReference'  => $orderId,
             'SourceInfo'         => 'Laravel ' . app()::VERSION . ' - MyFatoorah Package ' . MYFATOORAH_LARAVEL_PACKAGE_VERSION
         ];
-    }
-
-
-    public function myfatoorah_webview_callback()
-    {
-        try {
-            $paymentId = request('paymentId');
-            $data      = $this->mfObj->getPaymentStatus($paymentId, 'PaymentId');
-
-            if ($data->InvoiceStatus == 'Paid') {
-                $user = Session::get('user');
-                $coupon = Session::get('coupon');
-                $shipping_address_id = Session::get('shipping_address_id');
-                $billing_address_id = Session::get('billing_address_id');
-                $shipping_method_id = Session::get('shipping_method_id');
-                $payment_id = Session::get('payment_id');
-
-                $total = $this->calculateCartTotal($user, $coupon, $shipping_method_id);
-
-                $total_price = $total['total_price'];
-                $coupon_price = $total['coupon_price'];
-                $shipping_fee = $total['shipping_fee'];
-                $productWeight = $total['productWeight'];
-                $shipping = $total['shipping'];
-
-                $totalProduct = ShoppingCart::with('variants')->where('user_id', $user->id)->sum('qty');
-
-                $transaction_id = $paymentId;
-                $order_result = $this->orderStore($user, $total_price, $totalProduct, 'Myfatoorah', $transaction_id, 1, $shipping, $shipping_fee, $coupon_price, 0, $billing_address_id, $shipping_address_id);
-
-                $this->sendOrderSuccessMail($user, $total_price, 'Myfatoorah', 1, $order_result['order'], $order_result['order_details']);
-
-                $this->sendOrderSuccessSms($user, $order_result['order']);
-
-                $frontend_success_url = Session::get('frontend_success_url');
-                $request_from = Session::get('request_from');
-
-                if ($request_from == 'react_web') {
-                    $order = $order_result['order'];
-                    $success_url = $frontend_success_url;
-                    $success_url = $success_url . "/" . $order->order_id;
-                    return redirect($success_url);
-                } else {
-                    return redirect()->route('user.checkout.order-success-url-for-mobile-app');
-                }
-            } else if ($data->InvoiceStatus == 'Failed') {
-
-                $frontend_faild_url = Session::get('frontend_faild_url');
-                $request_from = Session::get('request_from');
-                if ($request_from == 'react_web') {
-                    return redirect($frontend_faild_url);
-                } else {
-                    return redirect()->route('user.checkout.order-fail-url-for-mobile-app');
-                }
-            } else if ($data->InvoiceStatus == 'Expired') {
-                $frontend_faild_url = Session::get('frontend_faild_url');
-                $request_from = Session::get('request_from');
-                if ($request_from == 'react_web') {
-                    return redirect($frontend_faild_url);
-                } else {
-                    return redirect()->route('user.checkout.order-fail-url-for-mobile-app');
-                }
-            }
-
-            $frontend_faild_url = Session::get('frontend_faild_url');
-            $request_from = Session::get('request_from');
-            if ($request_from == 'react_web') {
-                return redirect($frontend_faild_url);
-            } else {
-                return redirect()->route('user.checkout.order-fail-url-for-mobile-app');
-            }
-        } catch (\Exception $e) {
-
-            $frontend_faild_url = Session::get('frontend_faild_url');
-            $request_from = Session::get('request_from');
-            if ($request_from == 'react_web') {
-                return redirect($frontend_faild_url);
-            } else {
-                return redirect()->route('user.checkout.order-fail-url-for-mobile-app');
-            }
-        }
-
-        $frontend_faild_url = Session::get('frontend_faild_url');
-        $request_from = Session::get('request_from');
-        if ($request_from == 'react_web') {
-            return redirect($frontend_faild_url);
-        } else {
-            return redirect()->route('user.checkout.order-fail-url-for-mobile-app');
-        }
     }
 }

@@ -46,9 +46,9 @@ class AddressCotroller extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $user = Auth::guard('api')->user();
-        $isExist = Address::where(['user_id' => $user->id])->count();
+        $isExist = $user ? Address::where(['user_id' => $user?->id])->count() : 0;
         $address = new Address();
-        $address->user_id = $user->id;
+        $address->user_id = $user?->id;
         $address->name = $request->name;
         $address->email = $request->email;
         $address->phone = $request->phone;

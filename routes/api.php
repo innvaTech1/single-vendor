@@ -253,6 +253,7 @@ Route::group(['middleware' => ['XSS']], function () {
         });
 
 
+        Route::post('place/order',[PaymentController::class,'placeOrder']);
         Route::get('state-by-country', [UserProfileController::class, 'stateByCountry'])->name('state-by-country');
         Route::get('city-by-state/{id}', [UserProfileController::class, 'cityByState'])->name('city-by-state');
     });
