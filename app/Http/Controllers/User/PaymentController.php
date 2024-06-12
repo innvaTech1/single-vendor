@@ -70,12 +70,26 @@ class PaymentController extends Controller
 
 
         $rules = [
+            'district' => 'required',
+            'thana' => 'required',
+            'address' => 'required',
+            'name' => 'required',
+            'phone' => 'required',
             'shipping_method_id' => 'required',
         ];
 
         $customMessages = [
             'shipping_method_id.required' => 'Shipping method is required',
+            'district.required' => 'District is required',
+            'thana.required' => 'Thana is required',
+            'address.required' => 'Address is required',
+            'name.required' => 'Name is required',
+            'phone.required' => 'Phone is required',
+
         ];
+
+        $this->validate($request, $rules, $customMessages);
+
         $address_id = $this->storeAddress($request);
         // $address_id = 1;
 
@@ -88,7 +102,7 @@ class PaymentController extends Controller
         $order_result = $this->orderStore(null, $request->total, $totalProduct, 'Cash on Delivery', 'cash_on_delivery', 0, $shipping, $request->shippingFee, 0, 1, $address_id, $address_id, collect($request->products));
 
         Address::where('id', $address_id)->delete();
-        
+
         return response()->json(['message' => 'Order submitted successfully. please wait for admin approval', 'order_id' => $order_result['order']->order_id], 200);
     }
 
@@ -580,7 +594,7 @@ class PaymentController extends Controller
 
             // store prouct variant
 
-            
+
             if (isset($cartProduct->variants)) {
                 foreach ($cartProduct->variants as $index => $variant) {
                     $item = ProductVariantItem::find($variant->variant_item_id);
