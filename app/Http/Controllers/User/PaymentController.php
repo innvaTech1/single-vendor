@@ -67,6 +67,14 @@ class PaymentController extends Controller
 
     public function placeOrder(Request $request)
     {
+        $rules = [
+            'shipping_method_id' => 'required',
+        ];
+
+        $customMessages = [
+            'shipping_method_id.required' => 'Shipping method is required',
+        ];
+        
         $total = $this->calculateCartTotal(null, $request->coupon, $request->shipping_method_id);
     }
     public function cashOnDelivery(Request $request)

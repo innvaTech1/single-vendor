@@ -33,7 +33,7 @@ class CheckoutController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->except('shippingMethods');
     }
 
     public function checkout(Request $request)
@@ -79,5 +79,14 @@ class CheckoutController extends Controller
             'rocket' => $rocket,
             'nagad' => $nagad,
         ], 200);
+    }
+
+    public function shippingMethods()
+    {
+        $shippings = Shipping::all();
+
+        return response()->json([
+            'shippings' => $shippings
+        ]);
     }
 }
