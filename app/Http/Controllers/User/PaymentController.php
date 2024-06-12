@@ -522,6 +522,8 @@ class PaymentController extends Controller
             return response()->json(['message' => $notification], 403);
         }
 
+        return $cartProducts;
+
         $order = new Order();
         $orderId = substr(rand(0, time()), 0, 10);
         $order->order_id = $orderId;
