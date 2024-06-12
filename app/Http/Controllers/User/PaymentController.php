@@ -74,7 +74,7 @@ class PaymentController extends Controller
         $customMessages = [
             'shipping_method_id.required' => 'Shipping method is required',
         ];
-        
+
         $total = $this->calculateCartTotal(null, $request->coupon, $request->shipping_method_id);
     }
     public function cashOnDelivery(Request $request)
@@ -369,12 +369,11 @@ class PaymentController extends Controller
         else
             $cartProducts = $cart;
 
-        if ((gettype($cartProducts) == 'array'&& count($cartProducts)  == 0) ||( $cartProducts->count() == 0)) {
+        if ((gettype($cartProducts) == 'array' && count($cartProducts)  == 0) || ($cartProducts->count() == 0)) {
             $notification = trans('user_validation.Your shopping cart is empty');
             return response()->json(['message' => $notification], 403);
         }
         foreach ($cartProducts as $index => $cartProduct) {
-            dd($cartProduct);
             $variantPrice = 0;
             if ($cartProduct->variants) {
                 foreach ($cartProduct->variants as $item_index => $var_item) {
@@ -407,7 +406,45 @@ class PaymentController extends Controller
             $total_price += $price;
         }
 
-        // calculate coupon coast
+        if ($request_coupon) {
+            $this->couponCalc($request_coupon);
+        }
+
+        $shipping = Shipping::find($request_shipping_method_id);
+        if (!$shipping) {
+            return response()->json(['message' => trans('user_validation.Shipping method not found')], 403);
+        }
+
+        $shipping_fee = $this->shippingCal($shipping);
+
+        $total_price = ($total_price - $coupon_price) + $shipping_fee;
+        $total_price = str_replace(array('\'', '"', ',', ';', '<', '>'), '', $total_price);
+        $total_price = number_format($total_price, 2, '.', '');
+
+        $arr = [];
+        $arr['total_price'] = $total_price;
+        $arr['coupon_price'] = $coupon_price;
+        $arr['shipping_fee'] = $shipping_fee;
+        $arr['productWeight'] = $productWeight;
+        $arr['shipping'] = $shipping;
+
+        return $arr;
+    }
+
+    public function shippingCal($shipping)
+    {
+        if ($shipping->shipping_fee == 0) {
+            $shipping_fee = 0;
+        } else {
+            $shipping_fee = $shipping->shipping_fee;
+        }
+
+        return $shipping_fee;
+    }
+
+    public function couponCalc($request_coupon)
+    {
+        // calculate coupon cost
         if ($request_coupon) {
             $coupon = Coupon::where(['code' => $request_coupon, 'status' => 1])->first();
             if ($coupon) {
@@ -429,32 +466,7 @@ class PaymentController extends Controller
                 }
             }
         }
-
-        $shipping = Shipping::find($request_shipping_method_id);
-        if (!$shipping) {
-            return response()->json(['message' => trans('user_validation.Shipping method not found')], 403);
-        }
-
-        if ($shipping->shipping_fee == 0) {
-            $shipping_fee = 0;
-        } else {
-            $shipping_fee = $shipping->shipping_fee;
-        }
-
-        $total_price = ($total_price - $coupon_price) + $shipping_fee;
-        $total_price = str_replace(array('\'', '"', ',', ';', '<', '>'), '', $total_price);
-        $total_price = number_format($total_price, 2, '.', '');
-
-        $arr = [];
-        $arr['total_price'] = $total_price;
-        $arr['coupon_price'] = $coupon_price;
-        $arr['shipping_fee'] = $shipping_fee;
-        $arr['productWeight'] = $productWeight;
-        $arr['shipping'] = $shipping;
-
-        return $arr;
     }
-
     public function orderStore($user, $total_price, $totalProduct, $payment_method, $transaction_id, $paymetn_status, $shipping, $shipping_fee, $coupon_price, $cash_on_delivery, $billing_address_id, $shipping_address_id)
     {
         $cartProducts = ShoppingCart::with('product', 'variants.variantItem')->where('user_id', $user->id)->select('id', 'product_id', 'qty')->get();
