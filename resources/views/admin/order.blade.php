@@ -38,14 +38,14 @@
                                 @foreach ($orders as $index => $order)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td>{{ $order->user->name }}</td>
+                                        <td>{{ $order->user?->name ? $order->user?->name : $order->orderAddress?->shipping_name }} </td>
                                         <td>{{ $order->order_id }}</td>
                                         <td>{{ $order->created_at->format('d F, Y') }}</td>
                                         <td>{{ $order->product_qty }}</td>
                                         <td>{{ $setting->currency_icon }}{{ round($order->total_amount) }}</td>
                                         <td>
                                             @if ($order->order_status == 1)
-                                            <span class="badge badge-success">{{__('admin.Pregress')}} </span>
+                                            <span class="badge badge-success">{{__('admin.Progress')}} </span>
                                             @elseif ($order->order_status == 2)
                                             <span class="badge badge-success">{{__('admin.Delivered')}} </span>
                                             @elseif ($order->order_status == 3)
