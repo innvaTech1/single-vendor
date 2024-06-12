@@ -543,7 +543,6 @@ class PaymentController extends Controller
                 $cartProduct = (object)$cartProduct;
 
             $variantPrice = 0;
-            return isset($cartProduct->variants);
 
             if ($user && $cartProduct->variants) {
                 foreach ($cartProduct->variants as $item_index => $var_item) {
