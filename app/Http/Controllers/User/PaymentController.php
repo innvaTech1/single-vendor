@@ -545,7 +545,7 @@ class PaymentController extends Controller
                 $cartProduct = (object)$cartProduct;
 
             $variantPrice = 0;
-
+            return isset($cartProduct->variants);
 
             if ($user && $cartProduct->variants) {
                 foreach ($cartProduct->variants as $item_index => $var_item) {
@@ -596,7 +596,7 @@ class PaymentController extends Controller
 
             // store prouct variant
 
-            return isset($cartProduct->variants);
+
             if ($user && isset($cartProduct->variants)) {
                 foreach ($cartProduct->variants as $index => $variant) {
                     $item = ProductVariantItem::find($variant->variant_item_id);
