@@ -67,6 +67,8 @@ class PaymentController extends Controller
 
     public function placeOrder(Request $request)
     {
+
+
         $rules = [
             'shipping_method_id' => 'required',
         ];
@@ -74,9 +76,35 @@ class PaymentController extends Controller
         $customMessages = [
             'shipping_method_id.required' => 'Shipping method is required',
         ];
+        $address_id = $this->storeAddress($request);
+        // $address_id = 1;
 
-        $total = $this->calculateCartTotal(null, $request->coupon, $request->shipping_method_id);
+        $totalProduct = collect($request->products)->map(function ($item) {
+            return $item['qty'] ?? 0;
+        })->sum();
+
+        $shipping = Shipping::find($request->shipping_method_id);
+
+        $order_result = $this->orderStore(null, $request->total, $totalProduct, 'Cash on Delivery', 'cash_on_delivery', 0, $shipping, $request->shippingFee, 0, 1, $address_id, $address_id, collect($request->products));
+
+        Address::where('id', $address_id)->delete();
+        
+        return response()->json(['message' => 'Order submitted successfully. please wait for admin approval', 'order_id' => $order_result['order']->order_id], 200);
     }
+
+    public function storeAddress(Request $request)
+    {
+        $address = new Address();
+        $address->name = $request->name;
+        $address->phone = $request->phone;
+        $address->address = $request->address;
+        $address->state_id = $request->district;
+        $address->city_id = $request->thana;
+        $address->type = 'home';
+        $address->save();
+        return $address->id;
+    }
+
     public function cashOnDelivery(Request $request)
     {
         $currency = MultiCurrency::where('is_default', 'Yes')->first();
@@ -467,9 +495,12 @@ class PaymentController extends Controller
             }
         }
     }
-    public function orderStore($user, $total_price, $totalProduct, $payment_method, $transaction_id, $paymetn_status, $shipping, $shipping_fee, $coupon_price, $cash_on_delivery, $billing_address_id, $shipping_address_id)
+    public function orderStore($user, $total_price, $totalProduct, $payment_method, $transaction_id, $paymetn_status, $shipping, $shipping_fee, $coupon_price, $cash_on_delivery, $billing_address_id, $shipping_address_id, $cart = [])
     {
-        $cartProducts = ShoppingCart::with('product', 'variants.variantItem')->where('user_id', $user->id)->select('id', 'product_id', 'qty')->get();
+        if ($user)
+            $cartProducts = ShoppingCart::with('product', 'variants.variantItem')->where('user_id', $user?->id)->select('id', 'product_id', 'qty')->get();
+        else
+            $cartProducts = $cart;
         if ($cartProducts->count() == 0) {
             $notification = trans('user_validation.Your shopping cart is empty');
             return response()->json(['message' => $notification], 403);
@@ -478,7 +509,7 @@ class PaymentController extends Controller
         $order = new Order();
         $orderId = substr(rand(0, time()), 0, 10);
         $order->order_id = $orderId;
-        $order->user_id = $user->id;
+        $order->user_id = $user ? $user->id : null;
         $order->total_amount = $total_price;
         $order->product_qty = $totalProduct;
         $order->payment_method = $payment_method;
@@ -494,11 +525,22 @@ class PaymentController extends Controller
         $order_details = '';
         $currency = MultiCurrency::where('is_default', 'Yes')->first();
         foreach ($cartProducts as $key => $cartProduct) {
+            if (is_array($cartProduct))
+                $cartProduct = (object)$cartProduct;
 
             $variantPrice = 0;
-            if ($cartProduct->variants) {
+
+
+            if ($user && $cartProduct->variants) {
                 foreach ($cartProduct->variants as $item_index => $var_item) {
                     $item = ProductVariantItem::find($var_item->variant_item_id);
+                    if ($item) {
+                        $variantPrice += $item->price;
+                    }
+                }
+            } else if (isset($cartProduct->variants) && $cartProduct->variants) {
+                foreach ($cartProduct->variants as $var_item) {
+                    $item = ProductVariantItem::find($var_item);
                     if ($item) {
                         $variantPrice += $item->price;
                     }
@@ -521,11 +563,11 @@ class PaymentController extends Controller
                 }
             }
 
+
             // store ordre product
             $orderProduct = new OrderProduct();
             $orderProduct->order_id = $order->id;
             $orderProduct->product_id = $cartProduct->product_id;
-            $orderProduct->seller_id = $product->vendor_id;
             $orderProduct->product_name = $product->name;
             $orderProduct->unit_price = $price;
             $orderProduct->qty = $cartProduct->qty;
@@ -538,15 +580,17 @@ class PaymentController extends Controller
 
             // store prouct variant
 
-            // return $cartProduct->variants;
-            foreach ($cartProduct->variants as $index => $variant) {
-                $item = ProductVariantItem::find($variant->variant_item_id);
-                $productVariant = new OrderProductVariant();
-                $productVariant->order_product_id = $orderProduct->id;
-                $productVariant->product_id = $cartProduct->product_id;
-                $productVariant->variant_name = $item->product_variant_name;
-                $productVariant->variant_value = $item->name;
-                $productVariant->save();
+            
+            if (isset($cartProduct->variants)) {
+                foreach ($cartProduct->variants as $index => $variant) {
+                    $item = ProductVariantItem::find($variant->variant_item_id);
+                    $productVariant = new OrderProductVariant();
+                    $productVariant->order_product_id = $orderProduct->id;
+                    $productVariant->product_id = $cartProduct->product_id;
+                    $productVariant->variant_name = $item->product_variant_name;
+                    $productVariant->variant_value = $item->name;
+                    $productVariant->save();
+                }
             }
 
             $order_details .= 'Product: ' . $product->name . '<br>';
@@ -575,9 +619,11 @@ class PaymentController extends Controller
         $orderAddress->shipping_address_type = $shipping->type;
         $orderAddress->save();
 
-        foreach ($cartProducts as $cartProduct) {
-            ShoppingCartVariant::where('shopping_cart_id', $cartProduct->id)->delete();
-            $cartProduct->delete();
+        if ($user) {
+            foreach ($cartProducts as $cartProduct) {
+                ShoppingCartVariant::where('shopping_cart_id', $cartProduct->id)->delete();
+                $cartProduct->delete();
+            }
         }
 
         $arr = [];

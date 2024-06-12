@@ -55,7 +55,6 @@ class AddressCotroller extends Controller
         $address->address = $request->address;
         $address->state_id = $request->state;
         $address->city_id = $request->city;
-        $address->city_id = $request->city;
         $address->type = $request->type;
         if($isExist == 0){
             $address->default_billing = 1;
