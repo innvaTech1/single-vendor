@@ -595,9 +595,19 @@ class PaymentController extends Controller
             // store prouct variant
 
 
-            if (isset($cartProduct->variants)) {
+            if ($user && isset($cartProduct->variants)) {
                 foreach ($cartProduct->variants as $index => $variant) {
                     $item = ProductVariantItem::find($variant->variant_item_id);
+                    $productVariant = new OrderProductVariant();
+                    $productVariant->order_product_id = $orderProduct->id;
+                    $productVariant->product_id = $cartProduct->product_id;
+                    $productVariant->variant_name = $item->product_variant_name;
+                    $productVariant->variant_value = $item->name;
+                    $productVariant->save();
+                }
+            } else if (isset($cartProduct->variants)) {
+                foreach ($cartProduct->variants as $variant) {
+                    $item = ProductVariantItem::find($variant);
                     $productVariant = new OrderProductVariant();
                     $productVariant->order_product_id = $orderProduct->id;
                     $productVariant->product_id = $cartProduct->product_id;
