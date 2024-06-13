@@ -257,7 +257,8 @@
                                     <div class="col-lg-6 order-status">
                                         <div class="section-title">{{ __('admin.Order Status') }}</div>
 
-                                        <form action="{{ route('admin.update-order-status', $order->id) }}" method="POST">
+                                        <form action="{{ route('admin.update-order-status', $order->id) }}"
+                                            method="POST">
                                             @csrf
                                             @method('PUT')
                                             <div class="form-group">
@@ -295,7 +296,6 @@
                                             $sub_total = $order->total_amount;
                                             $grand_total =
                                                 $order->total_amount +
-                                                $order->shipping_cost +
                                                 $order->total_amount * ($setting->tex / 100) -
                                                 $order->coupon_coast;
 
