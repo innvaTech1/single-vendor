@@ -61,7 +61,7 @@
                 href="{{ route('product', ['category' => $product->category->slug]) }}">{{ $product->category->name }}
             </a>
 
-            @if ($reviewQty > 0)
+            
                 <p class="wsus__pro_rating">
                     @for ($i = 1; $i <= 5; $i++)
                         @if ($i <= $product->avgReview)
@@ -72,20 +72,9 @@
                             <i class="far fa-star"></i>
                         @endif
                     @endfor
-                    <span>({{ $reviewQty }} {{ __('user.review') }})</span>
+                    <span>({{ $product->totalReviews() }} {{ __('user.review') }})</span>
                 </p>
-            @endif
-
-            @if ($reviewQty == 0)
-                <p class="wsus__pro_rating">
-                    <i class="fal fa-star"></i>
-                    <i class="fal fa-star"></i>
-                    <i class="fal fa-star"></i>
-                    <i class="fal fa-star"></i>
-                    <i class="fal fa-star"></i>
-                    <span>(0 {{ __('user.review') }})</span>
-                </p>
-            @endif
+            
 
             <a class="wsus__pro_name"
                 href="{{ route('product-detail', $product->slug) }}">{{ $product->short_name }}</a>

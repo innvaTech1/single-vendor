@@ -10111,3 +10111,82 @@ textarea::placeholder {
 .banner_fluid {
     height: 500px;
 }
+
+
+/* =====================
+Order modal
+====================== */
+.modal_wrapper {
+    width: 800px !important;
+}
+
+.wsus__order_wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.wsus__order_img {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+
+}
+
+.wsus__order_img img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+}
+
+.wsus__quentity_order .spinner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+}
+
+.wsus__quentity_order input {
+    width: 40px;
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, .125);
+}
+
+.wsus__order_price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.wsus__order_price h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+
+.wsus__order_price_bb {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+}
+
+.wsus__delivery_fee {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, .125);
+    padding: 10px 15px;
+    border-radius: 0.25rem;
+}
+
+/* extra css end here */
