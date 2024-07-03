@@ -48,6 +48,15 @@ class Product extends Model
         return $this->hasMany(ProductReview::class);
     }
 
+    public function getAvgReviewAttribute()
+    {
+        // Return the average review for the menu item
+        return $this->reviews()->where('status',1)->avg('rating');
+    }
+    public function totalReviews()
+    {
+        return $this->reviews->count();
+    }
 
     public function variants(){
         return $this->hasMany(ProductVariant::class);
