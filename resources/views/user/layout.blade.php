@@ -100,32 +100,16 @@
         </span>
         <a href="{{ route('user.dashboard') }}" class="dash_logo"><img src="{{ asset($setting->logo) }}" alt="logo" class="img-fluid"></a>
         <ul class="dashboard_link">
-          <li><a class="{{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}"><i class="fas fa-tachometer"></i>{{__('Dashboard')}}</a></li>
-          <li><a class="{{ Route::is('user.message') ? 'active' : '' }}" href="{{ route('user.message') }}"><i class="fas fa-envelope"></i>{{__('Message')}}</a></li>
+          <li><a class="{{ Route::is('user.dashboard') ? 'active' : '' }}" href="{{ route('user.dashboard') }}"><i class="fas fa-tachometer"></i>{{__('user.Dashboard')}}</a></li>
 
-          <li><a href="{{ route('home') }}"><i class="fal fa fa-globe"></i> {{__('Go to Homepage')}}</a></li>
-          <li><a class="{{ Route::is('user.order') || Route::is('user.order-show') ? 'active' : '' }}" href="{{ route('user.order') }}"><i class="fas fa-list-ul"></i> {{__('Orders')}}</a></li>
-          <li><a class="{{ Route::is('user.review') ? 'active' : '' }}" href="{{ route('user.review') }}"><i class="far fa-star"></i> {{__('Reviews')}}</a></li>
-          <li><a class="{{ Route::is('user.wishlist') ? 'active' : '' }}" href="{{ route('user.wishlist') }}"><i class="far fa-heart"></i> {{__('Wishlist')}}</a></li>
-          <li><a class="{{ Route::is('user.my-profile') ? 'active' : '' }}" href="{{ route('user.my-profile') }}"><i class="far fa-user"></i> {{__('My Profile')}}</a></li>
-          <li><a class="{{ Route::is('user.address') ? 'active' : '' }}" href="{{ route('user.address') }}"><i class="fal fa-gift-card"></i> {{__('Address')}}</a></li>
-        @if ($setting->enable_multivendor == 1)
-            @php
-                $authUser = Auth::guard('web')->user();
-                $isSeller = App\Models\Vendor::where('user_id', $authUser->id)->first();
-            @endphp
-            @if ($isSeller)
-                <li><a class="" href="{{ route('seller.dashboard') }}"><i class="fal fa-gift-card"></i> {{__('Visit Seller Dashboard')}}</a></li>
-            @else
-                <li><a class="{{ Route::is('user.seller-registration') ? 'active' : '' }}" href="{{ route('user.seller-registration') }}"><i class="fal fa-gift-card"></i> {{__('Become a Seller')}}</a></li>
-            @endif
+          <li><a href="{{ route('home') }}"><i class="fal fa fa-globe"></i> {{__('user.Go to Homepage')}}</a></li>
+          <li><a class="{{ Route::is('user.order') || Route::is('user.order-show') ? 'active' : '' }}" href="{{ route('user.order') }}"><i class="fas fa-list-ul"></i> {{__('user.Orders')}}</a></li>
 
-        @endif
+          <li><a class="{{ Route::is('user.my-profile') ? 'active' : '' }}" href="{{ route('user.my-profile') }}"><i class="far fa-user"></i> {{__('user.My Profile')}}</a></li>
 
+          <li><a class="{{ Route::is('user.change-password') ? 'active' : '' }}" href="{{ route('user.change-password') }}"><i class="fal fa-gift-card"></i> {{__('user.Change Password')}}</a></li>
 
-          <li><a class="{{ Route::is('user.change-password') ? 'active' : '' }}" href="{{ route('user.change-password') }}"><i class="fal fa-gift-card"></i> {{__('Change Password')}}</a></li>
-
-          <li><a href="{{ route('user.logout') }}"><i class="far fa-sign-out-alt"></i> {{__('Log out')}}</a></li>
+          <li><a href="{{ route('user.logout') }}"><i class="far fa-sign-out-alt"></i> {{__('user.Log out')}}</a></li>
         </ul>
       </div>
 

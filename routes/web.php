@@ -53,14 +53,12 @@ use App\Http\Controllers\WEB\Admin\BlogCategoryController;
 use App\Http\Controllers\WEB\Admin\CountryStateController;
 use App\Http\Controllers\WEB\Admin\NotificationController;
 use App\Http\Controllers\WEB\Admin\ProductBrandController;
-use App\Http\Controllers\WEB\Seller\SellerOrderController;
 use App\Http\Controllers\WEB\Admin\AdvertisementController;
 use App\Http\Controllers\WEB\Admin\EmailTemplateController;
 use App\Http\Controllers\WEB\Admin\PaymentMethodController;
 use App\Http\Controllers\WEB\Admin\PrivacyPolicyController;
 use App\Http\Controllers\WEB\Admin\ProductReportController;
 use App\Http\Controllers\WEB\Admin\ProductReviewController;
-use App\Http\Controllers\WEB\Seller\SellerMessageContoller;
 use App\Http\Controllers\WEB\Admin\ContactMessageController;
 use App\Http\Controllers\WEB\Admin\MenuVisibilityController;
 use App\Http\Controllers\WEB\Admin\ProductGalleryController;
@@ -70,48 +68,28 @@ use App\Http\Controllers\WEB\Admin\CurrencyController;
 
 use App\Http\Controllers\WEB\Admin\ShippingMethodController;
 use App\Http\Controllers\WEB\Admin\WithdrawMethodController;
-use App\Http\Controllers\WEB\Deliveryman\MyReviewController;
-use App\Http\Controllers\WEB\Seller\SellerProductController;
-use App\Http\Controllers\WEB\Seller\SellerProfileController;
 use App\Http\Controllers\WEB\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\WEB\Admin\ProductCategoryController;
 use App\Http\Controllers\WEB\Admin\FooterSocialLinkController;
 use App\Http\Controllers\WEB\Admin\SpecificationKeyController;
-use App\Http\Controllers\WEB\Deliveryman\MyWithdrawController;
-use App\Http\Controllers\WEB\Seller\SellerDashboardController;
 use App\Http\Controllers\WEB\Admin\TermsAndConditionController;
 
-use App\Http\Controllers\WEB\Seller\Auth\SellerLoginController;
 use App\Http\Controllers\WEB\Admin\EmailConfigurationController;
 use App\Http\Controllers\WEB\Admin\HomepageVisibilityController;
 use App\Http\Controllers\WEB\Admin\ProductSubCategoryController;
 use App\Http\Controllers\WEB\Admin\ProductVariantItemController;
 use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawController;
 use App\Http\Controllers\WEB\Admin\MegaMenuSubCategoryController;
-use App\Http\Controllers\WEB\Seller\SellerProductReportControler;
 
 
 
 use App\Http\Controllers\WEB\Admin\ProductChildCategoryController;
 use App\Http\Controllers\WEB\Admin\PosController;
-use App\Http\Controllers\WEB\Seller\SellerProductReviewController;
-
-use App\Http\Controllers\WEB\Deliveryman\DeliveryMessageController;
-use App\Http\Controllers\WEB\Seller\SellerProductGalleryController;
-use App\Http\Controllers\WEB\Seller\SellerProductVariantController;
 use App\Http\Controllers\WEB\Admin\DeliveryManOrderAmountController;
-use App\Http\Controllers\WEB\Deliveryman\DeliveryManOrderController;
 use App\Http\Controllers\WEB\Admin\Auth\AdminForgotPasswordController;
-use App\Http\Controllers\WEB\Deliveryman\DeliveryManProfileController;
 use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawMethodController;
-use App\Http\Controllers\WEB\Seller\SellerProductVariantItemController;
-use App\Http\Controllers\WEB\Deliveryman\DeliveryManDashboardController;
-use App\Http\Controllers\WEB\Seller\Auth\SellerForgotPasswordController;
-use App\Http\Controllers\WEB\Deliveryman\Auth\DeliveryManLoginController;
-use App\Http\Controllers\WEB\Deliveryman\Auth\DeliveryManResetPasswordController;
 use App\Http\Controllers\WEB\Seller\InventoryController as SellerInventoryController;
-
-
+use Illuminate\Support\Facades\Broadcast;
 
 // Broadcast::routes(['middleware' => ['auth:web']]);
 
@@ -121,7 +99,6 @@ Broadcast::routes(['prefix' => 'api', 'middleware' => 'auth:api']);
 
 Route::group([
     'prefix' => 'auth'
-
 ], function ($router) {
 
     Route::post('login', [AuthController::class, 'login']);
@@ -130,26 +107,150 @@ Route::group([
     Route::post('me', [AuthController::class, 'me']);
 });
 
+
+Route::get('/mpdf', [HomeController::class, 'mpdf'])->name('mpdf');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');
+Route::get('/contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
+Route::post('/send-contact-message', [HomeController::class, 'sendContactMessage'])->name('send-contact-message');
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
+Route::get('/blog-detail/{slug}', [HomeController::class, 'blogDetail'])->name('blog-detail');
+Route::get('/blog-by-category/{slug}', [HomeController::class, 'blogByCategory'])->name('blog-by-category');
+Route::get('/search-blog', [HomeController::class, 'blogSearch'])->name('search-blog');
+Route::post('/blog-comment', [HomeController::class, 'blogComment'])->name('blog-comment');
+Route::get('/campaign', [HomeController::class, 'campaign'])->name('campaign');
+Route::get('/campaign-detail/{slug}', [HomeController::class, 'campaignDetail'])->name('campaign-detail');
+Route::get('/brand', [HomeController::class, 'brand'])->name('brand');
+Route::get('/track-order', [HomeController::class, 'trackOrder'])->name('track-order');
+Route::get('/track-order-response/{id}', [HomeController::class, 'trackOrderResponse'])->name('track-order-response');
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
+Route::get('/page/{slug}', [HomeController::class, 'customPage'])->name('page');
+Route::get('/terms-and-conditions', [HomeController::class, 'termsAndCondition'])->name('terms-and-conditions');
+Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
+Route::get('/sellers', [HomeController::class, 'seller'])->name('sellers');
+Route::get('/seller-detail', [HomeController::class, 'sellerDetail'])->name('seller-detail');
+Route::get('/product', [HomeController::class, 'product'])->name('product');
+Route::get('/search-product', [HomeController::class, 'searchProduct'])->name('search-product');
+Route::get('/product-detail/{slug}', [HomeController::class, 'productDetail'])->name('product-detail');
+Route::get('/compare', [HomeController::class, 'compare'])->name('compare');
+Route::get('/add-to-compare/{id}', [HomeController::class, 'addToCompare'])->name('add-to-compare');
+Route::get('/remove-compare/{id}', [HomeController::class, 'removeCompare'])->name('remove-compare');
+Route::get('/flash-deal', [HomeController::class, 'flashDeal'])->name('flash-deal');
+Route::post('subscribe-request', [HomeController::class, 'subscribeRequest'])->name('subscribe-request');
+Route::get('subscriber-verification/{token}', [HomeController::class, 'subscriberVerifcation'])->name('subscriber-verification');
+Route::get('/cart-test', [CartController::class, 'calculateWholsaleDiscount'])->name('cart-test');
+Route::get('/cart', [CartController::class, 'cart'])->name('cart');
+Route::get('/add-to-cart', [CartController::class, 'addToCart'])->name('add-to-cart');
+Route::get('/add-to-buy', [CartController::class, 'addToBuy'])->name('add-to-buy');
+Route::get('/cart-clear', [CartController::class, 'cartClear'])->name('cart-clear');
+Route::get('/cart-item-remove/{id}', [CartController::class, 'cartItemRemove'])->name('cart-item-remove');
+Route::get('/cart-item-increment/{id}', [CartController::class, 'cartItemIncrement'])->name('cart-item-increment');
+Route::get('/cart-item-decrement/{id}', [CartController::class, 'cartItemDecrement'])->name('cart-item-decrement');
+Route::post('/cart-update', [CartController::class, 'cartUpdate'])->name('cart-update');
+Route::post('/update-checkout-cart-item', [CartController::class, 'update_checkout_page_cart'])->name('update-checkout-cart-item');
+
+Route::get('/apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
+Route::get('/calculate-product-price', [CartController::class, 'calculateProductPrice'])->name('calculate-product-price');
+Route::get('/calculate-wholesale-price', [CartController::class, 'calculateWholsaleDiscount'])->name('calculate-wholesale-price');
+Route::get('/sidebar-cart-item-remove/{id}', [CartController::class, 'sidebarcartItemRemove'])->name('sidebar-cart-item-remove');
+Route::get('/load-sidebar-cart', [CartController::class, 'loadSidebarCart'])->name('load-sidebar-cart');
+Route::get('/get-cart-qty', [CartController::class, 'calculateCartQty'])->name('get-cart-qty');
+Route::get('/load-main-cart', [CartController::class, 'loadMainCart'])->name('load-main-cart');
+
+Route::get('login/google', [LoginController::class, 'redirectToGoogle'])->name('login-google');
+Route::get('/callback/google', [LoginController::class, 'googleCallBack'])->name('callback-google');
+
+Route::get('login/facebook', [LoginController::class, 'redirectToFacebook'])->name('login-facebook');
+Route::get('/callback/facebook', [LoginController::class, 'facebookCallBack'])->name('callback-facebook');
+
+
+Route::get('/login', [LoginController::class, 'loginPage'])->name('login');
+Route::post('/store-login', [LoginController::class, 'storeLogin'])->name('store-login');
+Route::post('/store-register', [RegisterController::class, 'storeRegister'])->name('store-register');
+Route::get('/user-verification/{token}', [RegisterController::class, 'userVerification'])->name('user-verification');
+Route::get('/forget-password', [LoginController::class, 'forgetPage'])->name('forget-password');
+Route::post('/send-forget-password', [LoginController::class, 'sendForgetPassword'])->name('send-forget-password');
+Route::get('/reset-password/{token}', [LoginController::class, 'resetPasswordPage'])->name('reset-password');
+Route::post('/store-reset-password/{token}', [LoginController::class, 'storeResetPasswordPage'])->name('store-reset-password');
+Route::get('/user/logout', [LoginController::class, 'userLogout'])->name('user.logout');
+
+
 Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
+    Route::get('dashboard', [UserProfileController::class, 'dashboard'])->name('dashboard');
+    Route::get('order', [UserProfileController::class, 'order'])->name('order');
+    Route::get('pending-order', [UserProfileController::class, 'pendingOrder'])->name('pending-order');
+    Route::get('complete-order', [UserProfileController::class, 'completeOrder'])->name('complete-order');
+    Route::get('declined-order', [UserProfileController::class, 'declinedOrder'])->name('declined-order');
+    Route::get('order-show/{id}', [UserProfileController::class, 'orderShow'])->name('order-show');
+    Route::get('review', [UserProfileController::class, 'review'])->name('review');
+    Route::get('my-profile', [UserProfileController::class, 'myProfile'])->name('my-profile');
+    Route::post('update-profile', [UserProfileController::class, 'updateProfile'])->name('update-profile');
+    Route::post('update-order-info/{id}', [UserProfileController::class, 'update_order_info'])->name('update-order-info');
+
+    Route::get('address', [UserProfileController::class, 'address'])->name('address');
+    Route::get('change-password', [UserProfileController::class, 'changePassword'])->name('change-password');
+    Route::post('update-password', [UserProfileController::class, 'updatePassword'])->name('update-password');
+    Route::get('seller-registration', [UserProfileController::class, 'sellerRegistration'])->name('seller-registration');
+    Route::get('billing-address', [UserProfileController::class, 'editBillingAddress'])->name('billing-address');
+    Route::post('update-billing-address', [UserProfileController::class, 'updateBillingAddress'])->name('update-billing-address');
+    Route::get('shipping-address', [UserProfileController::class, 'editShippingAddress'])->name('shipping-address');
+    Route::post('update-shipping-address', [UserProfileController::class, 'updateShippingAddress'])->name('update-shipping-address');
+    Route::post('seller-request', [UserProfileController::class, 'sellerRequest'])->name('seller-request');
+    Route::get('wishlist', [UserProfileController::class, 'wishlist'])->name('wishlist');
+    Route::get('add-to-wishlist/{id}', [UserProfileController::class, 'addToWishlist'])->name('add-to-wishlist');
+    Route::get('remove-wishlist/{id}', [UserProfileController::class, 'removeWishlist'])->name('remove-wishlist');
+    Route::post('product-report', [UserProfileController::class, 'storeProductReport'])->name('product-report');
+    Route::post('store-product-review', [UserProfileController::class, 'storeProductReview'])->name('store-product-review');
+    Route::post('update-review/{id}', [UserProfileController::class, 'updateReview'])->name('update-review');
+
+    Route::get('chat-with-seller/{slug}', [MessageController::class, 'chatWithSeller'])->name('chat-with-seller');
+    Route::get('message', [MessageController::class, 'index'])->name('message');
+    Route::get('load-chat-box/{id}', [MessageController::class, 'loadChatBox'])->name('load-chat-box');
+    Route::get('load-new-message/{id}', [MessageController::class, 'loadNewMessage'])->name('load-new-message');
+    Route::get('send-message', [MessageController::class, 'sendMessage'])->name('send-message');
+
     Route::group(['as' => 'checkout.', 'prefix' => 'checkout'], function () {
+        Route::get('/', [CheckoutController::class, 'checkout'])->name('checkout');
+        Route::get('/billing-address', [CheckoutController::class, 'checkoutBillingAddress'])->name('billing-address');
+        Route::post('/update-billing-address', [CheckoutController::class, 'updateCheckoutBillingAddress'])->name('update-billing-address');
+        Route::post('/update-shipping-address', [CheckoutController::class, 'updateShippingBillingAddress'])->name('update-shipping-address');
+        Route::get('/payment', [CheckoutController::class, 'payment'])->name('payment');
+
+        Route::post('/cash-on-delivery', [PaymentController::class, 'cashOnDelivery'])->name('cash-on-delivery');
+        Route::post('/pay-with-stripe', [PaymentController::class, 'payWithStripe'])->name('pay-with-stripe');
+
+        Route::get('/paypal-web-view', [PaypalController::class, 'paypalWebView'])->name('paypal-web-view');
+
+        Route::get('/pay-with-paypal-from-api', [PaypalController::class, 'payWithPaypalFromApi'])->name('pay-with-paypal-from-api');
+        Route::get('/paypal-payment-success-from-api', [PaypalController::class, 'paypalPaymentSuccessFromApi'])->name('paypal-payment-success-from-api');
+        Route::get('/paypal-payment-cancled-from-api', [PaypalController::class, 'paypalPaymentCancledFromApi'])->name('paypal-payment-cancled-from-api');
 
 
-        Route::get('/sslcommerz-web-view', [PaymentController::class,   'sslcommerzWebView'])->name('sslcommerz-web-view');
-        Route::post('/sslcommerz-pay',     [PaymentController::class,   'sslcommerz'])->name('sslcommerz-pay');
-        Route::post('/sslcommerz-success', [PaymentController::class,   'sslcommerz_success'])->name('sslcommerz-success');
 
-        Route::post('/sslcommerz-failed', [PaymentController::class,   'sslcommerz_failed'])->name('sslcommerz-failed');
-        Route::post('/sslcommerz-cancel', [PaymentController::class,   'sslcommerz_failed'])->name('sslcommerz-cancel');
+        Route::get('/pay-with-paypal', [PaypalController::class, 'payWithPaypal'])->name('pay-with-paypal');
+        Route::get('/paypal-payment-success', [PaypalController::class, 'paypalPaymentSuccess'])->name('paypal-payment-success');
+        Route::get('/paypal-payment-cancled', [PaypalController::class, 'paypalPaymentCancled'])->name('paypal-payment-cancled');
+        Route::post('/pay-with-razorpay', [PaymentController::class, 'payWithRazorpay'])->name('pay-with-razorpay');
+        Route::post('/pay-with-flutterwave', [PaymentController::class, 'payWithFlutterwave'])->name('pay-with-flutterwave');
+        Route::get('/pay-with-mollie', [PaymentController::class, 'payWithMollie'])->name('pay-with-mollie');
+        Route::get('/mollie-payment-success', [PaymentController::class, 'molliePaymentSuccess'])->name('mollie-payment-success');
+        Route::post('/pay-with-paystack', [PaymentController::class, 'payWithPayStack'])->name('pay-with-paystack');
+        Route::get('/pay-with-instamojo', [PaymentController::class, 'payWithInstamojo'])->name('pay-with-instamojo');
+        Route::get('/instamojo-response', [PaymentController::class, 'instamojoResponse'])->name('instamojo-response');
+        Route::post('/pay-with-bank', [PaymentController::class, 'payWithBank'])->name('pay-with-bank');
 
-        Route::get('order-success-url-for-mobile-app', function () {
-            return response()->json(['message' => 'order success']);
-        })->name('order-success-url-for-mobile-app');
 
-        Route::get('order-fail-url-for-mobile-app', function () {
-            return response()->json(['message' => 'order faild']);
-        })->name('order-fail-url-for-mobile-app');
+        Route::post('/pay-with-paymongo', [PaymentController::class, 'payWithPaymongo'])->name('pay-with-paymongo');
+        Route::get('/pay-with-grab-pay', [PaymentController::class, 'payWithPaymongoGrabPay'])->name('pay-with-grab-pay');
+        Route::get('/pay-with-gcash', [PaymentController::class, 'payWithPaymongoGcash'])->name('pay-with-gcash');
+        Route::get('/paymongo-payment-success', [PaymentController::class, 'paymongoPaymentSuccess'])->name('paymongo-payment-success');
+        Route::get('/paymongo-payment-cancled', [PaymentController::class, 'paymongoPaymentCancled'])->name('paymongo-payment-cancled');
     });
+
+    Route::get('state-by-country/{id}', [UserProfileController::class, 'stateByCountry'])->name('state-by-country');
+    Route::get('city-by-state/{id}', [UserProfileController::class, 'cityByState'])->name('city-by-state');
 });
+
 
 
 

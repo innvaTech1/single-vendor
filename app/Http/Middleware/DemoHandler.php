@@ -25,49 +25,7 @@ class DemoHandler
 
             return $next($request);
 
-         }else{
-
-            if(env('APP_VERSION') == 0){
-
-                if($request->isMethod('post') || $request->isMethod('delete') || $request->isMethod('put') || $request->isMethod('patch')){
-
-                    
-                
-
-                    $notification = trans('This Is Demo Version. You Can Not Change Anything');
-
-                    $notification=array('messege'=>$notification,'alert-type'=>'error');
-
-                    return redirect()->back()->with($notification);
-
-                }
-
-                if(Route::is('user.remove-wishlist')){
-
-                    $notification = trans('This Is Demo Version. You Can Not Change Anything');
-
-                    $notification=array('messege'=>$notification,'alert-type'=>'error');
-
-                    return redirect()->back()->with($notification);
-
-                }
-
-
-
-                if(Route::is('user.chat-with-seller')){
-
-                    $notification = trans('This Is Demo Version. You Can Not Change Anything');
-
-                    $notification=array('messege'=>$notification,'alert-type'=>'error');
-
-                    return redirect()->back()->with($notification);
-
-                }
-
-            }
-
          }
-
         return $next($request);
 
     }

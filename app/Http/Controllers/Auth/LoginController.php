@@ -41,7 +41,7 @@ class LoginController extends Controller
     }
 
     public function loginPage(){
-        $banner = BreadcrumbImage::where(['id' => 5])->first();
+        $banner = BreadcrumbImage::where('location', 'User Authentication')->first();
         $background = BannerImage::whereId('13')->first();
         $recaptchaSetting = GoogleRecaptcha::first();
         $socialLogin = SocialLoginInformation::first();

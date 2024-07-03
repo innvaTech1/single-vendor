@@ -52,22 +52,12 @@
                     $productMonths = [];
                     $productDays = [];
 
-                    if(env('APP_VERSION') == 0){
-                        $demo_end = Carbon\Carbon::now()->addDays(3);
-                        foreach ($products as $key => $product) {
-                            $productIds[] = $product->id;
-                            $productYears[] = $demo_end->format('Y');
-                            $productMonths[] = $demo_end->format('m');;
-                            $productDays[] = $demo_end->format('d');
-                        }
-                    }else {
-                        foreach ($products as $key => $product) {
+                    foreach ($products as $key => $product) {
                             $productIds[] = $product->id;
                             $productYears[] = date('Y', strtotime($product->flash_deal_date));
                             $productMonths[] = date('m', strtotime($product->flash_deal_date));
                             $productDays[] = date('d', strtotime($product->flash_deal_date));
                         }
-                    }
                 @endphp
                 <script>
                     var productIds = <?= json_encode($productIds)?>;
