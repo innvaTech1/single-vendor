@@ -225,8 +225,6 @@ Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
         Route::get('/paypal-payment-success-from-api', [PaypalController::class, 'paypalPaymentSuccessFromApi'])->name('paypal-payment-success-from-api');
         Route::get('/paypal-payment-cancled-from-api', [PaypalController::class, 'paypalPaymentCancledFromApi'])->name('paypal-payment-cancled-from-api');
 
-
-
         Route::get('/pay-with-paypal', [PaypalController::class, 'payWithPaypal'])->name('pay-with-paypal');
         Route::get('/paypal-payment-success', [PaypalController::class, 'paypalPaymentSuccess'])->name('paypal-payment-success');
         Route::get('/paypal-payment-cancled', [PaypalController::class, 'paypalPaymentCancled'])->name('paypal-payment-cancled');

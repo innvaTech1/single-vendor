@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'web',
         'passwords' => 'users',
     ],
 
@@ -41,36 +41,15 @@ return [
             'provider' => 'users',
         ],
 
-
-
-        'api' => [
-            'driver' => 'jwt',
-            'provider' => 'users',
-        ],
-
-
-
-        'admin-api' => [
-            'driver' => 'jwt',
-            'provider' => 'admins',
-        ],
-
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
 
-        'deliveryman-api' => [
+        'api' => [
             'driver' => 'jwt',
-            'provider' => 'deliverymans',
+            'provider' => 'users',
         ],
-
-        'deliveryman' => [
-            'driver' => 'session',
-            'provider' => 'deliverymans',
-        ],
-
-
 
     ],
 
@@ -100,11 +79,6 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
-        ],
-
-        'deliverymans' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\DeliveryMan::class,
         ],
 
 

@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
             break;
 
             default:
-                $login="/seller/login";
+                $login="/login";
         }
 
         return Redirect()->guest($login);
