@@ -12,7 +12,6 @@ use App\Models\GoogleRecaptcha;
 use App\Models\User;
 use App\Models\Vendor;
 use App\Rules\Captcha;
-use Auth;
 use Hash;
 use App\Mail\UserForgetPassword;
 use App\Helpers\MailHelper;
@@ -28,6 +27,7 @@ use Socialite;
 use Carbon\Carbon;
 use Twilio\Rest\Client;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -60,69 +60,32 @@ class LoginController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $login_by = 'email';
-        if(filter_var($request->email, FILTER_VALIDATE_EMAIL)){
-            $login_by = 'email';
-            $user = User::where('email',$request->email)->first();
+        $login = $request->email;
 
-        }else if(is_numeric($request->email)){
-            $login_by = 'phone';
-            $user = User::where('phone',$request->email)->first();
-        }else{
-            return response()->json(['message' => trans('user_validation.Please provide valid email or phone')],422);
+        $field = null;
+        if (is_numeric($login)) {
+            $field = 'phone';
+        } elseif (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            $field = 'email';
+        } else{
+            return redirect()->back()->with(['messege' => trans('user_validation.Please provide valid email or phone'),'alert-type' => 'error']);
         }
 
-        if($user){
-            if($user->email_verified == 0){
-                $notification = trans('user_validation.Please verify your acount. If you didn\'t get OTP, please resend your OTP and verify');
-                return response()->json(['notification' => $notification],402);
-            }
-            if($user->status==1){
-                if(Hash::check($request->password,$user->password)){
+        $check = User::where($field, $login)->first();
 
-                    if($login_by == 'email'){
-                        $credential=[
-                            'email'=> $request->email,
-                            'password'=> $request->password
-                        ];
-                    }else{
-                        $credential=[
-                            'phone'=> $request->email,
-                            'password'=> $request->password
-                        ];
-                    }
-                    if (! $token = Auth::guard('api')->attempt($credential, ['exp' => Carbon::now()->addDays(365)->timestamp])) {
-                        return response()->json(['error' => 'Unauthorized'], 401);
-                    }
-
-                    if($login_by == 'email'){
-                        $user = User::where('email',$request->email)->select('id','name','email','phone','image','status')->first();
-                    }else{
-                        $user = User::where('phone',$request->email)->select('id','name','email','phone','image','status')->first();
-                    }
-
-
-                    $isVendor = Vendor::where('user_id',$user->id)->first();
-                    if($isVendor) {
-                        return $this->respondWithToken($token,1,$user);
-                    }else {
-                        return $this->respondWithToken($token,0,$user);
-                    }
-
-
-                }else{
-                    $notification = trans('user_validation.Credentials does not exist');
-                    return response()->json(['notification' => $notification],402);
-                }
-
-            }else{
-                $notification = trans('user_validation.Disabled Account');
-                return response()->json(['notification' => $notification],402);
-            }
-        }else{
-            $notification = trans('user_validation.Email does not exist');
-            return response()->json(['notification' => $notification],402);
+        if (!$check) {
+            return redirect()->back()->with(['messege' => trans('User not found'), 'alert-type' => 'error']);
         }
+
+        $credentials = [
+            $field => $login,
+            'password' => $request->password,
+        ];
+
+        if(Auth::attempt($credentials)){
+            return redirect()->back()->with(['messege' => trans('Login Success'), 'alert-type' => 'success']);
+        }
+
     }
 
 

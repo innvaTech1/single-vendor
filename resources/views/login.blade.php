@@ -56,7 +56,7 @@
                                         @csrf
                                         <div class="wsus__login_input">
                                             <i class="fas fa-user-tie"></i>
-                                            <input type="email" placeholder="{{__('Email')}}" name="email">
+                                            <input type="text" placeholder="{{__('Email')}}" name="email">
                                         </div>
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>
@@ -102,8 +102,8 @@
                                             <input type="text" placeholder="{{__('Name')}}" name="name">
                                         </div>
                                         <div class="wsus__login_input">
-                                            <i class="far fa-envelope"></i>
-                                            <input type="text" placeholder="{{__('Email')}}" name="email">
+                                            <i class="fas fa-phone-alt"></i>
+                                            <input type="text" placeholder="{{__('Username')}}" name="username">
                                         </div>
                                         <div class="wsus__login_input">
                                             <i class="fas fa-key"></i>

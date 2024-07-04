@@ -6,6 +6,7 @@
   'Country is required' => 'Country is required',
   'State is required' => 'State is required',
   'City is required' => 'City is required',
+    'Register Successfully' => 'Register Successfully',
   'Address is required' => 'Address is required',
   'Address type is required' => 'Address type is required',
   'Create Successfully' => 'Create Successfully',

@@ -12,6 +12,7 @@ return array(
   'zip code' => 'zip code',
   'address' => 'address',
   'edit' => 'edit',
+  'Register Successfully' => 'Register Successfully',
   'Shipping Address' => 'Shipping Address',
   'Change Password' => 'Change Password',
   'Current Password' => 'Current Password',
