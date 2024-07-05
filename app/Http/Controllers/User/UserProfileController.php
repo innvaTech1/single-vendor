@@ -2,31 +2,31 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use File;
+use Image;
+
+use App\Models\City;
+use App\Models\Order;
+use App\Rules\Captcha;
+use App\Models\Country;
+use App\Models\Product;
+use App\Models\Setting;
+use App\Models\Wishlist;
+use App\Models\BannerImage;
+use Illuminate\Support\Str;
+use App\Models\CountryState;
+use App\Models\OrderProduct;
 use Illuminate\Http\Request;
 
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
-use App\Models\BillingAddress;
-use App\Models\ShippingAddress;
-use App\Models\Order;
-use App\Models\Setting;
-use App\Models\Product;
-use App\Models\ProductReview;
-use App\Models\OrderProduct;
-use App\Models\Wishlist;
 use App\Models\ProductReport;
 
-use App\Models\BannerImage;
+use App\Models\ProductReview;
+use App\Models\BillingAddress;
+use App\Models\ShippingAddress;
+use App\Http\Controllers\Controller;
 
-use App\Rules\Captcha;
-use Image;
-use File;
-use Str;
-use Hash;
 use Illuminate\Support\Facades\Auth;
-use Slug;
+use Illuminate\Support\Facades\Hash;
 
 class UserProfileController extends Controller
 {
@@ -187,6 +187,7 @@ class UserProfileController extends Controller
 
     public function updatePassword(Request $request){
         $rules =[
+            'current_password' => 'required',
             'password'=>'required|min:4|confirmed',
         ];
         $customMessages = [
@@ -198,8 +199,14 @@ class UserProfileController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $user = Auth::guard('web')->user();
+
+
+        // Check if the current password matches
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => trans('user_validation.Current password does not match')]);
+        }
+
         $user->password = Hash::make($request->password);
-        $user->normal_password = $request->password;
         $user->save();
 
         $notification = 'Password change successfully';
