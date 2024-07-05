@@ -91,12 +91,6 @@ use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawMethodController;
 use App\Http\Controllers\WEB\Seller\InventoryController as SellerInventoryController;
 use Illuminate\Support\Facades\Broadcast;
 
-// Broadcast::routes(['middleware' => ['auth:web']]);
-
-Broadcast::routes(['prefix' => 'seller', 'middleware' => 'auth:web']);
-
-Broadcast::routes(['prefix' => 'api', 'middleware' => 'auth:api']);
-
 Route::group([
     'prefix' => 'auth'
 ], function ($router) {

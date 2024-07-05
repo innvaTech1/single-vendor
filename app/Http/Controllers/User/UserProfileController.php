@@ -38,8 +38,9 @@ class UserProfileController extends Controller
     public function dashboard(){
         $user = Auth::guard('web')->user();
         $orders = Order::where('user_id',$user->id)->get();
-
-        return view('user.dashboard', compact('orders'));
+        $reviews = $user->reviews;
+        $wishlists = $user->wishlists;
+        return view('user.dashboard', compact('orders', 'reviews', 'wishlists'));
     }
 
 
@@ -128,9 +129,10 @@ class UserProfileController extends Controller
 
     public function myProfile(){
         $user = Auth::guard('web')->user();
-
         $defaultProfile = BannerImage::whereId('15')->first();
-        return view('user.my_profile', compact('user','defaultProfile'));
+        $states = CountryState::all();
+        $cities = City::all();
+        return view('user.my_profile', compact('user','defaultProfile', 'states', 'cities'));
     }
 
     public function updateProfile(Request $request){
@@ -145,14 +147,14 @@ class UserProfileController extends Controller
             'email.required' => trans('user_validation.Email is required'),
             'email.unique' => trans('user_validation.Email already exist'),
             'phone.required' => trans('user_validation.Phone is required'),
-            'country.required' => trans('user_validation.Country is required'),
-            'zip_code.required' => trans('user_validation.Zip code is required'),
             'address.required' => trans('user_validation.Address is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
         $user->name = $request->name;
         $user->phone = $request->phone;
+        $user->state_id = $request->state;
+        $user->city_id = $request->city;
         $user->address = $request->address;
         $user->save();
 

@@ -145,7 +145,7 @@
         $("#deleteForm").attr("action",'{{ url("admin/customer-delete/") }}'+"/"+id)
     }
     function manageCustomerStatus(id){
-        
+
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },

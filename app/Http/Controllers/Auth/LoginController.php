@@ -83,7 +83,7 @@ class LoginController extends Controller
         ];
 
         if(Auth::attempt($credentials)){
-            return redirect()->back()->with(['messege' => trans('Login Success'), 'alert-type' => 'success']);
+            return redirect()->route('user.dashboard')->with(['messege' => trans('Login Success'), 'alert-type' => 'success']);
         }
 
     }

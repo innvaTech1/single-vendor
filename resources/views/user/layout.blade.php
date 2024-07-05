@@ -30,9 +30,6 @@
     <link rel="stylesheet" href="{{ asset('toastr/toastr.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/clockpicker/dist/bootstrap-clockpicker.css') }}">
 
-    @if ($setting->text_direction == 'rtl')
-    <link rel="stylesheet" href="{{ asset('user/css/rtl.css') }}">
-    @endif
     <link rel="stylesheet" href="{{ asset('user/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/responsive.css') }}">
     @include('theme_style_css')
@@ -216,79 +213,7 @@
     @endforeach
     @endif
 
-
-<script>
-    (function($) {
-    "use strict";
-    $(document).ready(function () {
-
-    });
-
-    })(jQuery);
-</script>
 <script src="{{ asset('js/app.js') }}"></script>
-
-<script>
-    let activeSellerId= '';
-    let myId = {{ Auth::guard('web')->user()->id; }};
-    function loadChatBox(id){
-        $(".seller").removeClass('active');
-        $("#seller-list-"+id).addClass('active')
-        $("#pending-"+ id).addClass('d-none')
-        $("#pending-"+ id).html(0)
-        activeSellerId = id
-        $.ajax({
-            type:"get",
-            url: "{{ url('user/load-chat-box/') }}" + "/" + id,
-            success:function(response){
-                $("#chat_box").html(response)
-                scrollToBottomFunc()
-            },
-            error:function(err){
-            }
-        })
-    }
-
-
-  (function($) {
-      "use strict";
-      $(document).ready(function () {
-            $('.clockpicker').clockpicker();
-
-            Echo.private("App.Models.User.{{$user->id}}")
-            .listen('SellerToUser', (e) => {
-                if(e.seller_id == activeSellerId){
-                    $.ajax({
-                        type:"get",
-                        url: "{{ url('user/load-new-message/') }}" + "/" + e.seller_id,
-                        success:function(response){
-                            $(".wsus__chat_area_body").html(response)
-                            scrollToBottomFunc()
-                        },
-                        error:function(err){
-                        }
-                    })
-                }else{
-                    var pending = parseInt($("#pending-"+ e.seller_id).html());
-                    if (pending) {
-                        $("#pending-"+ e.seller_id).html(pending + 1)
-                        $("#pending-"+ e.seller_id).removeClass('d-none')
-                    } else {
-                        $("#pending-"+ e.seller_id).html(pending + 1)
-                        $("#pending-"+ e.seller_id).removeClass('d-none')
-                    }
-                }
-
-            });
-      });
-  })(jQuery);
-
-    function scrollToBottomFunc() {
-        $('.wsus__chat_area_body').animate({
-            scrollTop: $('.wsus__chat_area_body').get(0).scrollHeight
-        }, 100);
-    }
-</script>
 
 </body>
 
