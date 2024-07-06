@@ -145,8 +145,8 @@
 }
 
 .wsus__order_details {
-    background: {{ $setting->theme_one."20" }} !important;
-    border : 1px solid {{ $setting->theme_one."60" }} !important;
+    /* background: {{ $setting->theme_one."20" }} !important;
+    border : 1px solid {{ $setting->theme_one."60" }} !important; */
 }
 
 

@@ -635,6 +635,7 @@ SCROLL BUTTON  END
 <!--counter js-->
 <script src="{{ asset('user/js/jquery.waypoints.min.js') }}"></script>
 <script src="{{ asset('user/js/jquery.countup.min.js') }}"></script>
+<script src="{{ asset('global/custom-hook.js') }}"></script>
 <!--calender js-->
 <script src="{{ asset('user/js/jquery.calendar.js') }}"></script>
 <!--add row js-->
@@ -655,6 +656,7 @@ SCROLL BUTTON  END
 
 <!--main/custom js-->
 <script src="{{ asset('user/js/main.js') }}"></script>
+
 
 <script src="{{ asset('toastr/toastr.min.js') }}"></script>
 
@@ -1006,6 +1008,9 @@ SCROLL BUTTON  END
 
     }
 </script>
+
+
+@stack('js')
 </body>
 
 </html>

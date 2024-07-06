@@ -203,10 +203,10 @@ Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
     Route::get('load-new-message/{id}', [MessageController::class, 'loadNewMessage'])->name('load-new-message');
     Route::get('send-message', [MessageController::class, 'sendMessage'])->name('send-message');
 
+    Route::get('/checkout', [CheckoutController::class, 'checkoutBillingAddress'])->name('checkout');
     Route::group(['as' => 'checkout.', 'prefix' => 'checkout'], function () {
-        Route::get('/', [CheckoutController::class, 'checkout'])->name('checkout');
         Route::get('/billing-address', [CheckoutController::class, 'checkoutBillingAddress'])->name('billing-address');
-        Route::post('/update-billing-address', [CheckoutController::class, 'updateCheckoutBillingAddress'])->name('update-billing-address');
+        Route::post('/update-billing-address', [CheckoutController::class, 'placeOrder'])->name('update-billing-address');
         Route::post('/update-shipping-address', [CheckoutController::class, 'updateShippingBillingAddress'])->name('update-shipping-address');
         Route::get('/payment', [CheckoutController::class, 'payment'])->name('payment');
 
@@ -240,7 +240,7 @@ Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
     });
 
     Route::get('state-by-country/{id}', [UserProfileController::class, 'stateByCountry'])->name('state-by-country');
-    Route::get('city-by-state/{id}', [UserProfileController::class, 'cityByState'])->name('city-by-state');
+    Route::get('city-by-state/{id}', [HomeController::class, 'cityByState'])->name('city-by-state');
 });
 
 

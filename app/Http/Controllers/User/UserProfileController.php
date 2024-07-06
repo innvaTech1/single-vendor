@@ -237,6 +237,7 @@ class UserProfileController extends Controller
     }
 
     public function updateBillingAddress(Request $request){
+
         $rules = [
             'name'=>'required',
             'email'=>'required',

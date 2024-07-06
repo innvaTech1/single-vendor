@@ -36,6 +36,7 @@ use App\Models\ProductReview;
 use App\Models\Setting;
 use App\Models\ContactMessage;
 use App\Models\BlogComment;
+use App\Models\City;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantItem;
 use App\Models\GoogleRecaptcha;
@@ -616,7 +617,17 @@ class HomeController extends Controller
 
     }
 
-
+    public function cityByState($id)
+    {
+        $cities = City::where(['status' => 1, 'country_state_id' => $id])->get();
+        $response = '<option value="0">Select a City</option>';
+        if ($cities->count() > 0) {
+            foreach ($cities as $city) {
+                $response .= "<option value=" . $city->id . ">" . $city->name . "</option>";
+            }
+        }
+        return response()->json(['cities' => $response]);
+    }
 
 
 

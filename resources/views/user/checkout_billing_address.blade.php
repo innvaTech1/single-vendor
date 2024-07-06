@@ -1,26 +1,51 @@
 @extends('layout')
 @section('title')
-    <title>{{__('Billing Address')}}</title>
+    <title>{{ __('user.Billing Address') }}</title>
 @endsection
 @section('meta')
-    <meta name="description" content="{{__('Billing Address')}}">
+    <meta name="description" content="{{ __('user.Billing Address') }}">
 @endsection
 
 @section('public-content')
+    <style>
+        .cursor-pointer {
+            cursor: pointer;
+        }
 
-
+        .selected {
+            position: relative;
+            text-align: center;
+            width: 100%;
+            font-size: small;
+            color: #0d0d0d;
+            /* Assuming qgreen is a shade of green like limegreen */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 2px solid rgb(215, 204, 245);
+        }
+        /* .active-item {
+            color: #0d0d0d;
+            border: 2px solid rgb(215, 204, 245);
+        } */
+    </style>
     <!--============================
-         BREADCRUMB START
-    ==============================-->
-    <section id="wsus__breadcrumb" style="background: url({{  asset($banner->image) }});">
+                                     BREADCRUMB START
+                                ==============================-->
+    <section id="wsus__breadcrumb" style="background: url({{ asset($banner->image) }});">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <h4>{{__('Billing Address')}}</h4>
+                        <h4>{{ __('user.Billing Address') }}</h4>
                         <ul>
-                            <li><a href="{{ route('home') }}">{{__('home')}}</a></li>
-                            <li><a href="{{ route('user.checkout.billing-address') }}">{{__('Billing Address')}}</a></li>
+                            <li><a href="{{ route('home') }}">{{ __('user.home') }}</a></li>
+                            <li><a href="{{ route('user.checkout.billing-address') }}">{{ __('user.Billing Address') }}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -28,299 +53,298 @@
         </div>
     </section>
     <!--============================
-        BREADCRUMB END
-    ==============================-->
+                                    BREADCRUMB END
+                                ==============================-->
 
 
     <!--============================
-          CHECK OUT PAGE START
-    ==============================-->
+                                      CHECK OUT PAGE START
+                                ==============================-->
     <section id="wsus__cart_view">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <ul class="wsus__cart_tab">
-                        <li><a href="{{ route('cart') }}">{{__('Shopping Cart')}}</a></li>
-                        <li><a  class="wsus__order_active" href="{{ route('user.checkout.billing-address') }}">{{__('Billing Address')}}</a></li>
-                        <li><a  href="javascript:;">{{__('Shipping Address')}}</a></li>
-                        <li><a href="javascript:;">{{__('payment')}}</a></li>
+                        <li><a href="{{ route('cart') }}">{{ __('user.Shopping Cart') }}</a></li>
+                        <li><a class="wsus__order_active" href="javascript:;">{{ __('Delivery Address') }}</a></li>
+
                     </ul>
                 </div>
-                <form class="wsus__checkout_form" method="POST" action="{{ route('user.checkout.update-billing-address') }}">
+                <form class="wsus__checkout_form" method="POST"
+                    action="{{ route('user.checkout.update-billing-address') }}" id="checkout_form_submit">
                     @csrf
+
+                    <input type="hidden" name="payment_method" value="Cash on Delivery">
                     <div class="row">
                         <div class="col-xl-7 col-lg-6">
                             <div class="wsus__check_form">
-                                <h5>{{__('Billing Address')}}</h5>
-                                @if ($billing)
-                                    <div class="row">
-                                        <div class="col-xl-12">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" placeholder="{{__('Name')}}*" name="name" value="{{ $billing->name }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12">
-                                            <div class="wsus__add_address_single">
-                                                <input type="email" placeholder="{{__('Email')}}*" name="email" value="{{ $billing->email }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" placeholder="{{__('Phone')}}*" name="phone" value="{{ $billing->phone }}">
-                                            </div>
-                                        </div>
+                                <h5>{{ __('user.Delivery Address') }}</h5>
 
-                                        <div class="col-xl-12">
-                                            <div class="wsus__check_single_form">
-                                                <select class="select_2" name="country" id="country_id">
-                                                    <option value="">{{__('Select Country')}}*</option>
-                                                    @foreach ($countries as $country)
-                                                        <option {{ $country->id == $billing->country_id ? 'selected' : '' }} value="{{ $country->id }}">{{ $country->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="wsus__add_address_single">
+                                            <input type="text" placeholder="{{ __('user.Name') }} *" name="name" required>
                                         </div>
-                                        <div class="col-xl-12">
-                                            <div class="wsus__check_single_form">
-                                                <select class="select_2" name="state" id="state_id">
-                                                    <option value="0">{{__('Select State')}}</option>
-                                                    @foreach ($states as $state)
-                                                        <option {{ $state->id == $billing->state_id ? 'selected' : '' }} value="{{ $state->id }}">{{ $state->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-12">
-                                            <div class="wsus__check_single_form">
-                                                <select class="select_2" name="city" id="city_id">
-                                                    <option value="0">{{__('Select City')}}</option>
-                                                    @foreach ($cities as $city)
-                                                        <option {{ $city->id == $billing->city_id ? 'selected' : '' }} value="{{ $city->id }}">{{ $city->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-6">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" placeholder="{{__('Zip Code')}}" name="zip_code" value="{{ $billing->zip_code }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" name="address" placeholder="{{__('Address')}}*" value="{{ $billing->address }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6">
-                                            <input type="checkbox" name="same_as_shipping" id="same_as_shipping"> <label for="same_as_shipping">{{__('Same as Shipping Address')}}</label>
-                                        </div>
-
                                     </div>
-                                @else
-                                    <div class="row">
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" placeholder="{{__('Name')}}*" name="name" >
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__add_address_single">
-                                                <input type="email" placeholder="{{__('Email')}}*" name="email">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" placeholder="{{__('Phone')}}*" name="phone">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__check_single_form">
-                                                <select class="select_2" name="country" id="country_id">
-                                                    <option value="">{{__('Select Country')}}*</option>
-                                                    @foreach ($countries as $country)
-                                                        <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                    <div class="col-12">
+                                        <div class="wsus__add_address_single">
+                                            <input type="text" placeholder="{{ __('user.Phone') }} *" name="phone" required>
                                         </div>
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__check_single_form">
-                                                <select class="select_2" name="state" id="state_id">
-                                                    <option value="0">{{__('Select State')}}</option>
-                                                    @foreach ($states as $state)
-                                                        <option value="{{ $state->id }}">{{ $state->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__check_single_form">
-                                                <select class="select_2" name="city" id="city_id">
-                                                    <option value="0">{{__('Select City')}}</option>
-                                                    @foreach ($cities as $city)
-                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" placeholder="{{__('Zip Code')}}" name="zip_code">
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-md-6">
-                                            <div class="wsus__add_address_single">
-                                                <input type="text" name="address" placeholder="{{__('Address')}}*">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-xl-6">
-                                            <input type="checkbox" name="same_as_shipping" id="same_as_shipping"> <label for="same_as_shipping">{{__('Same as Shipping Address')}}</label>
-                                        </div>
-
                                     </div>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-xl-5 col-lg-6">
-                            <div class="wsus__order_details" id="sticky_sidebar">
-                                <h5>{{__('products')}}</h5>
-                                <ul class="wsus__order_details_item">
-                                    @php
-                                        $subTotal = 0;
-                                    @endphp
-                                    @foreach ($cartContents as $cartContent)
-                                        @php
-                                            $variantPrice = 0;
-                                        @endphp
-                                        <li>
-                                            <div class="wsus__order_details_img">
-                                                <img src="{{ asset($cartContent->options->image) }}" alt="blazer" class="img-fluid w-100">
-                                                <span>{{ $cartContent->qty }}</span>
-                                            </div>
-                                            <div class="wsus__order_details_text">
-                                                <p>{{ $cartContent->name }}</p>
-                                                <span>
-                                                    @php
-                                                        $totalVariant = count($cartContent->options->variants);
-                                                    @endphp
-                                                    @foreach ($cartContent->options->variants as $indx => $variant)
-                                                        @php
-                                                            $variantPrice += $cartContent->options->prices[$indx];
-                                                        @endphp
-                                                        {{ $variant }}: {{ $cartContent->options->values[$indx] }}{{ $totalVariant == ++$indx ? '' : ',' }}
-                                                    @endforeach
+                                    <div class="col-12">
+                                        <div class="wsus__add_address_single">
+                                            <select name="state_id" id="state_id" class="select_2">
+                                                <option value="">{{ __('user.Select State') }}</option>
+                                                @foreach ($states as $state)
+                                                    <option value="{{ $state->id }}">{{ $state->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
 
-                                                </span>
-                                            </div>
+                                    <div class="col-12">
+                                        <div class="wsus__add_address_single">
+                                            <select name="city_id" id="city_id" class="select_2">
+                                                <option value="">{{ __('user.Select City') }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-                                            @php
-                                                $productPrice = $cartContent->price ;
-                                                $total = $productPrice * $cartContent->qty ;
-                                                $subTotal += $total;
-                                            @endphp
-                                            <div class="wsus__order_details_tk">
-                                                <p>{{ $setting->currency_icon }}{{ $total }}</p>
-                                            </div>
-                                        </li>
-                                        @php
-                                            $totalVariant = 0;
-                                        @endphp
-                                    @endforeach
-                                </ul>
+                                    <div class="col-12">
+                                        <div class="wsus__add_address_single">
+                                            <input type="text" name="address" placeholder="{{ __('user.Address') }} *"
+                                                required>
+                                        </div>
+                                    </div>
 
-                                @php
-                                    $tax_amount = 0;
-                                    $total_price = 0;
-                                    $coupon_price = 0;
-                                    foreach ($cartContents as $key => $content) {
-                                        $tax = $content->options->tax * $content->qty;
-                                        $tax_amount = $tax_amount + $tax;
-                                    }
+                                    <div class="col-xl-12">
+                                        <div class="wsus__add_address_single">
+                                            <textarea cols="3" rows="4" name="additional_info" placeholder="{{ __('user.Additional Information') }} "></textarea>
+                                        </div>
+                                    </div>
 
-                                    $total_price = $tax_amount + $subTotal;
-
-                                    if(Session::get('coupon_price') && Session::get('offer_type')) {
-                                        if(Session::get('offer_type') == 1) {
-                                            $coupon_price = Session::get('coupon_price');
-                                            $coupon_price = ($coupon_price / 100) * $total_price;
-                                        }else {
-                                            $coupon_price = Session::get('coupon_price');
-                                        }
-                                    }
-
-                                    $total_price = $total_price - $coupon_price ;
-                                @endphp
-
-                                <div class="wsus__order_details_summery">
-                                    <p>{{__('subtotal')}}: <span>{{ $setting->currency_icon }}{{ $subTotal }}</span></p>
-                                    <p>{{__('Tax')}}(+): <span>{{ $setting->currency_icon }}{{ $tax_amount }}</span></p>
-                                    <p>{{__('Coupon')}}(-): <span>{{ $setting->currency_icon }}{{  $coupon_price  }}</span></p>
-                                    <p class="total"><span>{{__('total')}}:</span> <span>{{ $setting->currency_icon }}{{ $total_price }}</span></p>
                                 </div>
-                                <button type="submit" class="common_btn">{{__('Continue Shopping')}}</button>
+
                             </div>
                         </div>
-                    </div>
+                        <input type="hidden" name="delivery_fee" id="delivery_fee" value="0.00">
 
                 </form>
+                <div class="col-xl-5 col-lg-6">
+                    <div class="wsus__order_details" id="sticky_sidebar">
+                        <h5>{{ __('user.products') }}</h5>
+                        <form id="checkout_form_update" action="{{ route('update-checkout-cart-item') }}" method="POST">
+                            @csrf
+                            <ul class="wsus__order_details_item">
+                                @php
+                                    $subTotal = 0;
+                                @endphp
+                                @foreach ($cartContents as $cartContent)
+                                    @php
+                                        $variantPrice = 0;
+                                    @endphp
+                                    <li>
+                                        <div class="wsus__order_details_img">
+                                            <img src="{{ asset($cartContent->options->image) }}" alt="blazer"
+                                                class="img-fluid w-100">
+                                            <span>{{ $cartContent->qty }}</span>
+                                        </div>
+                                        <div class="wsus__order_details_text">
+                                            <p>{{ $cartContent->name }}</p>
+
+                                            <div class="checkout_quentity">
+                                                <button type="button"
+                                                    class="btn btn-danger btn-sm decreament_checkout">-</button>
+                                                <input type="text" value="{{ $cartContent->qty }}"
+                                                    class="form-control checkout_cart_item" name="quantities[]"
+                                                    min="1" autocomplete="off">
+                                                <input type="hidden" value="{{ $cartContent->rowId }}"
+                                                    class="form-control" name="ids[]">
+                                                <button type="button"
+                                                    class="btn btn-success btn-sm increament_checkout">+</button>
+                                            </div>
+                                            <span>
+                                                @php
+                                                    $totalVariant = count($cartContent->options->variants);
+                                                @endphp
+                                                @foreach ($cartContent->options->variants as $indx => $variant)
+                                                    @php
+                                                        $variantPrice += $cartContent->options->prices[$indx];
+                                                    @endphp
+                                                    {{ $variant }}:
+                                                    {{ $cartContent->options->values[$indx] }}{{ $totalVariant == ++$indx ? '' : ',' }}
+                                                @endforeach
+
+                                            </span>
+                                        </div>
+
+                                        @php
+                                            $productPrice = $cartContent->price;
+                                            $total = $productPrice * $cartContent->qty;
+                                            $subTotal += $total;
+                                        @endphp
+                                        <div class="wsus__order_details_tk">
+                                            <p>{{ $setting->currency_icon }}{{ $total }}</p>
+                                        </div>
+                                    </li>
+                                    @php
+                                        $totalVariant = 0;
+                                    @endphp
+                                @endforeach
+                            </ul>
+                        </form>
+                        @php
+                            $tax_amount = 0;
+                            $total_price = 0;
+                            $coupon_price = 0;
+
+                            $total_price = $tax_amount + $subTotal;
+
+                            if (Session::get('coupon_price') && Session::get('offer_type')) {
+                                if (Session::get('offer_type') == 1) {
+                                    $coupon_price = Session::get('coupon_price');
+                                    $coupon_price = ($coupon_price / 100) * $total_price;
+                                } else {
+                                    $coupon_price = Session::get('coupon_price');
+                                }
+                            }
+
+                            $total_price = $total_price - $coupon_price;
+                        @endphp
+
+                        <div class="wsus__order_details_summery">
+                            <p>{{ __('user.subtotal') }}: <span>{{ $setting->currency_icon }}{{ $subTotal }}</span>
+                            </p>
+
+                            <p class="total"><span>{{ __('Shipping') }}(+):</span></p>
+
+                            @foreach ($shippings as $ship)
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <input type="radio" name="shipping_method" id="shipping_method"
+                                            data-cost="{{ $ship->shipping_fee }}" value="{{ $ship->shipping_rule }}">
+                                        {{ $ship->shipping_rule }}
+                                    </div>
+                                    <div class="shipping_cost">
+                                        {{ $setting->currency_icon }} {{ $ship->shipping_fee }}
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            @include('user.payment-section')
+
+                            <p class="total"><span>{{ __('user.total') }}:</span>
+                                <span>{{ $setting->currency_icon }}<span class="total_price">{{ $total_price }}</span>
+                                </span>
+                            </p>
+                        </div>
+                        <button type="button" class="common_btn checkout_submit">{{ __('user.Place Order Now') }}</button>
+                    </div>
+                </div>
             </div>
+
+
+        </div>
         </div>
     </section>
-    <!--============================
-         CHECK OUT PAGE END
-    ==============================-->
+    {{-- <!--============================
+            CHECK OUT PAGE END
+    ==============================--> --}}
 
 
     <script>
         (function($) {
             "use strict";
-            $(document).ready(function () {
+            $(document).ready(function() {
+                let total_price = "{{ $total_price }}"
+                let inside_fee = "{{ $inside_fee }}"
+                let outside_fee = "{{ $outside_fee }}"
 
-                $("#country_id").on("change",function(){
-                    var countryId = $("#country_id").val();
-                    if(countryId){
-                        $.ajax({
-                            type:"get",
-                            url:"{{url('/user/state-by-country/')}}"+"/"+countryId,
-                            success:function(response){
-                                $("#state_id").html(response.states);
-                                var response= "<option value=''>{{__('Select a City')}}</option>";
-                                $("#city_id").html(response);
-                            },
-                            error:function(err){
-                            }
-                        })
-                    }else{
-                        var response= "<option value=''>{{__('Select a State')}}</option>";
-                        $("#state_id").html(response);
-                        var response= "<option value=''>{{__('Select a City')}}</option>";
-                        $("#city_id").html(response);
-                    }
+                $(".checkout_cart_item").on('keyup change', function() {
+                    $("#checkout_form_update").submit();
+                })
+
+                $(".checkout_submit").on('click', function() {
+                    $("#checkout_form_submit").submit();
+                })
+
+                $(".increament_checkout").on('click', function() {
+                    let root_div = $(this).parents('.checkout_quentity');
+                    let quantity = root_div.find('.checkout_cart_item').val();
+                    quantity = parseInt(quantity) + parseInt(1);
+                    root_div.find('.checkout_cart_item').val(quantity);
+                    $("#checkout_form_update").submit();
 
                 })
 
-                $("#state_id").on("change",function(){
-                    var countryId = $("#state_id").val();
-                    if(countryId){
-                        $.ajax({
-                            type:"get",
-                            url:"{{url('/user/city-by-state/')}}"+"/"+countryId,
-                            success:function(response){
-                                $("#city_id").html(response.cities);
-                            },
-                            error:function(err){
-                            }
-                        })
-                    }else{
-                        var response= "<option value=''>{{__('Select a City')}}</option>";
-                        $("#city_id").html(response);
+                $(".decreament_checkout").on('click', function() {
+                    let root_div = $(this).parents('.checkout_quentity');
+                    let quantity = root_div.find('.checkout_cart_item').val();
+                    if (quantity > 1) {
+                        quantity = parseInt(quantity) - parseInt(1);
+                        root_div.find('.checkout_cart_item').val(quantity);
+                        $("#checkout_form_update").submit();
                     }
-
                 })
+
+                $('[name="state_id"]').on('change',function(){
+
+                    const stateId = $(this).val();
+                    $.ajax({
+                        type: "get",
+                        url: "{{ route('user.city-by-state', '') }}" + "/" + stateId,
+                        success: function(response) {
+                            console.log(response);
+                            $("#city_id").html(response.cities);
+                        },
+                        error: function(err) {
+                            console.log(err);
+                        }
+                    })
+                })
+
+                $('[name="shipping_method"]').on('change',function(){
+
+                    let val = $(this).val();
+
+                    const cost = $(this).data('cost')
+                    $(".delivery_charge").html(cost)
+                    $(".total_price").html((parseInt(total_price) + parseInt(cost)))
+
+                    $("#delivery_fee").val(cost)
+                })
+
             });
         })(jQuery);
     </script>
 @endsection
+
+
+@push('js')
+    <script>
+        $('.payment-item').on('click',function(){
+
+
+            $('.payment-item').removeClass('selected')
+
+            $(this).addClass('selected')
+        })
+        function setPaymentMethod(ship) {
+            const paymentMethods = ['bank', 'bkash', 'rocket', 'nagad'];
+
+            // Hide all inputs
+            paymentMethods.forEach(method => {
+                $(`.${method}-inputs`).addClass('d-none');
+            });
+
+            // Show the selected input
+            if (paymentMethods.includes(ship)) {
+                $(`.${ship}-inputs`).removeClass('d-none');
+            }
+
+            // Set the selected payment method
+            $('input[name="payment_method"]').val(ship);
+        }
+    </script>
+@endpush

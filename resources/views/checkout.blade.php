@@ -41,8 +41,6 @@
                 <div class="col-12">
                     <ul class="wsus__cart_tab">
                         <li><a href="{{ route('cart') }}">{{__('Shopping Cart')}}</a></li>
-                        <li><a href="{{ route('user.checkout.billing-address') }}">{{__('Billing Address')}}</a></li>
-                        <li><a  class="wsus__order_active" href="{{ route('user.checkout.checkout') }}">{{__('Checkout')}}</a></li>
                         <li><a href="javascript:;">{{__('payment')}}</a></li>
 
                     </ul>
@@ -73,16 +71,6 @@
 
                                     <div class="col-xl-12">
                                         <div class="wsus__check_single_form">
-                                            <select class="select_2" name="country" id="country_id">
-                                                <option value="">{{__('Select Country')}}*</option>
-                                                @foreach ($countries as $country)
-                                                    <option {{ $country->id == $shipping->country_id ? 'selected' : '' }} value="{{ $country->id }}">{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="wsus__check_single_form">
                                             <select class="select_2" name="state" id="state_id">
                                                 <option value="0">{{__('Select State')}}</option>
                                                 @foreach ($states as $state)
@@ -102,11 +90,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6">
-                                        <div class="wsus__add_address_single">
-                                            <input type="text" placeholder="Zip Code" name="zip_code" value="{{ $shipping->zip_code }}">
-                                        </div>
-                                    </div>
                                     <div class="col-xl-6">
                                         <div class="wsus__add_address_single">
                                             <input type="text" name="address" placeholder="{{__('Address')}}*" value="{{ $shipping->address }}">
@@ -140,16 +123,6 @@
 
                                     <div class="col-xl-6 col-md-6">
                                         <div class="wsus__check_single_form">
-                                            <select class="select_2" name="country" id="country_id">
-                                                <option value="">{{__('Select Country')}}*</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-md-6">
-                                        <div class="wsus__check_single_form">
                                             <select class="select_2" name="state" id="state_id">
                                                 <option value="0">{{__('Select State')}}</option>
                                                 @foreach ($states as $state)
@@ -169,11 +142,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6 col-md-6">
-                                        <div class="wsus__add_address_single">
-                                            <input type="text" placeholder="{{__('Zip Code')}}" name="zip_code">
-                                        </div>
-                                    </div>
                                     <div class="col-xl-6 col-md-6">
                                         <div class="wsus__add_address_single">
                                             <input type="text" name="address" placeholder="{{__('Address')}}*">
