@@ -83,13 +83,13 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="wsus__add_address_single">
-                                            <input type="text" placeholder="{{ __('user.Name') }} *" name="name" required>
+                                            <input type="text" placeholder="{{ __('user.Name') }} *" name="name" required value="{{ old('name') }}">
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="wsus__add_address_single">
-                                            <input type="text" placeholder="{{ __('user.Phone') }} *" name="phone" required>
+                                            <input type="text" placeholder="{{ __('user.Phone') }} *" name="phone" required value="{{ old('phone') }}">
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -114,13 +114,13 @@
                                     <div class="col-12">
                                         <div class="wsus__add_address_single">
                                             <input type="text" name="address" placeholder="{{ __('user.Address') }} *"
-                                                required>
+                                                required value="{{ old('address') }}">
                                         </div>
                                     </div>
 
                                     <div class="col-xl-12">
                                         <div class="wsus__add_address_single">
-                                            <textarea cols="3" rows="4" name="additional_info" placeholder="{{ __('user.Additional Information') }} "></textarea>
+                                            <textarea cols="3" rows="4" name="additional_info" placeholder="{{ __('user.Additional Information') }} ">{{ old('additional_info') }}</textarea>
                                         </div>
                                     </div>
 
