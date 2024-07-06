@@ -21,8 +21,10 @@ class Product extends Model
         return $this->orderProducts()->sum('qty');
     }
 
-
-
+    public function tax()
+    {
+        return $this->belongsTo(Tax::class);
+    }
 
     public function category(){
         return $this->belongsTo(Category::class);

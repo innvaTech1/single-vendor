@@ -2,7 +2,7 @@
     @if ($products->count() == 0)
         <div class="row">
             <div class="col-12 text-center">
-                <h3 class="text-danger mt-5">{{__('Product not found')}}</h3>
+                <h3 class="text-danger mt-5">{{__('user.Product not found')}}</h3>
             </div>
         </div>
     @endif
@@ -66,13 +66,13 @@
         <div class="col-xl-4  col-sm-6">
             <div class="wsus__product_item">
                 @if ($product->new_product == 1)
-                    <span class="wsus__new">{{__('New')}}</span>
+                    <span class="wsus__new">{{__('user.New')}}</span>
                 @elseif ($product->is_featured == 1)
-                    <span class="wsus__new">{{__('Featured')}}</span>
+                    <span class="wsus__new">{{__('user.Featured')}}</span>
                 @elseif ($product->is_top == 1)
-                    <span class="wsus__new">{{__('Top')}}</span>
+                    <span class="wsus__new">{{__('user.Top')}}</span>
                 @elseif ($product->is_best == 1)
-                    <span class="wsus__new">{{__('Best')}}</span>
+                    <span class="wsus__new">{{__('user.Best')}}</span>
                 @endif
 
                 @if ($isCampaign)
@@ -87,9 +87,7 @@
                     <img src="{{ asset($product->thumb_image) }}" alt="product" class="img-fluid w-100 img_2" />
                 </a>
                 <ul class="wsus__single_pro_icon">
-                    <li><a data-bs-toggle="modal" data-bs-target="#productModalView-{{ $product->id }}"><i class="fal fa-eye"></i></a></li>
-                    <li><a href="javascript:;" onclick="addToWishlist('{{ $product->id }}')"><i class="far fa-heart"></i></a></li>
-                    <li><a href="javascript:;" onclick="addToCompare('{{ $product->id }}')"><i class="far fa-random"></i></a></li>
+
                 </ul>
                 <div class="wsus__product_details">
                 <a class="wsus__category" href="{{ route('product',['category' => $product->category->slug]) }}">{{ $product->category->name }} </a>
@@ -110,7 +108,7 @@
                                 @endif
                             @endif
                         @endfor
-                        <span>({{ $reviewQty }} {{__('review')}})</span>
+                        <span>({{ $reviewQty }} {{__('user.review')}})</span>
                     </p>
                 @endif
                 @if ($reviewQty == 0)
@@ -120,7 +118,7 @@
                         <i class="fal fa-star"></i>
                         <i class="fal fa-star"></i>
                         <i class="fal fa-star"></i>
-                        <span>(0 {{__('review')}})</span>
+                        <span>(0 {{__('user.review')}})</span>
                     </p>
                 @endif
                     <a class="wsus__pro_name" href="{{ route('product-detail',$product->slug) }}">{{ $product->short_name }}</a>
@@ -135,7 +133,9 @@
                         @endif
                     @endif
 
-                    <a class="add_cart" onclick="addToCartMainProduct('{{ $product->id }}')" href="javascript:;">{{__('add to cart')}}</a>
+                    <a class="buy_button" onclick="addToBuyNow('{{ $product->id }}')" href="javascript:;">{{ __('user.Order Now') }}</a>
+
+                    <a class="add_cart" onclick="addToCartMainProduct('{{ $product->id }}')" href="javascript:;"><i class="far fa-shopping-basket"></i></a>
                 </div>
             </div>
         </div>
@@ -150,7 +150,7 @@
     @if ($products->count() == 0)
         <div class="row">
             <div class="col-12 text-center">
-                <h3 class="text-danger mt-5">{{__('Product not found')}}</h3>
+                <h3 class="text-danger mt-5">{{__('user.Product not found')}}</h3>
             </div>
         </div>
     @endif
@@ -213,13 +213,13 @@
         <div class="col-xl-12">
             <div class="wsus__product_item wsus__list_view">
                 @if ($product->new_product == 1)
-                    <span class="wsus__new">{{__('New')}}</span>
+                    <span class="wsus__new">{{__('user.New')}}</span>
                 @elseif ($product->is_featured == 1)
-                    <span class="wsus__new">{{__('Featured')}}</span>
+                    <span class="wsus__new">{{__('user.Featured')}}</span>
                 @elseif ($product->is_top == 1)
-                    <span class="wsus__new">{{__('Top')}}</span>
+                    <span class="wsus__new">{{__('user.Top')}}</span>
                 @elseif ($product->is_best == 1)
-                    <span class="wsus__new">{{__('Best')}}</span>
+                    <span class="wsus__new">{{__('user.Best')}}</span>
                 @endif
 
                 @if ($isCampaign)
@@ -253,7 +253,7 @@
                                 @endif
                             @endif
                         @endfor
-                        <span>({{ $reviewQty }} {{__('review')}})</span>
+                        <span>({{ $reviewQty }} {{__('user.review')}})</span>
                     </p>
                 @endif
                 @if ($reviewQty == 0)
@@ -263,7 +263,7 @@
                         <i class="fal fa-star"></i>
                         <i class="fal fa-star"></i>
                         <i class="fal fa-star"></i>
-                        <span>(0 {{__('review')}})</span>
+                        <span>(0 {{__('user.review')}})</span>
                     </p>
                 @endif
                     <a class="wsus__pro_name" href="{{ route('product-detail',$product->slug) }}">{{ $product->short_name }}</a>
@@ -279,9 +279,9 @@
 
                     <p class="list_description">{{ $product->short_description }}</p>
                     <ul class="wsus__single_pro_icon">
-                        <li><a class="add_cart" onclick="addToCartMainProduct('{{ $product->id }}')" href="javascript:;">{{__('add to cart')}}</a></li>
-                        <li><a href="javascript:;" onclick="addToWishlist('{{ $product->id }}')"><i class="far fa-heart"></i></a></li>
-                        <li><a href="javascript:;" onclick="addToCompare('{{ $product->id }}')"><i class="far fa-random"></i></a></li>
+
+                        <a class="buy_button" onclick="addToBuyNow('{{ $product->id }}')" href="javascript:;">{{ __('user.Order Now') }}</a>
+                        <a class="add_cart" onclick="addToCartMainProduct('{{ $product->id }}')" href="javascript:;"><i class="far fa-shopping-basket"></i></a>
                     </ul>
                 </div>
             </div>
@@ -332,11 +332,11 @@
                                     <a class="title" href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a>
 
                                         @if ($product->qty == 0)
-                                        <p class="wsus__stock_area"><span class="in_stock">{{__('Out of Stock')}}</span></p>
+                                        <p class="wsus__stock_area"><span class="in_stock">{{__('user.Out of Stock')}}</span></p>
                                         @else
-                                            <p class="wsus__stock_area"><span class="in_stock">{{__('In stock')}}
+                                            <p class="wsus__stock_area"><span class="in_stock">{{__('user.In stock')}}
                                                 @if ($setting->show_product_qty == 1)
-                                                    </span> ({{ $product->qty }} {{__('item')}})
+                                                    </span> ({{ $product->qty }} {{__('user.item')}})
                                                 @endif
                                             </p>
                                         @endif
@@ -426,7 +426,7 @@
                                                     @endif
                                                 @endif
                                             @endfor
-                                            <span>({{ $reviewQty }} {{__('review')}})</span>
+                                            <span>({{ $reviewQty }} {{__('user.review')}})</span>
                                         </p>
                                     @endif
 
@@ -437,7 +437,7 @@
                                             <i class="fal fa-star"></i>
                                             <i class="fal fa-star"></i>
                                             <i class="fal fa-star"></i>
-                                            <span>(0 {{__('review')}})</span>
+                                            <span>(0 {{__('user.review')}})</span>
                                         </p>
                                     @endif
 
@@ -455,11 +455,11 @@
                                     @endphp
                                     <form id="productModalFormId-{{ $product->id }}">
                                     <div class="wsus__quentity">
-                                        <h5>{{__('quantity') }} :</h5>
+                                        <h5>{{__('user.quantity') }} :</h5>
                                         <div class="modal_btn">
                                             <button onclick="productModalDecrement('{{ $product->id }}')" type="button" class="btn btn-danger btn-sm">-</button>
                                             <input id="productModalQty-{{ $product->id }}" name="quantity"  readonly class="form-control" type="text" min="1" max="100" value="1" />
-                                            <button onclick="productModalIncrement('{{ $product->id }}')" type="button" class="btn btn-success btn-sm">+</button>
+                                            <button onclick="productModalIncrement('{{ $product->id }}','{{ $product->qty }}')" type="button" class="btn btn-success btn-sm">+</button>
                                         </div>
                                         <h3 class="d-none">{{ $currencySetting->currency_icon }}<span id="productModalPrice-{{ $product->id }}">{{ sprintf("%.2f",$productPrice) }}</span></h3>
 
@@ -498,20 +498,24 @@
                                         </div>
                                     @endif
                                     <ul class="wsus__button_area">
-                                        <li><button type="button" onclick="addToCartInProductModal('{{ $product->id }}')" class="add_cart">{{__('add to cart')}}</button></li>
-                                        <li><a class="buy_now" href="javascript:;" onclick="addToBuyNow('{{ $product->id }}')">{{__('buy now')}}</a></li>
-                                        <li><a href="javascript:;" onclick="addToWishlist('{{ $product->id }}')"><i class="fal fa-heart"></i></a></li>
-                                        <li><a href="javascript:;" onclick="addToCompare('{{ $product->id }}')"><i class="far fa-random"></i></a></li>
+                                        <li><button type="button" onclick="addToCartInProductModal('{{ $product->id }}')" class="add_cart">{{__('user.add to cart')}}</button></li>
+                                        <li><a class="buy_now" href="javascript:;" onclick="addToBuyNow('{{ $product->id }}')">{{ __('user.Order Now') }} </a></li>
+
                                     </ul>
                                 </form>
                                 @if ($product->sku)
-                                <p class="brand_model"><span>{{__('Model')}} :</span> {{ $product->sku }}</p>
+                                <p class="brand_model"><span>{{__('user.Model')}} :</span> {{ $product->sku }}</p>
                                 @endif
 
-                                <p class="brand_model"><span>{{__('Brand')}} :</span> <a href="{{ route('product',['brand' => $product->brand->slug]) }}">{{ $product->brand->name }}</a></p>
-                                <p class="brand_model"><span>{{__('Category')}} :</span> <a href="{{ route('product',['category' => $product->category->slug]) }}">{{ $product->category->name }}</a></p>
+                                @if ($product->brand)
+
+                                <p class="brand_model"><span>{{__('user.Brand')}} :</span>
+                                    <a href="{{ route('product',['brand' => $product->brand->slug]) }}">{{ $product->brand->name }}</a></p>
+                                @endif
+
+                                <p class="brand_model"><span>{{__('user.Category')}} :</span> <a href="{{ route('product',['category' => $product->category->slug]) }}">{{ $product->category->name }}</a></p>
                                 <div class="wsus__pro_det_share d-none">
-                                    <h5>{{__('share')}} :</h5>
+                                    <h5>{{__('user.share')}} :</h5>
                                     <ul class="d-flex">
                                         <li><a class="facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ route('product-detail', $product->slug) }}&t={{ $product->name }}"><i class="fab fa-facebook-f"></i></a></li>
                                         <li><a class="twitter" href="https://twitter.com/share?text={{ $product->name }}&url={{ route('product-detail', $product->slug) }}"><i class="fab fa-twitter"></i></a></li>

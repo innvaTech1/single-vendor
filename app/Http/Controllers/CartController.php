@@ -105,8 +105,11 @@ class CartController extends Controller
         $data['options']['prices'] = $prices;
         Cart::add($data);
 
+
+        $view = view('components.order-modal')->render();
+
         $notification = trans('user_validation.Item added successfully');
-        return response()->json(['status' => 1, 'message' => $notification]);
+        return response()->json(['status' => 1, 'message' => $notification, 'view' => $view]);
     }
 
     public function addToBuy(Request $request)

@@ -129,5 +129,6 @@ return array(
     'Delivery fee is required' => 'Delivery fee is required',
     'State is required' => 'State is required',
     'City is required' => 'City is required',
-    'Something went wrong, please try again' => 'Something went wrong, please try again'
+    'Something went wrong, please try again' => 'Something went wrong, please try again',
+    'Item removed successfully' => 'Item removed successfully'
 );

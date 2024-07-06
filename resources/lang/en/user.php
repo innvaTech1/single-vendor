@@ -490,5 +490,7 @@ return array(
     'Card Payment' => 'Card Payment',
     'GrabPay' => 'GrabPay',
     'GCash' => 'GCash',
-    'Payment with Paymongo' => 'Payment with Paymongo'
+    'Payment with Paymongo' => 'Payment with Paymongo',
+    'Select Delivery Area' => 'Select Delivery Area',
+    'Fill The Details' => 'Fill The Details'
 );

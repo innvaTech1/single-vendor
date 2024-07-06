@@ -231,7 +231,6 @@
                                     </div>
                                 </div>
                             @endforeach
-
                             @include('user.payment-section')
 
                             <p class="total"><span>{{ __('user.total') }}:</span>

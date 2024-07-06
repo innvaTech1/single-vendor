@@ -3895,11 +3895,13 @@ PRODUCT DETAILS START
 }
 
 .wsus__button_area li .buy_now,
-.wsus__ofer_det_footer_btn .buy_now {
+.wsus__ofer_det_footer_btn .buy_now, .modal-footer .buy_now {
     background: #ca6d00;
     padding: 10px 20px;
     border-radius: 3px;
     text-transform: uppercase;
+    outline:none;
+    
     font-size: 16px;
     font-weight: 400;
     color: #fff;

@@ -51,7 +51,7 @@
 .wsus__stock_area .in_stock,
 .wsus__button_area li .buy_now,
 .wsus__ofer_det_footer_btn .buy_now,
-.wsus__single_pro_icon li a {
+.wsus__single_pro_icon li a, .modal-footer .buy_now {
     background: {{ $setting->theme_one }} !important;
 }
 

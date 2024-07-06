@@ -8,7 +8,6 @@
 
 @section('public-content')
 
-
     <!--============================
          BREADCRUMB START
     ==============================-->
@@ -30,6 +29,7 @@
     <!--============================
         BREADCRUMB END
     ==============================-->
+
 <!--============================
         PRODUCT DETAILS START
     ==============================-->
@@ -53,8 +53,6 @@
                                     @foreach ($product->gallery as $image)
                                     <li><img class="zoom ing-fluid w-100" src="{{ asset($image->image) }}" alt="product"></li>
                                     @endforeach
-
-
                                 </ul>
                             </div>
                             <div class="exzoom_nav"></div>
@@ -238,22 +236,17 @@
 
                                                 <input type="hidden" name="variants[]" value="{{ $productVariant->id }}">
                                                 <input type="hidden" name="variantNames[]" value="{{ $productVariant->name }}">
-
                                                 <select class="select_2 productVariant" name="items[]">
                                                     @foreach ($items as $item)
                                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
                                                     @endforeach
                                                 </select>
-
                                             </div>
                                         @endif
                                     @endforeach
                                 </div>
                             </div>
                         @endif
-
-
-
 
                         <ul class="wsus__button_area">
                             <li><button type="submit" class="add_cart">{{__('add to cart')}}</button></li>
@@ -263,6 +256,7 @@
                         </ul>
 
                     </form>
+
                         @if ($product->sku)
                         <p class="brand_model"><span>{{__('Model')}} :</span> {{ $product->sku }}</p>
                         @endif
@@ -298,7 +292,9 @@
 
                         @endauth
 
+                        @include('components.order-modal')
                     </div>
+
 
                     <!--==========================
                     PRODUCT  REPORT MODAL VIEW
@@ -1031,7 +1027,6 @@
         RELATED PRODUCT END
     ==============================-->
 
-
 <script>
     (function($) {
         "use strict";
@@ -1116,32 +1111,40 @@
 
             // buy now item
             $("#buyNowBtn").on("click", function(){
+
+                $('#orderModal').modal('show')
+                const productQty = $('input.product_qty').val();
+                $('#orderModal .product_qty').text('x ' + productQty);
+
+                $('#orderModal .modal_price').text('{{ $currencySetting->currency_icon }}'+ $('#mainProductPrice').text());
                 $.ajax({
                     type: 'get',
                     data: $('#shoppingCartForm').serialize(),
                     url: "{{ route('add-to-cart') }}",
                     success: function (response) {
-                        if(response.status == 0){
-                            toastr.error(response.message)
-                        }
-                        if(response.status == 1){
-                            window.location.href = "{{ route('cart') }}";
-                            toastr.success(response.message)
-                            $.ajax({
-                                type: 'get',
-                                url: "{{ route('load-sidebar-cart') }}",
-                                success: function (response) {
-                                   $("#load_sidebar_cart").html(response)
-                                   $.ajax({
-                                        type: 'get',
-                                        url: "{{ route('get-cart-qty') }}",
-                                        success: function (response) {
-                                            $("#cartQty").text(response.qty);
-                                        },
-                                    });
-                                },
-                            });
-                        }
+                        // if(response.status == 0){
+                        //     toastr.error(response.message)
+                        // }
+                        // if(response.status == 1){
+                        //     window.location.href = "{{ route('cart') }}";
+                        //     toastr.success(response.message)
+                        //     $.ajax({
+                        //         type: 'get',
+                        //         url: "{{ route('load-sidebar-cart') }}",
+                        //         success: function (response) {
+                        //            $("#load_sidebar_cart").html(response)
+                        //            $.ajax({
+                        //                 type: 'get',
+                        //                 url: "{{ route('get-cart-qty') }}",
+                        //                 success: function (response) {
+                        //                     $("#cartQty").text(response.qty);
+                        //                 },
+                        //             });
+                        //         },
+                        //     });
+                        // }
+
+                        $('.billing_info').html($view);
                     },
                     error: function(response) {
 
@@ -1175,11 +1178,11 @@
                     }
                 });
             })
-
         });
     })(jQuery);
 
     function calculateProductPrice(){
+        
         $.ajax({
             type: 'get',
             data: $('#shoppingCartForm').serialize(),
@@ -1192,7 +1195,6 @@
                 $("#mainProductPrice").text(price);
             },
             error: function(err) {
-                alert('error')
             }
         });
     }

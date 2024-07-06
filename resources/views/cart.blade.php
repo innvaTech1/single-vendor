@@ -43,7 +43,6 @@
                     <ul class="wsus__cart_tab">
                         <li><a class="wsus__order_active" href="{{ route('cart') }}">{{__('Shopping Cart')}}</a></li>
                         <li><a href="{{ route('user.checkout.billing-address') }}">{{__('Checkout')}}</a></li>
-                        <li><a href="javascript:;">{{__('payment')}}</a></li>
                     </ul>
                 </div>
                 <div class="col-xl-12">
