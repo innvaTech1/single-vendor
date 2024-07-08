@@ -9,8 +9,6 @@
         }
     }
 
-
-
     $isCampaign = false;
     $today = date('Y-m-d H:i:s');
 
@@ -61,20 +59,20 @@
                 href="{{ route('product', ['category' => $product->category->slug]) }}">{{ $product->category->name }}
             </a>
 
-            
-                <p class="wsus__pro_rating">
-                    @for ($i = 1; $i <= 5; $i++)
-                        @if ($i <= $product->avgReview)
-                            <i class="fas fa-star"></i>
-                        @elseif($i - $product->avgReview == 0.5)
-                            <i class="fas fa-star-half-alt"></i>
-                        @else
-                            <i class="far fa-star"></i>
-                        @endif
-                    @endfor
-                    <span>({{ $product->totalReviews() }} {{ __('user.review') }})</span>
-                </p>
-            
+
+            <p class="wsus__pro_rating">
+                @for ($i = 1; $i <= 5; $i++)
+                    @if ($i <= $product->avgReview)
+                        <i class="fas fa-star"></i>
+                    @elseif($i - $product->avgReview == 0.5)
+                        <i class="fas fa-star-half-alt"></i>
+                    @else
+                        <i class="far fa-star"></i>
+                    @endif
+                @endfor
+                <span>({{ $product->totalReviews() }} {{ __('user.review') }})</span>
+            </p>
+
 
             <a class="wsus__pro_name"
                 href="{{ route('product-detail', $product->slug) }}">{{ $product->short_name }}</a>
@@ -96,8 +94,9 @@
                 @endif
             @endif
 
-            {{-- onclick="addToBuyNow('{{ $product->id }}')" --}}
-            <a class="buy_button" href="javascript:;">{{ __('user.Order Now') }} </a>
+
+            <a class="buy_button" href="javascript:;"
+                onclick="addToBuyNow('{{ $product->id }}')">{{ __('user.Order Now') }} </a>
 
             <a class="add_cart" onclick="addToCartMainProduct('{{ $product->id }}')" href="javascript:;"><i
                     class="far fa-shopping-basket"></i></a>

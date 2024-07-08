@@ -9,8 +9,8 @@
 @section('public-content')
 
     <!--============================
-                                                                     BREADCRUMB START
-                                                                ==============================-->
+                                                                             BREADCRUMB START
+                                                                        ==============================-->
     <section id="wsus__breadcrumb" style="background: url({{ asset($product->banner_image) }});">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -27,12 +27,12 @@
         </div>
     </section>
     <!--============================
-                                                                    BREADCRUMB END
-                                                                ==============================-->
+                                                                            BREADCRUMB END
+                                                                        ==============================-->
 
     <!--============================
-                                                                    PRODUCT DETAILS START
-                                                                ==============================-->
+                                                                            PRODUCT DETAILS START
+                                                                        ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="row">
@@ -335,8 +335,8 @@
 
 
                     <!--==========================
-                                                                                PRODUCT  REPORT MODAL VIEW
-                                                                                ===========================-->
+                                                                                        PRODUCT  REPORT MODAL VIEW
+                                                                                        ===========================-->
                     @auth
                         @if ($isExist)
                             <section class="product_popup_modal report_modal">
@@ -380,8 +380,8 @@
                         @endif
                     @endauth
                     <!--==========================
-                                                                                PRODUCT REPORT MODAL VIEW
-                                                                                ===========================-->
+                                                                                        PRODUCT REPORT MODAL VIEW
+                                                                                        ===========================-->
                 </div>
 
                 <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
@@ -697,13 +697,13 @@
         </div>
     </section>
     <!--============================
-                                                                    PRODUCT DETAILS END
-                                                                ==============================-->
+                                                                            PRODUCT DETAILS END
+                                                                        ==============================-->
 
 
     <!--============================
-                                                                    RELATED PRODUCT START
-                                                                ==============================-->
+                                                                            RELATED PRODUCT START
+                                                                        ==============================-->
     @if ($relatedProducts->count() > 0)
         <section id="wsus__flash_sell">
             <div class="container">
@@ -719,164 +719,9 @@
                 </div>
                 <div class="row flash_sell_slider ">
                     @foreach ($relatedProducts as $relatedProduct)
-                        @php
-                            $reviewQty = $relatedProduct->reviews->where('status', 1)->count();
-                            $totalReview = $relatedProduct->reviews->where('status', 1)->sum('rating');
-
-                            if ($reviewQty > 0) {
-                                $average = $totalReview / $reviewQty;
-
-                                $intAverage = intval($average);
-
-                                $nextValue = $intAverage + 1;
-                                $reviewPoint = $intAverage;
-                                $halfReview = false;
-                                if ($intAverage < $average && $average < $nextValue) {
-                                    $reviewPoint = $intAverage + 0.5;
-                                    $halfReview = true;
-                                }
-                            }
-                        @endphp
-
-                        @php
-                            $variantPrice = 0;
-                            $variants = $relatedProduct->variants->where('status', 1);
-                            if ($variants->count() != 0) {
-                                foreach ($variants as $variants_key => $variant) {
-                                    if ($variant->variantItems->where('status', 1)->count() != 0) {
-                                        $item = $variant->variantItems->where('is_default', 1)->first();
-                                        if ($item) {
-                                            $variantPrice += $item->price;
-                                        }
-                                    }
-                                }
-                            }
-
-                            $isCampaign = false;
-                            $today = date('Y-m-d H:i:s');
-
-                            $campaign = App\Models\CampaignProduct::where([
-                                'status' => 1,
-                                'product_id' => $relatedProduct->id,
-                            ])->first();
-                            if ($campaign) {
-                                $campaign = $campaign->campaign;
-                                if ($campaign->start_date <= $today && $today <= $campaign->end_date) {
-                                    $isCampaign = true;
-                                }
-
-                                $campaignOffer = $campaign->offer;
-                                $productPrice = $relatedProduct->price;
-                                $campaignOfferPrice = ($campaignOffer / 100) * $productPrice;
-                                $totalPrice = $productPrice;
-                                $campaignOfferPrice = $totalPrice - $campaignOfferPrice;
-                            }
-
-                            $totalPrice = $relatedProduct->price;
-                            if ($relatedProduct->offer_price != null) {
-                                $offerPrice = $relatedProduct->offer_price;
-                                $offer = $totalPrice - $offerPrice;
-                                $percentage = ($offer * 100) / $totalPrice;
-                                $percentage = round($percentage);
-                            }
-
-                        @endphp
-                        <div class="col-xl-3">
-                            <div class="wsus__product_item wsus__after">
-                                @if ($relatedProduct->new_product == 1)
-                                    <span class="wsus__new">{{ __('New') }}</span>
-                                @elseif ($relatedProduct->is_featured == 1)
-                                    <span class="wsus__new">{{ __('Featured') }}</span>
-                                @elseif ($relatedProduct->is_top == 1)
-                                    <span class="wsus__new">{{ __('Top') }}</span>
-                                @elseif ($relatedProduct->is_best == 1)
-                                    <span class="wsus__new">{{ __('Best') }}</span>
-                                @endif
-
-                                @if ($isCampaign)
-                                    <span class="wsus__minus">-{{ $campaignOffer }}%</span>
-                                @else
-                                    @if ($relatedProduct->offer_price != null)
-                                        <span class="wsus__minus">-{{ $percentage }}%</span>
-                                    @endif
-                                @endif
-                                <a class="wsus__pro_link" href="{{ route('product-detail', $relatedProduct->slug) }}">
-                                    <img src="{{ asset($relatedProduct->thumb_image) }}" alt="product"
-                                        class="img-fluid w-100 img_1" />
-                                    <img src="{{ asset($relatedProduct->thumb_image) }}" alt="product"
-                                        class="img-fluid w-100 img_2" />
-                                </a>
-
-                                <ul class="wsus__single_pro_icon">
-                                    <li><a data-bs-toggle="modal"
-                                            data-bs-target="#productModalView-{{ $relatedProduct->id }}"><i
-                                                class="fal fa-eye"></i></a></li>
-                                    <li><a href="javascript:;" onclick="addToWishlist('{{ $relatedProduct->id }}')"><i
-                                                class="far fa-heart"></i></a></li>
-                                    <li><a href="javascript:;" onclick="addToCompare('{{ $relatedProduct->id }}')"><i
-                                                class="far fa-random"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="wsus__product_details">
-                                    <a class="wsus__category"
-                                        href="{{ route('product', ['category' => $relatedProduct->category->slug]) }}">{{ $relatedProduct->category->name }}
-                                    </a>
-
-                                    @if ($reviewQty > 0)
-                                        <p class="wsus__pro_rating">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                @if ($i <= $reviewPoint)
-                                                    <i class="fas fa-star"></i>
-                                                @elseif ($i > $reviewPoint)
-                                                    @if ($halfReview == true)
-                                                        <i class="fas fa-star-half-alt"></i>
-                                                        @php
-                                                            $halfReview = false;
-                                                        @endphp
-                                                    @else
-                                                        <i class="fal fa-star"></i>
-                                                    @endif
-                                                @endif
-                                            @endfor
-                                            <span>({{ $reviewQty }} {{ __('review') }})</span>
-                                        </p>
-                                    @endif
-
-                                    @if ($reviewQty == 0)
-                                        <p class="wsus__pro_rating">
-                                            <i class="fal fa-star"></i>
-                                            <i class="fal fa-star"></i>
-                                            <i class="fal fa-star"></i>
-                                            <i class="fal fa-star"></i>
-                                            <i class="fal fa-star"></i>
-                                            <span>(0 {{ __('review') }})</span>
-                                        </p>
-                                    @endif
-
-                                    <a class="wsus__pro_name"
-                                        href="{{ route('product-detail', $relatedProduct->slug) }}">{{ $relatedProduct->short_name }}</a>
-                                    @if ($isCampaign)
-                                        <p class="wsus__price">
-                                            {{ $currencySetting->currency_icon }}{{ sprintf('%.2f', $campaignOfferPrice + $variantPrice) }}
-                                            <del>{{ $currencySetting->currency_icon }}{{ sprintf('%.2f', $totalPrice) }}</del>
-                                        </p>
-                                    @else
-                                        @if ($relatedProduct->offer_price == null)
-                                            <p class="wsus__price">
-                                                {{ $currencySetting->currency_icon }}{{ sprintf('%.2f', $totalPrice + $variantPrice) }}
-                                            </p>
-                                        @else
-                                            <p class="wsus__price">
-                                                {{ $currencySetting->currency_icon }}{{ sprintf('%.2f', $relatedProduct->offer_price + $variantPrice) }}
-                                                <del>{{ $currencySetting->currency_icon }}{{ sprintf('%.2f', $totalPrice) }}</del>
-                                            </p>
-                                        @endif
-                                    @endif
-                                    <a class="add_cart" onclick="addToCartMainProduct('{{ $relatedProduct->id }}')"
-                                        href="javascript:;">{{ __('add to cart') }}</a>
-                                </div>
-                            </div>
-                        </div>
+                        @include('components.product-cart', [
+                            'product' => $relatedProduct,
+                        ])
                     @endforeach
                 </div>
 
@@ -1165,8 +1010,8 @@
     </section>
     @endif
     <!--============================
-                                                                    RELATED PRODUCT END
-                                                                ==============================-->
+                                                                            RELATED PRODUCT END
+                                                                        ==============================-->
     <div class="order_modal"></div>
     <script>
         (function($) {
@@ -1266,7 +1111,6 @@
                         url: "{{ route('add-to-cart') }}?buy_now=1&quantity=" + productQty,
                         success: function(response) {
                             $('.order_modal').html(response?.view);
-                            console.log(response?.view);
                             $('#orderModal').modal('show')
                         },
                         error: function(response) {
