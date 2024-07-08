@@ -21,7 +21,9 @@
     }
 </style>
 
-<form id="checkout_form_update" action="{{ route('update-checkout-cart-item') }}" method="POST">
+<form id="checkout_form_update"
+    action="{{ request()->ajax() ? route('user.checkout.update-billing-address') : route('update-checkout-cart-item') }}"
+    method="POST">
     <div class="wsus__order_details" id="sticky_sidebar">
         @csrf
         <ul class="wsus__order_details_item">
@@ -41,12 +43,17 @@
                         <p>{{ $cartContent->name }}</p>
 
                         <div class="checkout_quentity">
-                            <button type="button" class="btn btn-danger btn-sm decreament_checkout">-</button>
-                            <input type="text" value="{{ $cartContent->qty }}"
-                                class="form-control checkout_cart_item" name="quantities[]" min="1"
-                                autocomplete="off">
-                            <input type="hidden" value="{{ $cartContent->rowId }}" class="form-control" name="ids[]">
-                            <button type="button" class="btn btn-success btn-sm increament_checkout">+</button>
+                            @if (request()->ajax())
+                                x {{ $cartContent->qty }}
+                            @else
+                                <button type="button" class="btn btn-danger btn-sm decreament_checkout">-</button>
+                                <input type="text" value="{{ $cartContent->qty }}"
+                                    class="form-control checkout_cart_item" name="quantities[]" min="1"
+                                    autocomplete="off">
+                                <input type="hidden" value="{{ $cartContent->rowId }}" class="form-control"
+                                    name="ids[]">
+                                <button type="button" class="btn btn-success btn-sm increament_checkout">+</button>
+                            @endif
                         </div>
                         <span>
                             @php
@@ -234,6 +241,8 @@
 
                 $("#delivery_fee").val(cost)
             })
+
+
 
         });
     })(jQuery);

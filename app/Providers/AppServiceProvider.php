@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\Setting;
+use Illuminate\Support\Facades\View;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +25,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        if (cache()->has('setting')) {
+            $setting = cache()->get('setting');
+        } else {
+            $setting = Setting::first();
+            cache()->forever('setting', $setting);
+        }
 
+        View::share('setting', $setting);
     }
 }

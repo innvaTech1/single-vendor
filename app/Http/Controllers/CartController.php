@@ -35,10 +35,15 @@ class CartController extends Controller
 
         $productStock = Product::find($request->product_id);
 
-        if ($itemExist) {
-            $notification = trans('user_validation.Item already exist');
-            return response()->json(['status' => 0, 'message' => $notification]);
+        if (!request('buy_now')) {
+            if ($itemExist) {
+                $notification = trans('user_validation.Item already exist');
+                return response()->json(['status' => 0, 'message' => $notification]);
+            }
+        } else {
+            Cart::destroy();
         }
+
         $variants = [];
         $values = [];
         $prices = [];
@@ -103,10 +108,13 @@ class CartController extends Controller
         $data['options']['variants'] = $variants;
         $data['options']['values'] = $values;
         $data['options']['prices'] = $prices;
-        Cart::add($data);
+        $cart = Cart::add($data);
 
+        $carts = Cart::content();
 
-        $view = view('components.order-modal')->render();
+        // dd($carts);
+        $view = view('components.order-modal', compact('carts'))->render();
+
 
         $notification = trans('user_validation.Item added successfully');
         return response()->json(['status' => 1, 'message' => $notification, 'view' => $view]);

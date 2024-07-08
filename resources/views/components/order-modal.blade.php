@@ -1,5 +1,9 @@
 @php
-    $cartContents = Cart::content();
+    if (isset($carts)) {
+        $cartContents = $carts;
+    } else {
+        $cartContents = Cart::content();
+    }
     $shippings = \App\Models\Shipping::all();
     $bankInfo = \App\Models\BankPayment::first();
     $bkash = \App\Models\MobilePayment::where('name', 'bkash')->first();
@@ -8,8 +12,8 @@
 
     $states = \App\Models\CountryState::all();
     $tax_amount = 0;
-        $total_price = 0;
-        $coupon_price = 0;
+    $total_price = 0;
+    $coupon_price = 0;
 @endphp
 
 

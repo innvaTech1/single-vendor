@@ -9,8 +9,8 @@
 @section('public-content')
 
     <!--============================
-                 BREADCRUMB START
-            ==============================-->
+                                                                     BREADCRUMB START
+                                                                ==============================-->
     <section id="wsus__breadcrumb" style="background: url({{ asset($product->banner_image) }});">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -27,12 +27,12 @@
         </div>
     </section>
     <!--============================
-                BREADCRUMB END
-            ==============================-->
+                                                                    BREADCRUMB END
+                                                                ==============================-->
 
     <!--============================
-                PRODUCT DETAILS START
-            ==============================-->
+                                                                    PRODUCT DETAILS START
+                                                                ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="row">
@@ -330,13 +330,13 @@
 
                         @endauth
 
-                        @include('components.order-modal')
+                        {{-- @include('components.order-modal') --}}
                     </div>
 
 
                     <!--==========================
-                            PRODUCT  REPORT MODAL VIEW
-                            ===========================-->
+                                                                                PRODUCT  REPORT MODAL VIEW
+                                                                                ===========================-->
                     @auth
                         @if ($isExist)
                             <section class="product_popup_modal report_modal">
@@ -380,8 +380,8 @@
                         @endif
                     @endauth
                     <!--==========================
-                            PRODUCT REPORT MODAL VIEW
-                            ===========================-->
+                                                                                PRODUCT REPORT MODAL VIEW
+                                                                                ===========================-->
                 </div>
 
                 <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
@@ -697,13 +697,13 @@
         </div>
     </section>
     <!--============================
-                PRODUCT DETAILS END
-            ==============================-->
+                                                                    PRODUCT DETAILS END
+                                                                ==============================-->
 
 
     <!--============================
-                RELATED PRODUCT START
-            ==============================-->
+                                                                    RELATED PRODUCT START
+                                                                ==============================-->
     @if ($relatedProducts->count() > 0)
         <section id="wsus__flash_sell">
             <div class="container">
@@ -1165,9 +1165,9 @@
     </section>
     @endif
     <!--============================
-                RELATED PRODUCT END
-            ==============================-->
-
+                                                                    RELATED PRODUCT END
+                                                                ==============================-->
+    <div class="order_modal"></div>
     <script>
         (function($) {
             "use strict";
@@ -1255,46 +1255,25 @@
 
                 // buy now item
                 $("#buyNowBtn").on("click", function() {
-
-                    $('#orderModal').modal('show')
+                    $('.order_modal').html('');
                     const productQty = $('input.product_qty').val();
                     $('#orderModal .product_qty').text('x ' + productQty);
-
                     $('#orderModal .modal_price').text('{{ $currencySetting->currency_icon }}' + $(
                         '#mainProductPrice').text());
                     $.ajax({
                         type: 'get',
                         data: $('#shoppingCartForm').serialize(),
-                        url: "{{ route('add-to-cart') }}",
+                        url: "{{ route('add-to-cart') }}?buy_now=1&quantity=" + productQty,
                         success: function(response) {
-                            // if(response.status == 0){
-                            //     toastr.error(response.message)
-                            // }
-                            // if(response.status == 1){
-                            //     window.location.href = "{{ route('cart') }}";
-                            //     toastr.success(response.message)
-                            //     $.ajax({
-                            //         type: 'get',
-                            //         url: "{{ route('load-sidebar-cart') }}",
-                            //         success: function (response) {
-                            //            $("#load_sidebar_cart").html(response)
-                            //            $.ajax({
-                            //                 type: 'get',
-                            //                 url: "{{ route('get-cart-qty') }}",
-                            //                 success: function (response) {
-                            //                     $("#cartQty").text(response.qty);
-                            //                 },
-                            //             });
-                            //         },
-                            //     });
-                            // }
-
-                            $('.billing_info').html($view);
+                            $('.order_modal').html(response?.view);
+                            console.log(response?.view);
+                            $('#orderModal').modal('show')
                         },
                         error: function(response) {
 
                         }
                     });
+
                 })
 
                 $("#reviewFormId").on('submit', function(e) {
@@ -1329,6 +1308,10 @@
                     });
                 })
             });
+            $(document).on('click', '.checkout_submit', function() {
+
+                $("#checkout_form_update").submit();
+            })
         })(jQuery);
 
         function calculateProductPrice() {
@@ -1342,7 +1325,6 @@
                     let price = response.productPrice * qty;
                     price = price.toFixed(2);
                     $("#product_price").text(price);
-                    // $("#mainProductPrice").text(price);
                 },
                 error: function(err) {}
             });
