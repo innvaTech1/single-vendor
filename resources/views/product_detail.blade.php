@@ -9,8 +9,8 @@
 @section('public-content')
 
     <!--============================
-                                                                             BREADCRUMB START
-                                                                        ==============================-->
+                                                                                         BREADCRUMB START
+                                                                                    ==============================-->
     <section id="wsus__breadcrumb" style="background: url({{ asset($product->banner_image) }});">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -27,12 +27,12 @@
         </div>
     </section>
     <!--============================
-                                                                            BREADCRUMB END
-                                                                        ==============================-->
+                                                                                        BREADCRUMB END
+                                                                                    ==============================-->
 
     <!--============================
-                                                                            PRODUCT DETAILS START
-                                                                        ==============================-->
+                                                                                        PRODUCT DETAILS START
+                                                                                    ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="row">
@@ -292,6 +292,9 @@
                         <p class="brand_model"><span>{{ __('Category') }} :</span> <a
                                 href="{{ route('product', ['category' => $product->category->slug]) }}">{{ $product->category->name }}</a>
                         </p>
+                        <p>
+                            <i class="fas fa-eye"></i> <span>{{ $product->views }}</span>
+                        </p>
                         <div class="wsus__pro_det_share d-none">
                             <h5>{{ __('share') }} :</h5>
                             <ul class="d-flex">
@@ -335,8 +338,8 @@
 
 
                     <!--==========================
-                                                                                        PRODUCT  REPORT MODAL VIEW
-                                                                                        ===========================-->
+                                                                                                    PRODUCT  REPORT MODAL VIEW
+                                                                                                    ===========================-->
                     @auth
                         @if ($isExist)
                             <section class="product_popup_modal report_modal">
@@ -380,8 +383,8 @@
                         @endif
                     @endauth
                     <!--==========================
-                                                                                        PRODUCT REPORT MODAL VIEW
-                                                                                        ===========================-->
+                                                                                                    PRODUCT REPORT MODAL VIEW
+                                                                                                    ===========================-->
                 </div>
 
                 <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
@@ -434,8 +437,6 @@
                                 </div>
                             </div>
                         @endif
-
-
                     </div>
                 </div>
                 <div class="col-xl-12">
@@ -446,26 +447,6 @@
                                     data-bs-target="#pills-home22" type="button" role="tab"
                                     aria-controls="pills-home" aria-selected="true">{{ __('Description') }}</button>
                             </li>
-                            @if ($product->is_specification == 1)
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="pills-profile-tab7" data-bs-toggle="pill"
-                                        data-bs-target="#pills-profile22" type="button" role="tab"
-                                        aria-controls="pills-profile"
-                                        aria-selected="false">{{ __('Specification') }}</button>
-                                </li>
-                            @endif
-
-                            @if ($product->vendor_id != 0)
-                                @if ($setting->enable_multivendor == 1)
-                                    <li class="nav-item" role="presentation">
-                                        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
-                                            data-bs-target="#pills-contact" type="button" role="tab"
-                                            aria-controls="pills-contact"
-                                            aria-selected="false">{{ __('Seller Information') }}</button>
-                                    </li>
-                                @endif
-                            @endif
-
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-contact-tab2" data-bs-toggle="pill"
                                     data-bs-target="#pills-contact2" type="button" role="tab"
@@ -697,13 +678,13 @@
         </div>
     </section>
     <!--============================
-                                                                            PRODUCT DETAILS END
-                                                                        ==============================-->
+                                                                                        PRODUCT DETAILS END
+                                                                                    ==============================-->
 
 
     <!--============================
-                                                                            RELATED PRODUCT START
-                                                                        ==============================-->
+                                                                                        RELATED PRODUCT START
+                                                                                    ==============================-->
     @if ($relatedProducts->count() > 0)
         <section id="wsus__flash_sell">
             <div class="container">
@@ -1010,8 +991,8 @@
     </section>
     @endif
     <!--============================
-                                                                            RELATED PRODUCT END
-                                                                        ==============================-->
+                                                                                        RELATED PRODUCT END
+                                                                                    ==============================-->
     <div class="order_modal"></div>
     <script>
         (function($) {

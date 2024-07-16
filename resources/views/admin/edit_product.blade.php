@@ -218,7 +218,6 @@
                                             <label>{{ __('admin.SEO Description') }}</label>
                                             <textarea name="seo_description" id="" cols="30" rows="10" class="form-control text-area-5">{{ $product->seo_description }}</textarea>
                                         </div>
-
                                         <input type="hidden" name="is_specification" value="0">
                                     </div>
                                     <div class="row">
