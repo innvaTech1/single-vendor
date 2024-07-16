@@ -76,7 +76,6 @@
                                                                 onclick="deleteData({{ $popularCategory->id }})"><i
                                                                     class="fa fa-trash" aria-hidden="true"></i></a>
                                                         </td>
-
                                                     </tr>
                                                 @endforeach
                                             </tbody>

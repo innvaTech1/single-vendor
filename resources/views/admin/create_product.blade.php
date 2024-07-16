@@ -190,69 +190,7 @@
                                             <textarea name="seo_description" id="" cols="30" rows="10" class="form-control text-area-5">{{ old('seo_description') }}</textarea>
                                         </div>
 
-                                        <div class="form-group col-12">
-                                            <label>{{ __('admin.Specifications') }}</label>
-                                            <div>
-                                                <a href="javascript::void()" id="manageSpecificationBox">
-                                                    <input name="is_specification" id="status_toggle" type="checkbox"
-                                                        checked data-toggle="toggle" data-on="Enable" data-off="Disabled"
-                                                        data-onstyle="success" data-offstyle="danger">
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-12" id="specification-box">
-                                            <div class="row">
-                                                <div class="col-md-5">
-                                                    <label>{{ __('admin.Key') }} <span
-                                                            class="text-danger">*</span></label>
-                                                    <select name="keys[]" class="form-control">
-                                                        @foreach ($specificationKeys as $specificationKey)
-                                                            <option value="{{ $specificationKey->id }}">
-                                                                {{ $specificationKey->key }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <label>{{ __('admin.Specification') }} <span
-                                                            class="text-danger">*</span></label>
-                                                    <input type="text" class="form-control" name="specifications[]">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-success plus_btn"
-                                                        id="addNewSpecificationRow"><i class="fas fa-plus"></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div id="hidden-specification-box" class="d-none">
-                                            <div class="delete-specification-row">
-                                                <div class="row mt-2">
-                                                    <div class="col-md-5">
-                                                        <label>{{ __('admin.Key') }} <span
-                                                                class="text-danger">*</span></label>
-                                                        <select name="keys[]" class="form-control">
-                                                            @foreach ($specificationKeys as $specificationKey)
-                                                                <option value="{{ $specificationKey->id }}">
-                                                                    {{ $specificationKey->key }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <label>{{ __('admin.Specification') }} <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control"
-                                                            name="specifications[]">
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <button type="button"
-                                                            class="btn btn-danger plus_btn deleteSpeceficationBtn"><i
-                                                                class="fas fa-trash"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <input type="hidden" name="is_specification" value="0">
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
