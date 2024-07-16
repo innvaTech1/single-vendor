@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class DeliveryMan extends Authenticatable implements JWTSubject
+class DeliveryMan extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 

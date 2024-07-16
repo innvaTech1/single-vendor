@@ -138,7 +138,6 @@
                                                 value="{{ $product->offer_price }}">
                                         </div>
 
-
                                         <div class="form-group col-12">
                                             <label>{{ __('admin.Weight') }} <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="weight"
