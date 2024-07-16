@@ -9,8 +9,8 @@
 @section('public-content')
 
     <!--============================
-                                                                                         BREADCRUMB START
-                                                                                    ==============================-->
+                                                                                             BREADCRUMB START
+                                                                                        ==============================-->
     <section id="wsus__breadcrumb" style="background: url({{ asset($product->banner_image) }});">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -27,12 +27,12 @@
         </div>
     </section>
     <!--============================
-                                                                                        BREADCRUMB END
-                                                                                    ==============================-->
+                                                                                            BREADCRUMB END
+                                                                                        ==============================-->
 
     <!--============================
-                                                                                        PRODUCT DETAILS START
-                                                                                    ==============================-->
+                                                                                            PRODUCT DETAILS START
+                                                                                        ==============================-->
     <section id="wsus__product_details">
         <div class="container">
             <div class="row">
@@ -332,14 +332,12 @@
                             @endif
 
                         @endauth
-
-                        {{-- @include('components.order-modal') --}}
                     </div>
 
 
-                    <!--==========================
-                                                                                                    PRODUCT  REPORT MODAL VIEW
-                                                                                                    ===========================-->
+                    {{-- <!--==========================
+                        PRODUCT  REPORT MODAL VIEW
+                        ===========================--> --}}
                     @auth
                         @if ($isExist)
                             <section class="product_popup_modal report_modal">
@@ -382,9 +380,9 @@
                             </section>
                         @endif
                     @endauth
-                    <!--==========================
-                                                                                                    PRODUCT REPORT MODAL VIEW
-                                                                                                    ===========================-->
+                    {{-- <!--==========================
+                        PRODUCT REPORT MODAL VIEW
+                        ===========================--> --}}
                 </div>
 
                 <div class="col-xl-3 col-md-12 mt-md-5 mt-lg-0">
@@ -481,105 +479,7 @@
 
                                 </div>
                             </div>
-                            @if ($product->vendor_id != 0)
-                                @php
-                                    $user = $product->seller;
-                                    $user = $user->user;
-                                @endphp
-                                <div class="tab-pane fade" id="pills-contact" role="tabpanel"
-                                    aria-labelledby="pills-contact-tab">
-                                    <div class="wsus__pro_det_vendor">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-xxl-5 col-md-6">
-                                                <div class="wsus__vebdor_img">
-                                                    @if ($user->image)
-                                                        <img src="{{ asset($user->image) }}" alt="vensor"
-                                                            class="img-fluid w-100">
-                                                    @else
-                                                        <img src="{{ asset($defaultProfile->image) }}" alt="vensor"
-                                                            class="img-fluid w-100">
-                                                    @endif
 
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-xxl-7 col-md-6 mt-4 mt-md-0">
-                                                <div class="wsus__pro_det_vendor_text">
-                                                    <h4>{{ $user->name }}</h4>
-                                                    @php
-                                                        $reviewQty = App\Models\ProductReview::where('status', 1)
-                                                            ->where('product_vendor_id', $product->vendor_id)
-                                                            ->count();
-                                                        $totalReview = App\Models\ProductReview::where('status', 1)
-                                                            ->where('product_vendor_id', $product->vendor_id)
-                                                            ->sum('rating');
-                                                        if ($reviewQty > 0) {
-                                                            $average = $totalReview / $reviewQty;
-                                                            $intAverage = intval($average);
-                                                            $nextValue = $intAverage + 1;
-                                                            $reviewPoint = $intAverage;
-                                                            $halfReview = false;
-                                                            if ($intAverage < $average && $average < $nextValue) {
-                                                                $reviewPoint = $intAverage + 0.5;
-                                                                $halfReview = true;
-                                                            }
-                                                        }
-                                                    @endphp
-
-                                                    @if ($reviewQty > 0)
-                                                        <p class="rating">
-                                                            @for ($i = 1; $i <= 5; $i++)
-                                                                @if ($i <= $reviewPoint)
-                                                                    <i class="fas fa-star"></i>
-                                                                @elseif ($i > $reviewPoint)
-                                                                    @if ($halfReview == true)
-                                                                        <i class="fas fa-star-half-alt"></i>
-                                                                        @php
-                                                                            $halfReview = false;
-                                                                        @endphp
-                                                                    @else
-                                                                        <i class="fal fa-star"></i>
-                                                                    @endif
-                                                                @endif
-                                                            @endfor
-                                                            <span>({{ $reviewQty }} {{ __('user.review') }})</span>
-                                                        </p>
-                                                    @endif
-
-                                                    @if ($reviewQty == 0)
-                                                        <p class="rating">
-                                                            <i class="fal fa-star"></i>
-                                                            <i class="fal fa-star"></i>
-                                                            <i class="fal fa-star"></i>
-                                                            <i class="fal fa-star"></i>
-                                                            <i class="fal fa-star"></i>
-                                                            <span>(0 {{ __('user.review') }})</span>
-                                                        </p>
-                                                    @endif
-
-                                                    <p><span>{{ __('Store Name') }}:</span>
-                                                        {{ $user->seller->shop_name }}</p>
-                                                    <p><span>{{ __('Address') }}:</span> {{ $user->address }}
-                                                        {{ $user->city ? ',' . $user->city->name : '' }}
-                                                        {{ $user->city ? ',' . $user->city->countryState->name : '' }}
-                                                        {{ $user->city ? ',' . $user->city->countryState->country->name : '' }}
-                                                    </p>
-                                                    <p><span>{{ __('Phone') }}:</span> {{ $user->phone }}</p>
-                                                    <p><span>{{ __('mail') }}:</span> {{ $user->email }}</p>
-                                                    <a href="{{ route('seller-detail', ['shop_name' => $user->seller->slug]) }}"
-                                                        class="see_btn">{{ __('visit store') }}</a>
-                                                    <a href="{{ route('user.chat-with-seller', $user->seller->slug) }}"
-                                                        class="see_btn">{{ __('Chat with Seller') }}</a>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12">
-                                                <div class="wsus__vendor_details">
-                                                    {!! clean($user->seller->description) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endif
                             <div class="tab-pane fade" id="pills-contact2" role="tabpanel"
                                 aria-labelledby="pills-contact-tab2">
                                 <div class="wsus__pro_det_review">
@@ -662,7 +562,6 @@
                                                             <a class="login_link"
                                                                 href="{{ route('login') }}">{{ __('Before submit review, please login first') }}</a>
                                                         @endauth
-
                                                     </form>
                                                 </div>
                                             </div>
@@ -678,13 +577,13 @@
         </div>
     </section>
     <!--============================
-                                                                                        PRODUCT DETAILS END
-                                                                                    ==============================-->
+                                                                                            PRODUCT DETAILS END
+                                                                                        ==============================-->
 
 
     <!--============================
-                                                                                        RELATED PRODUCT START
-                                                                                    ==============================-->
+                                                                                            RELATED PRODUCT START
+                                                                                        ==============================-->
     @if ($relatedProducts->count() > 0)
         <section id="wsus__flash_sell">
             <div class="container">
@@ -991,8 +890,8 @@
     </section>
     @endif
     <!--============================
-                                                                                        RELATED PRODUCT END
-                                                                                    ==============================-->
+                                                                                            RELATED PRODUCT END
+                                                                                        ==============================-->
     <div class="order_modal"></div>
     <script>
         (function($) {

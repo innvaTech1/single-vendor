@@ -10,7 +10,6 @@
     $rocket = \App\Models\MobilePayment::where('name', 'rocket')->first();
     $nagad = \App\Models\MobilePayment::where('name', 'nagad')->first();
 
-    $states = \App\Models\CountryState::all();
     $tax_amount = 0;
     $total_price = 0;
     $coupon_price = 0;

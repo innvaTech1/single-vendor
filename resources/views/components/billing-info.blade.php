@@ -146,25 +146,6 @@
             </div>
             <div class="col-12">
                 <div class="wsus__add_address_single">
-                    <select name="state_id" id="state_id" class="select_2">
-                        <option value="">{{ __('user.Select State') }}</option>
-                        @foreach ($states as $state)
-                            <option value="{{ $state->id }}">{{ $state->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="wsus__add_address_single">
-                    <select name="city_id" id="city_id" class="select_2">
-                        <option value="">{{ __('user.Select City') }}</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="wsus__add_address_single">
                     <input type="text" name="address" placeholder="{{ __('user.Address') }} *" required
                         value="{{ old('address') }}">
                 </div>
