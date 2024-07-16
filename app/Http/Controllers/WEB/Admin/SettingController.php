@@ -81,10 +81,11 @@ use App\Models\FeaturedCategory;
 use App\Models\PopularCategory;
 use App\Models\Shipping;
 use App\Models\MultiCurrency;
-use Image;
 use File;
 use Artisan;
+use Intervention\Image\Image;
 use Validator;
+
 class SettingController extends Controller
 {
     public function __construct()
@@ -92,7 +93,8 @@ class SettingController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function clearDatabase(){
+    public function clearDatabase()
+    {
         Address::truncate();
         AboutUs::truncate();
         ShoppingCart::truncate();
@@ -150,11 +152,11 @@ class SettingController extends Controller
 
         // pending ----
         $admins = Admin::where('id', '!=', 1)->get();
-        foreach($admins as $admin){
+        foreach ($admins as $admin) {
             $admin_image = $admin->image;
             $admin->delete();
-            if($admin_image){
-                if(File::exists(public_path().'/'.$admin_image))unlink(public_path().'/'.$admin_image);
+            if ($admin_image) {
+                if (File::exists(public_path() . '/' . $admin_image)) unlink(public_path() . '/' . $admin_image);
             }
         }
 
@@ -163,16 +165,17 @@ class SettingController extends Controller
         $response = File::deleteDirectory($folderPath);
 
         $path = public_path('uploads/custom-images');
-        if(!File::isDirectory($path)){
+        if (!File::isDirectory($path)) {
             File::makeDirectory($path, 0777, true, true);
         }
 
         $notification = trans('admin_validation.Database Cleared Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function index(){
+    public function index()
+    {
         $setting = Setting::with('currency')->first();
         $cookieConsent = CookieConsent::first();
         $googleRecaptcha = GoogleRecaptcha::first();
@@ -183,14 +186,15 @@ class SettingController extends Controller
         $socialLogin = SocialLoginInformation::first();
         $facebookPixel = FacebookPixel::first();
         $pusher = PusherCredentail::first();
-        $currencies = MultiCurrency::where('status',1)->orderBy('currency_name','asc')->get();
+        $currencies = MultiCurrency::where('status', 1)->orderBy('currency_name', 'asc')->get();
 
 
-        return view('admin.setting',compact('setting','cookieConsent','googleRecaptcha','facebookComment','tawkChat','googleAnalytic','customPaginations','socialLogin','facebookPixel','currencies','pusher'));
+        return view('admin.setting', compact('setting', 'cookieConsent', 'googleRecaptcha', 'facebookComment', 'tawkChat', 'googleAnalytic', 'customPaginations', 'socialLogin', 'facebookPixel', 'currencies', 'pusher'));
     }
 
 
-    public function update_database(){
+    public function update_database()
+    {
         Artisan::call('migrate');
 
         $setting = Setting::first();
@@ -201,14 +205,14 @@ class SettingController extends Controller
         $setting->save();
 
         $notification = trans('Database generated successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
-
     }
-    public function updateThemeColor(Request $request){
+    public function updateThemeColor(Request $request)
+    {
         $setting = Setting::first();
 
-        if(!$setting){
+        if (!$setting) {
             $setting = new Setting();
         }
 
@@ -217,34 +221,35 @@ class SettingController extends Controller
         $setting->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateCustomPagination(Request $request){
+    public function updateCustomPagination(Request $request)
+    {
 
-        foreach($request->quantities as $index => $quantity){
-            if($request->quantities[$index]==''){
-                $notification=array(
-                    'messege'=> trans('admin_validation.Every field is required'),
-                    'alert-type'=>'error'
+        foreach ($request->quantities as $index => $quantity) {
+            if ($request->quantities[$index] == '') {
+                $notification = array(
+                    'messege' => trans('admin_validation.Every field is required'),
+                    'alert-type' => 'error'
                 );
 
                 return redirect()->back()->with($notification);
             }
 
-            $customPagination=CustomPagination::find($request->ids[$index]);
-            $customPagination->qty=$request->quantities[$index];
+            $customPagination = CustomPagination::find($request->ids[$index]);
+            $customPagination->qty = $request->quantities[$index];
             $customPagination->save();
         }
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
-
     }
 
-    public function updateGeneralSetting(Request $request){
+    public function updateGeneralSetting(Request $request)
+    {
 
         $rules = [
             'frontend_url' => 'required',
@@ -258,11 +263,11 @@ class SettingController extends Controller
             'sm_header.required' => trans('admin_validation.Sidebar small header is required'),
             'contact_email.required' => trans('admin_validation.Contact email is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $setting = Setting::first();
 
-        if(!$setting){
+        if (!$setting) {
             $setting = new Setting();
         }
 
@@ -279,11 +284,12 @@ class SettingController extends Controller
         $setting->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateCookieConset(Request $request){
+    public function updateCookieConset(Request $request)
+    {
         $rules = [
             'allow' => 'required',
             'message' => 'required',
@@ -292,11 +298,11 @@ class SettingController extends Controller
             'allow.required' => trans('admin_validation.Allow is required'),
             'message.required' => trans('admin_validation.Message is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $cookieConsent = CookieConsent::first();
 
-        if(!$cookieConsent){
+        if (!$cookieConsent) {
             $cookieConsent = new CookieConsent();
         }
 
@@ -305,11 +311,12 @@ class SettingController extends Controller
         $cookieConsent->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateFacebookComment(Request $request){
+    public function updateFacebookComment(Request $request)
+    {
         $rules = [
             'comment_type' => 'required',
             'app_id' => $request->comment_type == 0 ?  'required' : ''
@@ -317,11 +324,11 @@ class SettingController extends Controller
         $customMessages = [
             'app_id.required' => trans('admin_validation.App id is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $facebookComment = FacebookComment::first();
 
-        if(!$facebookComment){
+        if (!$facebookComment) {
             $facebookComment = new FacebookComment();
         }
         $facebookComment->comment_type = $request->comment_type;
@@ -329,11 +336,12 @@ class SettingController extends Controller
         $facebookComment->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateTawkChat(Request $request){
+    public function updateTawkChat(Request $request)
+    {
         $rules = [
             'allow' => 'required',
             'widget_id' => $request->allow == 1 ?  'required' : '',
@@ -344,11 +352,11 @@ class SettingController extends Controller
             'widget_id.required' => trans('admin_validation.Widget Id is required'),
             'property_id.required' => trans('admin_validation.Property Id is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $tawkChat = TawkChat::first();
 
-        if(!$tawkChat){
+        if (!$tawkChat) {
             $tawkChat = new TawkChat();
         }
         $tawkChat->status = $request->allow;
@@ -357,11 +365,12 @@ class SettingController extends Controller
         $tawkChat->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateGoogleAnalytic(Request $request){
+    public function updateGoogleAnalytic(Request $request)
+    {
         $rules = [
             'allow' => 'required',
             'analytic_id' => $request->allow == 1 ?  'required' : ''
@@ -370,10 +379,10 @@ class SettingController extends Controller
             'allow.required' => trans('admin_validation.Allow is required'),
             'analytic_id.required' => trans('admin_validation.Analytic id is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $googleAnalytic = GoogleAnalytic::first();
-        if(!$googleAnalytic){
+        if (!$googleAnalytic) {
             $googleAnalytic = new GoogleAnalytic();
         }
         $googleAnalytic->status = $request->allow;
@@ -381,12 +390,13 @@ class SettingController extends Controller
         $googleAnalytic->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
 
-    public function updateGoogleRecaptcha(Request $request){
+    public function updateGoogleRecaptcha(Request $request)
+    {
 
         $rules = [
             'site_key' => $request->allow == 1 ?  'required' : '',
@@ -398,11 +408,11 @@ class SettingController extends Controller
             'secret_key.required' => trans('admin_validation.Secret key is required'),
             'allow.required' => trans('admin_validation.Allow is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $googleRecaptcha = GoogleRecaptcha::first();
 
-        if(!$googleRecaptcha){
+        if (!$googleRecaptcha) {
             $googleRecaptcha = new GoogleRecaptcha();
         }
         $googleRecaptcha->status = $request->allow;
@@ -411,53 +421,39 @@ class SettingController extends Controller
         $googleRecaptcha->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
-
     }
 
-    public function updateLogoFavicon(Request $request){
+    public function updateLogoFavicon(Request $request)
+    {
         $setting = Setting::first();
-        if($request->logo){
-            $old_logo=$setting->logo;
-            $image=$request->logo;
-            $ext=$image->getClientOriginalExtension();
-            $logo_name= 'logo-'.date('Y-m-d-h-i-s-').rand(999,9999).'.'.$ext;
-            $logo_name='uploads/website-images/'.$logo_name;
-            $logo=Image::make($image)
-                    ->save(public_path().'/'.$logo_name);
-            $setting->logo=$logo_name;
+        if ($request->logo) {
+            $logo_name = file_upload($request->logo, $setting->logo, '/uploads/custom-images/');
+            $setting->logo = $logo_name;
             $setting->save();
-            if($old_logo){
-                if(File::exists(public_path().'/'.$old_logo))unlink(public_path().'/'.$old_logo);
-            }
         }
 
-        if($request->favicon){
-            $old_favicon=$setting->favicon;
-            $favicon=$request->favicon;
-            $ext=$favicon->getClientOriginalExtension();
-            $favicon_name= 'favicon-'.date('Y-m-d-h-i-s-').rand(999,9999).'.'.$ext;
-            $favicon_name='uploads/website-images/'.$favicon_name;
-            Image::make($favicon)
-                    ->save(public_path().'/'.$favicon_name);
-            $setting->favicon=$favicon_name;
+        if ($request->favicon) {
+            $old_favicon = $setting->favicon;
+            $favicon = $request->favicon;
+            $favicon_name = file_upload($favicon, $old_favicon, '/uploads/custom-images/');
+            $setting->favicon = $favicon_name;
             $setting->save();
-            if($old_favicon){
-                if(File::exists(public_path().'/'.$old_favicon))unlink(public_path().'/'.$old_favicon);
-            }
         }
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function showClearDatabasePage(){
+    public function showClearDatabasePage()
+    {
         return view('admin.clear_database');
     }
 
-    public function updateSocialLogin(Request $request){
+    public function updateSocialLogin(Request $request)
+    {
 
         $rules = [
             'facebook_app_id' => $request->allow_facebook_login ?  'required' : '',
@@ -475,11 +471,11 @@ class SettingController extends Controller
             'gmail_redirect_url.required' => trans('admin_validation.Gmail redirect url is required'),
             'facebook_redirect_url.required' => trans('admin_validation.Facebook redirect url is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $socialLogin = SocialLoginInformation::first();
 
-        if(!$socialLogin){
+        if (!$socialLogin) {
             $socialLogin = new SocialLoginInformation();
         }
 
@@ -494,11 +490,12 @@ class SettingController extends Controller
         $socialLogin->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateFacebookPixel(Request $request){
+    public function updateFacebookPixel(Request $request)
+    {
 
         $rules = [
             'allow_facebook_pixel' => 'required',
@@ -507,11 +504,11 @@ class SettingController extends Controller
         $customMessages = [
             'app_id.required' => trans('admin_validation.App id is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $facebookPixel = FacebookPixel::first();
 
-        if(!$facebookPixel){
+        if (!$facebookPixel) {
             $facebookPixel = new FacebookPixel();
         }
         $facebookPixel->app_id = $request->app_id;
@@ -519,11 +516,12 @@ class SettingController extends Controller
         $facebookPixel->save();
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updatePusher(Request $request){
+    public function updatePusher(Request $request)
+    {
         $rules = [
             'app_id' => 'required',
             'app_key' => 'required',
@@ -536,11 +534,11 @@ class SettingController extends Controller
             'app_secret.required' => trans('admin_validation.App secret is required'),
             'app_cluster.required' => trans('admin_validation.App cluster is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $pusher = PusherCredentail::first();
 
-        if(!$pusher){
+        if (!$pusher) {
             $pusher = new PusherCredentail();
         }
         $pusher->app_id = $request->app_id;
@@ -549,14 +547,14 @@ class SettingController extends Controller
         $pusher->app_cluster = $request->app_cluster;
         $pusher->save();
 
-        Artisan::call("env:set PUSHER_APP_ID='". $request->app_id ."'");
-        Artisan::call("env:set PUSHER_APP_KEY='". $request->app_key ."'");
-        Artisan::call("env:set PUSHER_APP_SECRET='". $request->app_secret ."'");
-        Artisan::call("env:set PUSHER_APP_CLUSTER='". $request->app_cluster ."'");
+        Artisan::call("env:set PUSHER_APP_ID='" . $request->app_id . "'");
+        Artisan::call("env:set PUSHER_APP_KEY='" . $request->app_key . "'");
+        Artisan::call("env:set PUSHER_APP_SECRET='" . $request->app_secret . "'");
+        Artisan::call("env:set PUSHER_APP_CLUSTER='" . $request->app_cluster . "'");
 
 
         $notification = trans('admin_validation.Update Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 }
