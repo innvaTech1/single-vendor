@@ -77,17 +77,9 @@ class HomePageController extends Controller
         if ($request->image) {
             $old_logo = $setting->popular_category_banner;
             $image = $request->image;
-            $ext = $image->getClientOriginalExtension();
-            $logo_name = 'popular-cat-banner-' . date('Y-m-d-h-i-s-') . rand(999, 9999) . '.' . $ext;
-            $logo_name = 'uploads/website-images/' . $logo_name;
-            $logo = Image::make($image)
-                ->save(public_path() . '/' . $logo_name);
+            $logo_name = file_upload($image, $old_logo, '/uploads/custom-images/');
             $setting->popular_category_banner = $logo_name;
             $setting->save();
-
-            if ($old_logo) {
-                if (File::exists(public_path() . '/' . $old_logo)) unlink(public_path() . '/' . $old_logo);
-            }
         }
 
 
@@ -150,17 +142,8 @@ class HomePageController extends Controller
         if ($request->image) {
             $old_logo = $setting->featured_category_banner;
             $image = $request->image;
-            $ext = $image->getClientOriginalExtension();
-            $logo_name = 'featured-cat-banner-' . date('Y-m-d-h-i-s-') . rand(999, 9999) . '.' . $ext;
-            $logo_name = 'uploads/website-images/' . $logo_name;
-            $logo = Image::make($image)
-                ->save(public_path() . '/' . $logo_name);
-            $setting->featured_category_banner = $logo_name;
+            $logo_name = file_upload($image, $old_logo, '/uploads/custom-images/');
             $setting->save();
-
-            if ($old_logo) {
-                if (File::exists(public_path() . '/' . $old_logo)) unlink(public_path() . '/' . $old_logo);
-            }
         }
 
 

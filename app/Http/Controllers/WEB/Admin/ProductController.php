@@ -129,11 +129,7 @@ class ProductController extends Controller
 
         $product = new Product();
         if ($request->thumb_image) {
-            $extention = $request->thumb_image->getClientOriginalExtension();
-            $image_name = Str::slug($request->name) . date('-Y-m-d-h-i-s-') . rand(999, 9999) . '.' . $extention;
-            $image_name = 'uploads/custom-images/' . $image_name;
-            Image::make($request->thumb_image)
-                ->save(public_path() . '/' . $image_name);
+            $image_name = file_upload($request->thumb_image, null, '/uploads/custom-images/');
             $product->thumb_image = $image_name;
         }
 
@@ -251,16 +247,10 @@ class ProductController extends Controller
 
         if ($request->thumb_image) {
             $old_thumbnail = $product->thumb_image;
-            $extention = $request->thumb_image->getClientOriginalExtension();
-            $image_name = Str::slug($request->name) . date('-Y-m-d-h-i-s-') . rand(999, 9999) . '.' . $extention;
-            $image_name = 'uploads/custom-images/' . $image_name;
-            Image::make($request->thumb_image)
-                ->save(public_path() . '/' . $image_name);
+            $image = $request->thumb_image;
+            $image_name = file_upload($image, $old_thumbnail, '/uploads/custom-images/');
             $product->thumb_image = $image_name;
             $product->save();
-            if ($old_thumbnail) {
-                if (File::exists(public_path() . '/' . $old_thumbnail)) unlink(public_path() . '/' . $old_thumbnail);
-            }
         }
 
 

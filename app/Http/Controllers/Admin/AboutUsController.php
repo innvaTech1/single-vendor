@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AboutUs;
 use Illuminate\Http\Request;
-use Intervention\Image\Laravel\Facades\Image;
 use File;
 
 class AboutUsController extends Controller
@@ -35,16 +34,9 @@ class AboutUsController extends Controller
         $aboutUs = AboutUs::find($id);
         if ($request->banner_image) {
             $exist_banner = $aboutUs->banner_image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'about-us' . date('-Y-m-d-h-i-s-') . rand(999, 9999) . '.' . $extention;
-            $banner_name = 'uploads/custom-images/' . $banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path() . '/' . $banner_name);
+            $banner_name = file_upload($request->banner_image, $exist_banner, '/uploads/custom-images/');
             $aboutUs->banner_image = $banner_name;
             $aboutUs->save();
-            if ($exist_banner) {
-                if (File::exists(public_path() . '/' . $exist_banner)) unlink(public_path() . '/' . $exist_banner);
-            }
         }
 
         $aboutUs->description = $request->description;
@@ -68,11 +60,7 @@ class AboutUsController extends Controller
 
         $aboutUs = new AboutUs();
         if ($request->banner_image) {
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'about-us' . date('-Y-m-d-h-i-s-') . rand(999, 9999) . '.' . $extention;
-            $banner_name = 'uploads/custom-images/' . $banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path() . '/' . $banner_name);
+            $banner_name = file_upload($request->banner_image, null, '/uploads/custom-images/');
             $aboutUs->banner_image = $banner_name;
         }
         $aboutUs->description = $request->description;

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ContactPage;
 use Image;
 use File;
+
 class ContactPageController extends Controller
 {
     public function __construct()
@@ -14,11 +15,13 @@ class ContactPageController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index(){
+    public function index()
+    {
         $contact = ContactPage::first();
         return view('admin.contact_page', compact('contact'));
     }
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $rules = [
             'email' => 'required',
             'phone' => 'required',
@@ -35,7 +38,7 @@ class ContactPageController extends Controller
             'google_map.unique' => trans('admin_validation.Google Map is required'),
             'description.unique' => trans('admin_validation.Description is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $contact = new ContactPage();
 
@@ -49,11 +52,12 @@ class ContactPageController extends Controller
 
 
         $notification = trans('admin_validation.Create Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $rules = [
             'email' => 'required',
             'phone' => 'required',
@@ -70,21 +74,14 @@ class ContactPageController extends Controller
             'google_map.unique' => trans('admin_validation.Google Map is required'),
             'description.unique' => trans('admin_validation.Description is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $contact = ContactPage::find($id);
-        if($request->banner_image){
+        if ($request->banner_image) {
             $exist_banner = $contact->banner;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'contact-us'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/custom-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $exist_banner, '/uploads/custom-images/');
             $contact->banner = $banner_name;
             $contact->save();
-            if($exist_banner){
-                if(File::exists(public_path().'/'.$exist_banner))unlink(public_path().'/'.$exist_banner);
-            }
         }
 
         $contact->email = $request->email;
@@ -96,8 +93,7 @@ class ContactPageController extends Controller
         $contact->save();
 
         $notification = trans('admin_validation.Updated Successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
-
 }

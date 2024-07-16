@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Image;
 use File;
+
 class AdvertisementController extends Controller
 {
     public function __construct()
@@ -17,31 +18,32 @@ class AdvertisementController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index(){
+    public function index()
+    {
 
-        $sliderSidebarBannerOne = BannerImage::where('type', 'sliderSidebarBannerOne')->select('product_slug','image','id','banner_location','title_one','title_two','badge','status')->first();
+        $sliderSidebarBannerOne = BannerImage::where('type', 'sliderSidebarBannerOne')->select('product_slug', 'image', 'id', 'banner_location', 'title_one', 'title_two', 'badge', 'status')->first();
 
-        $sliderSidebarBannerTwo = BannerImage::where('type','sliderSidebarBannerTwo')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
+        $sliderSidebarBannerTwo = BannerImage::where('type', 'sliderSidebarBannerTwo')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title_one', 'title_two', 'badge')->first();
 
-        $popularCategorySidebarBanner = BannerImage::where('type','popularCategorySidebarBanner')->select('product_slug','image','id','banner_location','status')->first();
+        $popularCategorySidebarBanner = BannerImage::where('type', 'popularCategorySidebarBanner')->select('product_slug', 'image', 'id', 'banner_location', 'status')->first();
 
-        $homepageTwoColumnBannerOne = BannerImage::where('type','homepageTwoColumnBannerOne')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
+        $homepageTwoColumnBannerOne = BannerImage::where('type', 'homepageTwoColumnBannerOne')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title_one', 'title_two', 'badge')->first();
 
-        $homepageTwoColumnBannerTwo = BannerImage::where('type','homepageTwoColumnBannerTwo')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
+        $homepageTwoColumnBannerTwo = BannerImage::where('type', 'homepageTwoColumnBannerTwo')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title_one', 'title_two', 'badge')->first();
 
-        $homepageSingleBannerOne = BannerImage::where('type','homepageSingleBannerOne')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
+        $homepageSingleBannerOne = BannerImage::where('type', 'homepageSingleBannerOne')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title_one', 'title_two')->first();
 
-        $homepageSingleBannerTwo = BannerImage::where('type','homepageSingleBannerTwo')->select('product_slug','image','id','banner_location','status','title_one')->first();
+        $homepageSingleBannerTwo = BannerImage::where('type', 'homepageSingleBannerTwo')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title_one')->first();
 
-        $megaMenuBanner = BannerImage::where('type','megaMenuBanner')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
+        $megaMenuBanner = BannerImage::where('type', 'megaMenuBanner')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title_one', 'title_two')->first();
 
-        $homepageFlashSaleSidebarBanner = BannerImage::where('type','homepageFlashSaleSidebarBanner')->select('product_slug','image','id','banner_location','status','title')->first();
+        $homepageFlashSaleSidebarBanner = BannerImage::where('type', 'homepageFlashSaleSidebarBanner')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title')->first();
 
-        $shopPageCenterBanner = BannerImage::where('type','shopPageCenterBanner')->select('product_slug','image','id','banner_location','after_product_qty','status','title_one')->first();
+        $shopPageCenterBanner = BannerImage::where('type', 'shopPageCenterBanner')->select('product_slug', 'image', 'id', 'banner_location', 'after_product_qty', 'status', 'title_one')->first();
 
-        $shopPageSidebarBanner = BannerImage::where('type','shopPageSidebarBanner')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
+        $shopPageSidebarBanner = BannerImage::where('type', 'shopPageSidebarBanner')->select('product_slug', 'image', 'id', 'banner_location', 'status', 'title_one', 'title_two')->first();
 
-        $products = Category::where(['status' => 1])->select('id','name','slug')->get();
+        $products = Category::where(['status' => 1])->select('id', 'name', 'slug')->get();
 
         return view('admin.advertisement')->with([
             'products' => $products,
@@ -59,7 +61,8 @@ class AdvertisementController extends Controller
         ]);
     }
 
-    public function megaMenuBannerUpdate(Request $request){
+    public function megaMenuBannerUpdate(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -70,26 +73,19 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $megaMenuBanner = BannerImage::where('type','megaMenuBanner')->select('type','link','image','id','banner_location')->first();
+        $megaMenuBanner = BannerImage::where('type', 'megaMenuBanner')->select('type', 'link', 'image', 'id', 'banner_location')->first();
 
         if (!$megaMenuBanner) {
             $megaMenuBanner = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $megaMenuBanner->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $megaMenuBanner->image = $banner_name;
             $megaMenuBanner->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $megaMenuBanner->product_slug = $request->product_slug;
         $megaMenuBanner->status = $request->status;
@@ -98,12 +94,13 @@ class AdvertisementController extends Controller
         $megaMenuBanner->title_two = $request->title_two;
         $megaMenuBanner->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateSliderBannerOne(Request $request){
+    public function updateSliderBannerOne(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -115,26 +112,19 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $sliderSidebarBannerOne = BannerImage::where('type','sliderSidebarBannerOne')->select('link','image','id','banner_location','type')->first();
+        $sliderSidebarBannerOne = BannerImage::where('type', 'sliderSidebarBannerOne')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
-        if(!$sliderSidebarBannerOne){
+        if (!$sliderSidebarBannerOne) {
             $sliderSidebarBannerOne = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $sliderSidebarBannerOne->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $sliderSidebarBannerOne->image = $banner_name;
             $sliderSidebarBannerOne->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
 
         $sliderSidebarBannerOne->product_slug = $request->product_slug;
@@ -145,12 +135,13 @@ class AdvertisementController extends Controller
         $sliderSidebarBannerOne->type = 'sliderSidebarBannerOne';
         $sliderSidebarBannerOne->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updateSliderBannerTwo(Request $request){
+    public function updateSliderBannerTwo(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -162,25 +153,18 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $sliderSidebarBannerTwo = BannerImage::where('type','sliderSidebarBannerTwo')->select('link','image','id','banner_location', 'type')->first();
+        $sliderSidebarBannerTwo = BannerImage::where('type', 'sliderSidebarBannerTwo')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
         if (!$sliderSidebarBannerTwo) {
             $sliderSidebarBannerTwo = new BannerImage();
         }
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $sliderSidebarBannerTwo->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $sliderSidebarBannerTwo->image = $banner_name;
             $sliderSidebarBannerTwo->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $sliderSidebarBannerTwo->product_slug = $request->product_slug;
         $sliderSidebarBannerTwo->status = $request->status;
@@ -190,12 +174,13 @@ class AdvertisementController extends Controller
         $sliderSidebarBannerTwo->type = 'sliderSidebarBannerTwo';
         $sliderSidebarBannerTwo->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function updatePopularCategorySidebar(Request $request){
+    public function updatePopularCategorySidebar(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
         ];
@@ -203,38 +188,32 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $popularCategorySidebarBanner = BannerImage::where('type','popularCategorySidebarBanner')->select('link','image','id','banner_location', 'type')->first();
+        $popularCategorySidebarBanner = BannerImage::where('type', 'popularCategorySidebarBanner')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
         if (!$popularCategorySidebarBanner) {
             $popularCategorySidebarBanner = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $popularCategorySidebarBanner->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $popularCategorySidebarBanner->image = $banner_name;
             $popularCategorySidebarBanner->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $popularCategorySidebarBanner->product_slug = $request->product_slug;
         $popularCategorySidebarBanner->status = 1;
         $popularCategorySidebarBanner->type = 'popularCategorySidebarBanner';
         $popularCategorySidebarBanner->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function homepageTwoColFirstBanner(Request $request){
+    public function homepageTwoColFirstBanner(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -246,26 +225,19 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $homepageTwoColumnBannerOne = BannerImage::where('type','homepageTwoColumnBannerOne')->select('link','image','id','banner_location', 'type')->first();
+        $homepageTwoColumnBannerOne = BannerImage::where('type', 'homepageTwoColumnBannerOne')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
         if (!$homepageTwoColumnBannerOne) {
             $homepageTwoColumnBannerOne = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $homepageTwoColumnBannerOne->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $homepageTwoColumnBannerOne->image = $banner_name;
             $homepageTwoColumnBannerOne->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $homepageTwoColumnBannerOne->product_slug = $request->product_slug;
         $homepageTwoColumnBannerOne->status = $request->status;
@@ -275,12 +247,13 @@ class AdvertisementController extends Controller
         $homepageTwoColumnBannerOne->type = 'homepageTwoColumnBannerOne';
         $homepageTwoColumnBannerOne->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function homepageTwoColSecondBanner(Request $request){
+    public function homepageTwoColSecondBanner(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -292,27 +265,20 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $homepageTwoColumnBannerTwo = BannerImage::where('type','homepageTwoColumnBannerTwo')->select('link','image','id','banner_location', 'type')->first();
+        $homepageTwoColumnBannerTwo = BannerImage::where('type', 'homepageTwoColumnBannerTwo')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
 
         if (!$homepageTwoColumnBannerTwo) {
             $homepageTwoColumnBannerTwo = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $homepageTwoColumnBannerTwo->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $homepageTwoColumnBannerTwo->image = $banner_name;
             $homepageTwoColumnBannerTwo->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $homepageTwoColumnBannerTwo->product_slug = $request->product_slug;
         $homepageTwoColumnBannerTwo->status = $request->status;
@@ -322,12 +288,13 @@ class AdvertisementController extends Controller
         $homepageTwoColumnBannerTwo->type = 'homepageTwoColumnBannerTwo';
         $homepageTwoColumnBannerTwo->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function homepageSinleFirstBanner(Request $request){
+    public function homepageSinleFirstBanner(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -338,26 +305,19 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $homepageSingleBannerOne = BannerImage::where('type','homepageSingleBannerOne')->select('link','image','id','banner_location', 'type')->first();
+        $homepageSingleBannerOne = BannerImage::where('type', 'homepageSingleBannerOne')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
 
         if (!$homepageSingleBannerOne) {
             $homepageSingleBannerOne = new BannerImage();
         }
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $homepageSingleBannerOne->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $homepageSingleBannerOne->image = $banner_name;
             $homepageSingleBannerOne->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $homepageSingleBannerOne->product_slug = $request->product_slug;
         $homepageSingleBannerOne->status = $request->status;
@@ -366,12 +326,13 @@ class AdvertisementController extends Controller
         $homepageSingleBannerOne->type = 'homepageSingleBannerOne';
         $homepageSingleBannerOne->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function homepageSinleSecondBanner(Request $request){
+    public function homepageSinleSecondBanner(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -382,26 +343,19 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $homepageSingleBannerTwo = BannerImage::where('type','homepageSingleBannerTwo')->select('link','image','id','banner_location', 'type')->first();
+        $homepageSingleBannerTwo = BannerImage::where('type', 'homepageSingleBannerTwo')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
         if (!$homepageSingleBannerTwo) {
             $homepageSingleBannerTwo = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $homepageSingleBannerTwo->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $homepageSingleBannerTwo->image = $banner_name;
             $homepageSingleBannerTwo->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $homepageSingleBannerTwo->product_slug = $request->product_slug;
         $homepageSingleBannerTwo->status = $request->status;
@@ -409,12 +363,13 @@ class AdvertisementController extends Controller
         $homepageSingleBannerTwo->type = 'homepageSingleBannerTwo';
         $homepageSingleBannerTwo->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function homepageFlashSaleSidebarBanner(Request $request){
+    public function homepageFlashSaleSidebarBanner(Request $request)
+    {
         $rules = [
             'link' => 'required',
             'link_two' => 'required',
@@ -425,27 +380,20 @@ class AdvertisementController extends Controller
             'link_two.required' => trans('admin_validation.App store link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $homepageFlashSaleSidebarBanner = BannerImage::where('type','homepageFlashSaleSidebarBanner')->select('link','image','id','banner_location', 'type')->first();
+        $homepageFlashSaleSidebarBanner = BannerImage::where('type', 'homepageFlashSaleSidebarBanner')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
 
         if (!$homepageFlashSaleSidebarBanner) {
             $homepageFlashSaleSidebarBanner = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $homepageFlashSaleSidebarBanner->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $homepageFlashSaleSidebarBanner->image = $banner_name;
             $homepageFlashSaleSidebarBanner->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $homepageFlashSaleSidebarBanner->link = $request->link;
         $homepageFlashSaleSidebarBanner->title = $request->link_two;
@@ -453,12 +401,13 @@ class AdvertisementController extends Controller
         $homepageFlashSaleSidebarBanner->type = 'homepageFlashSaleSidebarBanner';
         $homepageFlashSaleSidebarBanner->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function shopPageCenterBanner(Request $request){
+    public function shopPageCenterBanner(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'after_product_qty' => 'required',
@@ -470,9 +419,9 @@ class AdvertisementController extends Controller
             'after_product_qty.required' => trans('admin_validation.After product quantity is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-         $shopPageCenterBanner = BannerImage::where('type','shopPageCenterBanner')->first();
+        $shopPageCenterBanner = BannerImage::where('type', 'shopPageCenterBanner')->first();
 
 
 
@@ -480,18 +429,11 @@ class AdvertisementController extends Controller
             $shopPageCenterBanner = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $shopPageCenterBanner->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $shopPageCenterBanner->image = $banner_name;
             $shopPageCenterBanner->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
         $shopPageCenterBanner->after_product_qty = $request->after_product_qty;
         $shopPageCenterBanner->product_slug = $request->product_slug;
@@ -500,12 +442,13 @@ class AdvertisementController extends Controller
         $shopPageCenterBanner->type = 'shopPageCenterBanner';
         $shopPageCenterBanner->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function shopPageSidebarBanner(Request $request){
+    public function shopPageSidebarBanner(Request $request)
+    {
         $rules = [
             'product_slug' => 'required',
             'status' => 'required',
@@ -516,26 +459,19 @@ class AdvertisementController extends Controller
             'product_slug.required' => trans('admin_validation.Link is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $shopPageSidebarBanner = BannerImage::where('type','shopPageSidebarBanner')->select('link','image','id','banner_location', 'type')->first();
+        $shopPageSidebarBanner = BannerImage::where('type', 'shopPageSidebarBanner')->select('link', 'image', 'id', 'banner_location', 'type')->first();
 
         if (!$shopPageSidebarBanner) {
             $shopPageSidebarBanner = new BannerImage();
         }
 
-        if($request->banner_image){
+        if ($request->banner_image) {
             $existing_banner = $shopPageSidebarBanner->image;
-            $extention = $request->banner_image->getClientOriginalExtension();
-            $banner_name = 'Mega-menu'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $banner_name = 'uploads/website-images/'.$banner_name;
-            Image::make($request->banner_image)
-                ->save(public_path().'/'.$banner_name);
+            $banner_name = file_upload($request->banner_image, $existing_banner, '/uploads/custom-images/');
             $shopPageSidebarBanner->image = $banner_name;
             $shopPageSidebarBanner->save();
-            if($existing_banner){
-                if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
-            }
         }
 
         $shopPageSidebarBanner->product_slug = $request->product_slug;
@@ -545,9 +481,8 @@ class AdvertisementController extends Controller
         $shopPageSidebarBanner->type = 'shopPageSidebarBanner';
         $shopPageSidebarBanner->save();
 
-        $notification= trans('admin_validation.Update Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Update Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
-
 }
