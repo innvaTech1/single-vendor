@@ -91,17 +91,18 @@ class CheckoutController extends Controller
         $states = CountryState::all();
 
 
-        return view('user.checkout_billing_address', compact('banner', 'cartContents', 'setting', 'inside_fee', 'outside_fee', 'shippings', "bankInfo",'sslcommerz', 'bkash','rocket', 'nagad', 'states'));
+        return view('user.checkout_billing_address', compact('banner', 'cartContents', 'setting', 'inside_fee', 'outside_fee', 'shippings', "bankInfo", 'sslcommerz', 'bkash', 'rocket', 'nagad', 'states'));
     }
 
-    public function payment(){
-        if(!Session::get('is_billing') && !Session::put('is_shipping')) {
+    public function payment()
+    {
+        if (!Session::get('is_billing') && !Session::put('is_shipping')) {
             return redirect()->route('user.checkout.billing-address');
         }
 
         $shipping_fee = 0;
         $shipping_method = Session::get('shipping_method');
-        $shippingMethod = ShippingMethod::where('id',$shipping_method)->first();
+        $shippingMethod = ShippingMethod::where('id', $shipping_method)->first();
         $shipping_fee = $shippingMethod->fee;
 
         $banner = BreadcrumbImage::where(['id' => 2])->first();
@@ -116,19 +117,20 @@ class CheckoutController extends Controller
         $instamojoPayment = InstamojoPayment::first();
         $paypal = PaypalPayment::first();
         $paymongo = PaymongoPayment::first();
-        return view('payment', compact('banner','cartContents','shipping_fee','setting','stripe','razorpay','flutterwave','user','paystack','bankPayment','instamojoPayment','paypal','paymongo'));
+        return view('payment', compact('banner', 'cartContents', 'shipping_fee', 'setting', 'stripe', 'razorpay', 'flutterwave', 'user', 'paystack', 'bankPayment', 'instamojoPayment', 'paypal', 'paymongo'));
     }
 
 
-    public function updateShippingBillingAddress(Request $request){
+    public function updateShippingBillingAddress(Request $request)
+    {
         $rules = [
-            'name'=>'required',
-            'email'=>'required',
-            'phone'=>'required',
-            'country'=>'required',
-            'address'=>'required',
-            'shipping_method'=>'required',
-            'agree_terms_condition'=>'required',
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'country' => 'required',
+            'address' => 'required',
+            'shipping_method' => 'required',
+            'agree_terms_condition' => 'required',
         ];
 
         $customMessages = [
@@ -141,11 +143,11 @@ class CheckoutController extends Controller
             'address.required' => trans('user_validation.Address is required'),
             'agree_terms_condition.required' => trans('user_validation.Agree field is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
         $user = Auth::guard('web')->user();
         $shipping = ShippingAddress::where('user_id', $user->id)->first();
-        if($shipping){
+        if ($shipping) {
             $shipping->name = $request->name;
             $shipping->email = $request->email;
             $shipping->phone = $request->phone;
@@ -155,7 +157,7 @@ class CheckoutController extends Controller
             $shipping->zip_code = $request->zip_code;
             $shipping->address = $request->address;
             $shipping->save();
-        }else{
+        } else {
             $shipping = new ShippingAddress();
             $shipping->user_id = $user->id;
             $shipping->name = $request->name;
@@ -168,14 +170,14 @@ class CheckoutController extends Controller
             $shipping->address = $request->address;
             $shipping->save();
         }
-        Session::put('is_shipping','yes');
-        Session::put('shipping_method',$request->shipping_method);
-        Session::put('shipping_method',$request->shipping_method);
-        if($request->agree_terms_condition){
-            Session::put('agree_terms_condition','yes');
+        Session::put('is_shipping', 'yes');
+        Session::put('shipping_method', $request->shipping_method);
+        Session::put('shipping_method', $request->shipping_method);
+        if ($request->agree_terms_condition) {
+            Session::put('agree_terms_condition', 'yes');
         }
-        if($request->addition_information){
-            Session::put('addition_information',$request->addition_information);
+        if ($request->addition_information) {
+            Session::put('addition_information', $request->addition_information);
         }
         return redirect()->route('user.checkout.payment');
     }
@@ -186,8 +188,6 @@ class CheckoutController extends Controller
         $rules = [
             'name' => 'required',
             'phone' => 'required',
-            'state_id' => 'required',
-            'city_id' => 'required',
             'delivery_fee' => 'required',
             'shipping_method' => 'required',
             'address' => 'required',
@@ -200,14 +200,11 @@ class CheckoutController extends Controller
             'payment_method.required' => trans('user_validation.Payment method is required'),
             'shipping_method.required' => trans('user_validation.Shipping method is required'),
             'delivery_fee.required' => trans('user_validation.Delivery fee is required'),
-            'state_id.required' => trans('user_validation.State is required'),
-            'city_id.required' => trans('user_validation.City is required'),
-
         ];
         $this->validate($request, $rules, $customMessages);
 
         DB::beginTransaction();
-        try{
+        try {
             $address_id = $this->storeAddress($request);
             $this->orderStore($request, auth('web')->user(),  $request->delivery_fee, $address_id, $address_id);
 
@@ -226,7 +223,7 @@ class CheckoutController extends Controller
             // forget cart
             Cart::destroy();
             return redirect()->route($route)->with($notification);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());
             $notification = trans('user_validation.Something went wrong, please try again');
@@ -241,14 +238,12 @@ class CheckoutController extends Controller
         $address->name = $request->name;
         $address->phone = $request->phone;
         $address->address = $request->address;
-        $address->state_id = $request->state_id;
-        $address->city_id = $request->city_id;
         $address->type = 'home';
         $address->save();
         return $address->id;
     }
 
-    public function orderStore($request,$user, $shipping_fee, $billing_address_id, $shipping_address_id)
+    public function orderStore($request, $user, $shipping_fee, $billing_address_id, $shipping_address_id)
     {
 
         $tax_amount = 0;
@@ -316,10 +311,10 @@ class CheckoutController extends Controller
         $order->save();
 
 
-        if(Session::get('coupon_name')){
+        if (Session::get('coupon_name')) {
             $coupon = Coupon::where(['code' => Session::get('coupon_name')])->first();
             $qty = $coupon->apply_qty;
-            $qty = $qty +1;
+            $qty = $qty + 1;
             $coupon->apply_qty = $qty;
             $coupon->save();
         }
@@ -377,15 +372,11 @@ class CheckoutController extends Controller
         $orderAddress->billing_email = $billing->email;
         $orderAddress->billing_phone = $billing->phone;
         $orderAddress->billing_address = $billing->address;
-        $orderAddress->billing_state = $billing->countryState?->name;
-        $orderAddress->billing_city = $billing->city->name;
         $orderAddress->billing_address_type = $billing->type;
         $orderAddress->shipping_name = $shipping->name;
         $orderAddress->shipping_email = $shipping->email;
         $orderAddress->shipping_phone = $shipping->phone;
         $orderAddress->shipping_address = $shipping->address;
-        $orderAddress->shipping_state = $shipping->countryState->name;
-        $orderAddress->shipping_city = $shipping->city->name;
         $orderAddress->shipping_address_type = $shipping->type;
         $orderAddress->save();
 
@@ -396,6 +387,4 @@ class CheckoutController extends Controller
 
         return $arr;
     }
-
-
 }

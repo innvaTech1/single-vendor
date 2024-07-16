@@ -70,8 +70,6 @@ class PaymentController extends Controller
 
 
         $rules = [
-            'district' => 'required',
-            'thana' => 'required',
             'address' => 'required',
             'name' => 'required',
             'phone' => 'required',
@@ -80,8 +78,6 @@ class PaymentController extends Controller
 
         $customMessages = [
             'shipping_method_id.required' => 'Shipping method is required',
-            'district.required' => 'District is required',
-            'thana.required' => 'Thana is required',
             'address.required' => 'Address is required',
             'name.required' => 'Name is required',
             'phone.required' => 'Phone is required',
@@ -112,8 +108,6 @@ class PaymentController extends Controller
         $address->name = $request->name;
         $address->phone = $request->phone;
         $address->address = $request->address;
-        $address->state_id = $request->district;
-        $address->city_id = $request->thana;
         $address->type = 'home';
         $address->save();
         return $address->id;
@@ -630,15 +624,11 @@ class PaymentController extends Controller
         $orderAddress->billing_email = $billing->email;
         $orderAddress->billing_phone = $billing->phone;
         $orderAddress->billing_address = $billing->address;
-        $orderAddress->billing_state = $billing->countryState?->name;
-        $orderAddress->billing_city = $billing->city->name;
         $orderAddress->billing_address_type = $billing->type;
         $orderAddress->shipping_name = $shipping->name;
         $orderAddress->shipping_email = $shipping->email;
         $orderAddress->shipping_phone = $shipping->phone;
         $orderAddress->shipping_address = $shipping->address;
-        $orderAddress->shipping_state = $shipping->countryState->name;
-        $orderAddress->shipping_city = $shipping->city->name;
         $orderAddress->shipping_address_type = $shipping->type;
         $orderAddress->save();
 
