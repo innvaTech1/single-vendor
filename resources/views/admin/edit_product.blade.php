@@ -145,7 +145,11 @@
                                                 value="{{ $product->weight }}">
                                         </div>
 
-
+                                        <div class="form-group col-12">
+                                            <label>{{ __('admin.Video') }}</label>
+                                            <input type="text" id="video_link" class="form-control" name="video_link"
+                                                value="{{ $product->video_link }}">
+                                        </div>
 
                                         <div class="form-group col-12">
                                             <label>{{ __('admin.Short Description') }} <span

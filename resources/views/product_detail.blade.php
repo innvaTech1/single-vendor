@@ -9,8 +9,8 @@
 @section('public-content')
 
     <!--============================
-                                                                                             BREADCRUMB START
-                                                                                        ==============================-->
+                                                                                                 BREADCRUMB START
+                                                                                            ==============================-->
     <section id="wsus__breadcrumb" style="background: url({{ asset($product->banner_image) }});">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -26,13 +26,13 @@
             </div>
         </div>
     </section>
-    <!--============================
-                                                                                            BREADCRUMB END
-                                                                                        ==============================-->
+    {{-- <!--============================
+        BREADCRUMB END
+    ==============================--> --}}
 
-    <!--============================
-                                                                                            PRODUCT DETAILS START
-                                                                                        ==============================-->
+    {{-- <!--============================
+        PRODUCT DETAILS START
+    ==============================--> --}}
     <section id="wsus__product_details">
         <div class="container">
             <div class="row">
@@ -577,13 +577,13 @@
         </div>
     </section>
     <!--============================
-                                                                                            PRODUCT DETAILS END
-                                                                                        ==============================-->
+                                                                                                PRODUCT DETAILS END
+                                                                                            ==============================-->
 
 
     <!--============================
-                                                                                            RELATED PRODUCT START
-                                                                                        ==============================-->
+                                                                                                RELATED PRODUCT START
+                                                                                            ==============================-->
     @if ($relatedProducts->count() > 0)
         <section id="wsus__flash_sell">
             <div class="container">
@@ -890,8 +890,8 @@
     </section>
     @endif
     <!--============================
-                                                                                            RELATED PRODUCT END
-                                                                                        ==============================-->
+                                                                                                RELATED PRODUCT END
+                                                                                            ==============================-->
     <div class="order_modal"></div>
     <script>
         (function($) {
