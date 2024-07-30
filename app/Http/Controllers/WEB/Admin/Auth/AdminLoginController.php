@@ -10,6 +10,7 @@ use Auth;
 use Hash;
 use App\Models\Admin;
 use App\Models\Setting;
+
 class AdminLoginController extends Controller
 {
     use AuthenticatesUsers;
@@ -18,64 +19,66 @@ class AdminLoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:admin-api')->except('adminLogout');
     }
 
-    public function adminLoginPage(){
+    public function adminLoginPage()
+    {
         $setting = Setting::first();
-        return view('admin.auth.login',compact('setting'));
+        return view('admin.auth.login', compact('setting'));
     }
 
 
-    public function storeLogin(Request $request){
+    public function storeLogin(Request $request)
+    {
 
         $rules = [
-            'email'=>'required|email',
-            'password'=>'required',
+            'email' => 'required|email',
+            'password' => 'required',
         ];
 
         $customMessages = [
             'email.required' => trans('admin_validation.Email is required'),
             'password.required' => trans('admin_validation.Password is required'),
         ];
-        $this->validate($request, $rules,$customMessages);
+        $this->validate($request, $rules, $customMessages);
 
-        $credential=[
-            'email'=> $request->email,
-            'password'=> $request->password
+        $credential = [
+            'email' => $request->email,
+            'password' => $request->password
         ];
 
-        $isAdmin=Admin::where('email',$request->email)->first();
-        if($isAdmin){
-            if($isAdmin->status==1){
-                if(Hash::check($request->password,$isAdmin->password)){
-                    if(Auth::guard('admin')->attempt($credential,$request->remember)){
-                        $notification= trans('admin_validation.Login Successfully');
-                        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $isAdmin = Admin::where('email', $request->email)->first();
+        if ($isAdmin) {
+            if ($isAdmin->status == 1) {
+                if (Hash::check($request->password, $isAdmin->password)) {
+                    if (Auth::guard('admin')->attempt($credential, $request->remember)) {
+                        $notification = trans('admin_validation.Login Successfully');
+                        $notification = array('messege' => $notification, 'alert-type' => 'success');
                         return redirect()->route('admin.dashboard')->with($notification);
                     }
-                }else{
-                    $notification= trans('admin_validation.Invalid Password');
+                } else {
+                    $notification = trans('admin_validation.Invalid Password');
 
-                    $notification=array('messege'=>$notification,'alert-type'=>'error');
+                    $notification = array('messege' => $notification, 'alert-type' => 'error');
                     return redirect()->route('admin.login')->with($notification);
                 }
-            }else{
-                $notification= trans('admin_validation.Inactive account');
-                $notification=array('messege'=>$notification,'alert-type'=>'error');
-            return redirect()->route('admin.login')->with($notification);
+            } else {
+                $notification = trans('admin_validation.Inactive account');
+                $notification = array('messege' => $notification, 'alert-type' => 'error');
+                return redirect()->route('admin.login')->with($notification);
             }
-        }else{
-            $notification= trans('admin_validation.Invalid Email');
-            $notification=array('messege'=>$notification,'alert-type'=>'error');
+        } else {
+            $notification = trans('admin_validation.Invalid Email');
+            $notification = array('messege' => $notification, 'alert-type' => 'error');
             return redirect()->route('admin.login')->with($notification);
         }
     }
 
-    public function adminLogout(){
+    public function adminLogout()
+    {
         Auth::guard('admin')->logout();
-        $notification= trans('admin_validation.Logout Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
+        $notification = trans('admin_validation.Logout Successfully');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->route('admin.login')->with($notification);
     }
 }
