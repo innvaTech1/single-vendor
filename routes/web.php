@@ -703,7 +703,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('/pos/update/cart/product', [PosController::class, 'updatePosCart'])->name('pos.update.cart.order');
         Route::post('/pos/add/product/with/detils/{id}', [PosController::class, 'AddProductWithDetils'])->name('pos.cart.order.detils');
 
-
+        Route::get('order/booking/{id}', [OrderController::class, 'booking'])->name('order.booking');
         Route::post('/add-new-product-in-order/{id}', [OrderController::class, 'addNewProduct'])->name('add-new-product-in-order');
         Route::get('/increment-order-quantity/{id}/{order_id}', [OrderController::class, 'incrementOrderQuantity'])->name('order-quantity-increment');
         Route::get('/decrement-order-quantity/{id}/{order_id}', [OrderController::class, 'decrementOrderQuantity'])->name('order-quantity-decrement');

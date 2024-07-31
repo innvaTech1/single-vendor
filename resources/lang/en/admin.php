@@ -9,6 +9,8 @@ return array(
     'Image' => 'Image',
     'Save' => 'Save',
     'Admin' => 'Admin',
+    'Book' => 'Book',
+    'Booking' => 'Booking',
     'Add New' => 'Add New',
     'SN' => 'SN',
     'Video' => 'Video',

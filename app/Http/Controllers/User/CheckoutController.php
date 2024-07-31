@@ -29,7 +29,6 @@ use App\Models\Shipping;
 use App\Models\SslcommerzPayment;
 use Cart;
 use Exception;
-use SteadFast\SteadFastCourierLaravelPackage\Facades\SteadfastCourier;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -387,32 +386,7 @@ class CheckoutController extends Controller
         // create courier order
         // if ($request->payment_method == 'Cash on Delivery') {
 
-        $orderData =
-            [
 
-                'invoice' => $order->order_id,
-
-                'recipient_name' => $shipping->name,
-
-                'recipient_phone' => $shipping->phone,
-
-                'recipient_address' => $shipping->address,
-
-                'cod_amount' => $request->payment_method == 'Cash on Delivery' ? $order->total_amount : 0,
-
-                'note' => $request->additional_info,
-            ];
-
-        $response = SteadfastCourier::placeOrder($orderData);
-
-
-        if ($response['status'] == 200) {
-            $arr['tracking_code'] = $response['consignment']['tracking_code'];
-
-            $order->tracking_code = $response['consignment']['tracking_code'];
-            $order->consignment_id = $response['consignment']['consignment_id'];
-            $order->save();
-        }
         // clear coupon
         Session::forget('coupon_name');
         Session::forget('coupon_discount');

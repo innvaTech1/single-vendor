@@ -15,6 +15,8 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Country;
 
+use SteadFast\SteadFastCourierLaravelPackage\Facades\SteadfastCourier;
+
 class OrderController extends Controller
 {
     public function __construct()
@@ -22,73 +24,81 @@ class OrderController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index(){
-        $orders = Order::with('user')->orderBy('id','desc')->get();
+    public function index()
+    {
+        $orders = Order::with('user')->orderBy('id', 'desc')->get();
         $title = trans('admin_validation.All Orders');
         $setting = Setting::first();
 
-        return view('admin.order', compact('orders','title','setting'));
-
+        return view('admin.order', compact('orders', 'title', 'setting'));
     }
 
-    public function pendingOrder(){
-        $orders = Order::with('user')->orderBy('id','desc')->where('order_status',0)->get();
+    public function pendingOrder()
+    {
+        $orders = Order::with('user')->orderBy('id', 'desc')->where('order_status', 0)->get();
         $title = trans('admin_validation.Pending Orders');
         $setting = Setting::first();
 
-        return view('admin.order', compact('orders','title','setting'));
+        return view('admin.order', compact('orders', 'title', 'setting'));
     }
 
-    public function pregressOrder(){
-        $orders = Order::with('user')->orderBy('id','desc')->where('order_status',1)->get();
+    public function pregressOrder()
+    {
+        $orders = Order::with('user')->orderBy('id', 'desc')->where('order_status', 1)->get();
         $title = trans('admin_validation.Pregress Orders');
         $setting = Setting::first();
 
-        return view('admin.order', compact('orders','title','setting'));
+        return view('admin.order', compact('orders', 'title', 'setting'));
     }
 
-    public function deliveredOrder(){
-        $orders = Order::with('user')->orderBy('id','desc')->where('order_status',2)->get();
+    public function deliveredOrder()
+    {
+        $orders = Order::with('user')->orderBy('id', 'desc')->where('order_status', 2)->get();
         $title = trans('admin_validation.Delivered Orders');
         $setting = Setting::first();
 
-        return view('admin.order', compact('orders','title','setting'));
+        return view('admin.order', compact('orders', 'title', 'setting'));
     }
 
-    public function completedOrder(){
-        $orders = Order::with('user')->orderBy('id','desc')->where('order_status',3)->get();
+    public function completedOrder()
+    {
+        $orders = Order::with('user')->orderBy('id', 'desc')->where('order_status', 3)->get();
         $title = trans('admin_validation.Completed Orders');
         $setting = Setting::first();
-        return view('admin.order', compact('orders','title','setting'));
+        return view('admin.order', compact('orders', 'title', 'setting'));
     }
 
-    public function declinedOrder(){
-        $orders = Order::with('user')->orderBy('id','desc')->where('order_status',4)->get();
+    public function declinedOrder()
+    {
+        $orders = Order::with('user')->orderBy('id', 'desc')->where('order_status', 4)->get();
         $title = trans('admin_validation.Declined Orders');
         $setting = Setting::first();
-        return view('admin.order', compact('orders','title','setting'));
+        return view('admin.order', compact('orders', 'title', 'setting'));
     }
 
-    public function cashOnDelivery(){
-        $orders = Order::with('user')->orderBy('id','desc')->where('cash_on_delivery',1)->get();
+    public function cashOnDelivery()
+    {
+        $orders = Order::with('user')->orderBy('id', 'desc')->where('cash_on_delivery', 1)->get();
         $title = trans('admin_validation.Cash On Delivery');
         $setting = Setting::first();
-        return view('admin.order', compact('orders','title','setting'));
+        return view('admin.order', compact('orders', 'title', 'setting'));
     }
 
-    public function show($id){
-        $order = Order::with('user','orderProducts.orderProductVariants','orderAddress')->find($id);
-        $products = Product::where('status',1)->get();
-        $deliverymans=DeliveryMan::latest()->get();
+    public function show($id)
+    {
+        $order = Order::with('user', 'orderProducts.orderProductVariants', 'orderAddress')->find($id);
+        $products = Product::where('status', 1)->get();
+        $deliverymans = DeliveryMan::latest()->get();
         $setting = Setting::first();
 
         $brands = Brand::all();
-        $categories = Category::with('subCategories','products')->get();
+        $categories = Category::with('subCategories', 'products')->get();
         $countries = Country::all();
-        return view('admin.show_order',compact('order', 'deliverymans', 'setting','products','brands','categories','countries'));
+        return view('admin.show_order', compact('order', 'deliverymans', 'setting', 'products', 'brands', 'categories', 'countries'));
     }
 
-    public function updateOrderStatus(Request $request , $id){
+    public function updateOrderStatus(Request $request, $id)
+    {
         $rules = [
             'order_status' => 'required',
             'payment_status' => 'required',
@@ -96,32 +106,32 @@ class OrderController extends Controller
         $this->validate($request, $rules);
 
         $order = Order::find($id);
-        if($request->order_status == 0){
+        if ($request->order_status == 0) {
             $order->order_status = 0;
             $order->save();
-        }else if($request->order_status == 1){
+        } else if ($request->order_status == 1) {
             $order->order_status = 1;
             $order->order_approval_date = date('Y-m-d');
             $order->save();
-           //return $this->sendFirebasePush($tokens,$data);
-        }else if($request->order_status == 2){
+            //return $this->sendFirebasePush($tokens,$data);
+        } else if ($request->order_status == 2) {
             $order->order_status = 2;
             $order->order_delivered_date = date('Y-m-d');
             $order->save();
-        }else if($request->order_status == 3){
+        } else if ($request->order_status == 3) {
             $order->order_status = 3;
             $order->order_completed_date = date('Y-m-d');
             $order->save();
-        }else if($request->order_status == 4){
+        } else if ($request->order_status == 4) {
             $order->order_status = 4;
             $order->order_declined_date = date('Y-m-d');
             $order->save();
         }
 
-        if($request->payment_status == 0){
+        if ($request->payment_status == 0) {
             $order->payment_status = 0;
             $order->save();
-        }elseif($request->payment_status == 1){
+        } elseif ($request->payment_status == 1) {
             $order->payment_status = 1;
             $order->payment_approval_date = date('Y-m-d');
             $order->save();
@@ -129,36 +139,36 @@ class OrderController extends Controller
 
         $order->order_request = 0;
         $order->order_req_date = date('Y-m-d');
-    
+
         $notification = trans('admin_validation.Order Status Updated successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $order = Order::find($id);
         $order->delete();
-        $orderProducts = OrderProduct::where('order_id',$id)->get();
-        $orderAddress = OrderAddress::where('order_id',$id)->first();
-        foreach($orderProducts as $orderProduct){
-            OrderProductVariant::where('order_product_id',$orderProduct->id)->delete();
+        $orderProducts = OrderProduct::where('order_id', $id)->get();
+        $orderAddress = OrderAddress::where('order_id', $id)->first();
+        foreach ($orderProducts as $orderProduct) {
+            OrderProductVariant::where('order_product_id', $orderProduct->id)->delete();
             $orderProduct->delete();
         }
-        OrderAddress::where('order_id',$id)->delete();
+        OrderAddress::where('order_id', $id)->delete();
 
         $notification = trans('admin_validation.Delete successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->route('admin.all-order')->with($notification);
     }
 
-    public function addNewProduct(Request $request,$id)
+    public function addNewProduct(Request $request, $id)
     {
         $product = Product::find($request->product_id);
-        if($product->offer_price == NULL)
-        {
+        if ($product->offer_price == NULL) {
             $amount = $product->price;
-        }else{
+        } else {
             $amount = $product->offer_price;
         }
         $order_product = new OrderProduct();
@@ -170,71 +180,114 @@ class OrderController extends Controller
         $order_product->qty = $request->quantity;
         $order_product->save();
 
-        if($product->offer_price == NULL)
-        {
-            $add_amount = $product->price*$request->quantity;
-        }else{
-            $add_amount = $product->offer_price*$request->quantity;
+        if ($product->offer_price == NULL) {
+            $add_amount = $product->price * $request->quantity;
+        } else {
+            $add_amount = $product->offer_price * $request->quantity;
         }
         $order = Order::find($id);
-        Order::where('id',$id)->update([
+        Order::where('id', $id)->update([
             'total_amount' => $order->total_amount + $add_amount
         ]);
 
         $notification = trans('admin_validation.Order Status Updated successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
-
     }
 
-    public function incrementOrderQuantity($id,$order_id)
+    public function incrementOrderQuantity($id, $order_id)
     {
         $orderProduct = OrderProduct::find($id);
-        OrderProduct::where('id',$id)->update([
+        OrderProduct::where('id', $id)->update([
             'qty' => $orderProduct->qty + 1
         ]);
 
         $order = Order::find($order_id);
-        Order::where('id',$order_id)->update([
+        Order::where('id', $order_id)->update([
             'total_amount' => $order->total_amount + $orderProduct->unit_price
         ]);
 
         $notification = trans('admin_validation.Updated successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
-    public function decrementOrderQuantity($id,$order_id)
+    public function decrementOrderQuantity($id, $order_id)
     {
         $orderProduct = OrderProduct::find($id);
-        
-        OrderProduct::where('id',$id)->update([
+
+        OrderProduct::where('id', $id)->update([
             'qty' => $orderProduct->qty - 1
         ]);
 
         $order = Order::find($order_id);
-        Order::where('id',$order_id)->update([
+        Order::where('id', $order_id)->update([
             'total_amount' => $order->total_amount - $orderProduct->unit_price
         ]);
 
         $notification = trans('admin_validation.Updated successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 
-    public function deleteOrderProduct($id,$order_id)
+    public function deleteOrderProduct($id, $order_id)
     {
-        
+
         $orderProduct =  OrderProduct::find($id);
-        
+
         $amount = $orderProduct->unit_price * $orderProduct->qty;
         $orderProduct->delete();
         $order = Order::find($order_id);
-        Order::where('id',$order_id)->update([
+        Order::where('id', $order_id)->update([
             'total_amount' => $order->total_amount - $amount
         ]);
 
         $notification = trans('admin_validation.Delete successfully');
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
         return redirect()->back()->with($notification);
-    } 
+    }
+    public function booking($id)
+    {
+        $order = Order::where('order_id', $id)->first();
+
+        $shipping = $order->orderAddress;
+
+        $orderData =
+            [
+
+                'invoice' => $order->order_id,
+
+                'recipient_name' => $shipping->billing_name,
+
+                'recipient_phone' => $shipping->billing_phone,
+
+                'recipient_address' => $shipping->billing_address,
+
+                'cod_amount' => $order->payment_method == 'Cash on Delivery' ? $order->total_amount : 0,
+
+                'note' => $order->additional_info,
+            ];
+
+        $response = SteadfastCourier::placeOrder($orderData);
+
+
+        if ($response['status'] == 400 && count($response['errors']) > 0) {
+            // flatten the array
+            $errors = collect($response['errors'])->flatten();
+
+            foreach ($errors as $error) {
+                return back()->with(['messege' => $error, 'alert-type' => 'error']);
+            }
+        }
+        if ($response['status'] == 200) {
+            $arr['tracking_code'] = $response['consignment']['tracking_code'];
+
+            $order->tracking_id = $response['consignment']['tracking_code'];
+            $order->consignment_id = $response['consignment']['consignment_id'];
+            $order->save();
+
+            return back()->with(['messege' => 'Booking Placed Successfully', 'alert-type' => 'success']);
+        }
+
+        return back()->with(['messege' => 'Something went wrong. Please try again', 'alert-type' => 'error']);
+    }
 }
