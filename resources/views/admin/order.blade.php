@@ -30,6 +30,7 @@
                                                 <th width="10%">{{ __('admin.Date') }}</th>
                                                 <th width="10%">{{ __('admin.Quantity') }}</th>
                                                 <th width="10%">{{ __('admin.Booking') }}</th>
+                                                <th width="10%">{{ __('admin.Tracking Id') }}</th>
                                                 <th width="10%">{{ __('admin.Amount') }}</th>
                                                 <th width="10%">{{ __('admin.Order Status') }}</th>
                                                 <th width="10%">{{ __('admin.Payment') }}</th>
@@ -46,9 +47,15 @@
                                                     <td>{{ $order->created_at->format('d F, Y') }}</td>
                                                     <td>{{ $order->product_qty }}</td>
                                                     <td>
-                                                        <a href="{{ route('admin.order.booking', $order->order_id) }}"
-                                                            class="btn btn-primary">{{ __('admin.Book') }}</a>
+                                                        @if (!$order->tracking_id)
+                                                            <a href="{{ route('admin.order.booking', $order->order_id) }}"
+                                                                class="btn btn-primary">{{ __('admin.Book') }}</a>
+                                                        @else
+                                                            <span
+                                                                class="badge badge-success">{{ __('admin.Booked') }}</span>
+                                                        @endif
                                                     </td>
+                                                    <td>{{ $order->tracking_id }}</td>
                                                     <td>{{ $setting->currency_icon }}{{ round($order->total_amount) }}
                                                     </td>
                                                     <td>
