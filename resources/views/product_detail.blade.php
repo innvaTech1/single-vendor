@@ -9,8 +9,8 @@
 @section('public-content')
 
     <!--============================
-                                                                                                 BREADCRUMB START
-                                                                                            ==============================-->
+                                                                                                                             BREADCRUMB START
+                                                                                                                        ==============================-->
     <section id="wsus__breadcrumb" style="background: url({{ asset($product->banner_image) }});">
         <div class="wsus_breadcrumb_overlay">
             <div class="container">
@@ -577,13 +577,13 @@
         </div>
     </section>
     <!--============================
-                                                                                                PRODUCT DETAILS END
-                                                                                            ==============================-->
+                                                                                                                            PRODUCT DETAILS END
+                                                                                                                        ==============================-->
 
 
     <!--============================
-                                                                                                RELATED PRODUCT START
-                                                                                            ==============================-->
+                                                                                                                            RELATED PRODUCT START
+                                                                                                                        ==============================-->
     @if ($relatedProducts->count() > 0)
         <section id="wsus__flash_sell">
             <div class="container">
@@ -890,8 +890,8 @@
     </section>
     @endif
     <!--============================
-                                                                                                RELATED PRODUCT END
-                                                                                            ==============================-->
+                                                                                                                            RELATED PRODUCT END
+                                                                                                                        ==============================-->
     <div class="order_modal"></div>
     <script>
         (function($) {
@@ -992,6 +992,13 @@
                         success: function(response) {
                             $('.order_modal').html(response?.view);
                             $('#orderModal').modal('show')
+
+                            fbq('track', 'AddToCart', {
+                                content_ids: ['{{ $product->id }}'],
+                                content_type: 'product',
+                                value: {{ $product->price }},
+                                currency: 'BDT' // Replace with your currency
+                            });
                         },
                         error: function(response) {
 
@@ -1033,7 +1040,6 @@
                 })
             });
             $(document).on('click', '.checkout_submit', function() {
-
                 $("#checkout_form_update").submit();
             })
         })(jQuery);
@@ -1066,4 +1072,14 @@
             $("#product_rating").val(rating);
         }
     </script>
+
+    <script>
+        fbq('track', 'ViewContent', {
+            content_ids: ['{{ $product->id }}'],
+            content_type: 'product',
+            value: {{ $product->price }},
+            currency: 'BDT' // Replace with your currency
+        });
+    </script>
+
 @endsection

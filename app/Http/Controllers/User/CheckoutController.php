@@ -382,11 +382,8 @@ class CheckoutController extends Controller
         $arr['order_details'] = $order_details;
 
 
-
-        // create courier order
-        // if ($request->payment_method == 'Cash on Delivery') {
-
-
+        session()->put('order_id', $order->order_id);
+        session()->put('total_amount', $order->total_amount);
         // clear coupon
         Session::forget('coupon_name');
         Session::forget('coupon_discount');
