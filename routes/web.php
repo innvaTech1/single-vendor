@@ -22,7 +22,6 @@ use App\Http\Controllers\WEB\Admin\OrderController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\WEB\Admin\CouponController;
 use App\Http\Controllers\WEB\Admin\FooterController;
-use App\Http\Controllers\WEB\Admin\SellerController;
 use App\Http\Controllers\WEB\Admin\SliderController;
 use App\Http\Controllers\WEB\Admin\AboutUsController;
 use App\Http\Controllers\WEB\Admin\ContentController;
@@ -38,7 +37,7 @@ use App\Http\Controllers\WEB\Admin\DashboardController;
 use App\Http\Controllers\WEB\Admin\ErrorPageController;
 use App\Http\Controllers\WEB\Admin\FlashSaleController;
 use App\Http\Controllers\WEB\Admin\InventoryController;
-use App\Http\Controllers\WEB\Seller\WithdrawController;
+
 use App\Http\Controllers\WEB\Admin\BreadcrumbController;
 use App\Http\Controllers\WEB\Admin\CustomPageController;
 use App\Http\Controllers\WEB\Admin\FooterLinkController;
@@ -63,7 +62,7 @@ use App\Http\Controllers\WEB\Admin\ContactMessageController;
 use App\Http\Controllers\WEB\Admin\MenuVisibilityController;
 use App\Http\Controllers\WEB\Admin\ProductGalleryController;
 use App\Http\Controllers\WEB\Admin\ProductVariantController;
-use App\Http\Controllers\WEB\Admin\SellerWithdrawController;
+
 use App\Http\Controllers\WEB\Admin\CurrencyController;
 
 use App\Http\Controllers\WEB\Admin\ShippingMethodController;
@@ -88,7 +87,7 @@ use App\Http\Controllers\WEB\Admin\PosController;
 use App\Http\Controllers\WEB\Admin\DeliveryManOrderAmountController;
 use App\Http\Controllers\WEB\Admin\Auth\AdminForgotPasswordController;
 use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawMethodController;
-use App\Http\Controllers\WEB\Seller\InventoryController as SellerInventoryController;
+
 use Illuminate\Support\Facades\Broadcast;
 
 Route::group([
@@ -123,8 +122,6 @@ Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
 Route::get('/page/{slug}', [HomeController::class, 'customPage'])->name('page');
 Route::get('/terms-and-conditions', [HomeController::class, 'termsAndCondition'])->name('terms-and-conditions');
 Route::get('/privacy-policy', [HomeController::class, 'privacyPolicy'])->name('privacy-policy');
-Route::get('/sellers', [HomeController::class, 'seller'])->name('sellers');
-Route::get('/seller-detail', [HomeController::class, 'sellerDetail'])->name('seller-detail');
 Route::get('/product', [HomeController::class, 'product'])->name('product');
 Route::get('/search-product', [HomeController::class, 'searchProduct'])->name('search-product');
 Route::get('/product-detail/{slug}', [HomeController::class, 'productDetail'])->name('product-detail');
@@ -186,12 +183,10 @@ Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
     Route::get('address', [UserProfileController::class, 'address'])->name('address');
     Route::get('change-password', [UserProfileController::class, 'changePassword'])->name('change-password');
     Route::post('update-password', [UserProfileController::class, 'updatePassword'])->name('update-password');
-    Route::get('seller-registration', [UserProfileController::class, 'sellerRegistration'])->name('seller-registration');
     Route::get('billing-address', [UserProfileController::class, 'editBillingAddress'])->name('billing-address');
     Route::post('update-billing-address', [UserProfileController::class, 'updateBillingAddress'])->name('update-billing-address');
     Route::get('shipping-address', [UserProfileController::class, 'editShippingAddress'])->name('shipping-address');
     Route::post('update-shipping-address', [UserProfileController::class, 'updateShippingAddress'])->name('update-shipping-address');
-    Route::post('seller-request', [UserProfileController::class, 'sellerRequest'])->name('seller-request');
     Route::get('wishlist', [UserProfileController::class, 'wishlist'])->name('wishlist');
     Route::get('add-to-wishlist/{id}', [UserProfileController::class, 'addToWishlist'])->name('add-to-wishlist');
     Route::get('remove-wishlist/{id}', [UserProfileController::class, 'removeWishlist'])->name('remove-wishlist');
@@ -199,7 +194,6 @@ Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
     Route::post('store-product-review', [UserProfileController::class, 'storeProductReview'])->name('store-product-review');
     Route::post('update-review/{id}', [UserProfileController::class, 'updateReview'])->name('update-review');
 
-    Route::get('chat-with-seller/{slug}', [MessageController::class, 'chatWithSeller'])->name('chat-with-seller');
     Route::get('message', [MessageController::class, 'index'])->name('message');
     Route::get('load-chat-box/{id}', [MessageController::class, 'loadChatBox'])->name('load-chat-box');
     Route::get('load-new-message/{id}', [MessageController::class, 'loadNewMessage'])->name('load-new-message');
@@ -292,8 +286,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('product-status/{id}', [ProductController::class, 'changeStatus'])->name('product.status');
         Route::put('product-approved/{id}', [ProductController::class, 'productApproved'])->name('product-approved');
         Route::put('removed-product-exist-specification/{id}', [ProductController::class, 'removedProductExistSpecification'])->name('removed-product-exist-specification');
-        Route::get('seller-product', [ProductController::class, 'sellerProduct'])->name('seller-product');
-        Route::get('seller-pending-product', [ProductController::class, 'sellerPendingProduct'])->name('seller-pending-product');
+
         Route::get('stockout-product', [ProductController::class, 'stockoutProduct'])->name('stockout-product');
 
         Route::get('product-import-page', [ProductController::class, 'product_import_page'])->name('product-import-page');
@@ -416,31 +409,6 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('send-mail-to-single-user/{id}', [CustomerController::class, 'sendMailToSingleUser'])->name('send-mail-to-single-user');
 
 
-        Route::get('seller-list', [SellerController::class, 'index'])->name('seller-list');
-        Route::get('seller-show/{id}', [SellerController::class, 'show'])->name('seller-show');
-        Route::put('seller-status/{id}', [SellerController::class, 'changeStatus'])->name('seller-status');
-        Route::delete('seller-delete/{id}', [SellerController::class, 'destroy'])->name('seller-delete');
-        Route::get('pending-seller-list', [SellerController::class, 'pendingSellerList'])->name('pending-seller-list');
-        Route::put('seller-update/{id}', [SellerController::class, 'updateSeller'])->name('seller-update');
-        Route::get('seller-shop-detail/{id}', [SellerController::class, 'sellerShopDetail'])->name('seller-shop-detail');
-        Route::put('remove-seller-social-link/{id}', [SellerController::class, 'removeSellerSocialLink'])->name('remove-seller-social-link');
-
-
-        Route::put('update-seller-shop/{id}', [SellerController::class, 'updateSellerSop'])->name('update-seller-shop');
-        Route::get('seller-reviews/{id}', [SellerController::class, 'sellerReview'])->name('seller-reviews');
-        Route::get('show-seller-review-details/{id}', [SellerController::class, 'showSellerReviewDetails'])->name('show-seller-review-details');
-        Route::get('send-email-to-seller/{id}', [SellerController::class, 'sendEmailToSeller'])->name('send-email-to-seller');
-        Route::post('send-mail-to-single-seller/{id}', [SellerController::class, 'sendMailtoSingleSeller'])->name('send-mail-to-single-seller');
-        Route::get('email-history/{id}', [SellerController::class, 'emailHistory'])->name('email-history');
-        Route::get('product-by-seller/{id}', [SellerController::class, 'productBySaller'])->name('product-by-seller');
-        Route::get('send-email-to-all-seller', [SellerController::class, 'sendEmailToAllSeller'])->name('send-email-to-all-seller');
-        Route::post('send-mail-to-all-seller', [SellerController::class, 'sendMailToAllSeller'])->name('send-mail-to-all-seller');
-        Route::get('withdraw-list/{id}', [SellerController::class, 'sellerWithdrawList'])->name('withdraw-list');
-
-
-        Route::get('state-by-country/{id}', [SellerController::class, 'stateByCountry'])->name('state-by-country');
-        Route::get('city-by-state/{id}', [SellerController::class, 'cityByState'])->name('city-by-state');
-
         Route::resource('error-page', ErrorPageController::class);
 
         Route::get('announcement', [ContentController::class, 'announcementModal'])->name('announcement');
@@ -455,8 +423,6 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('default-avatar', [ContentController::class, 'defaultAvatar'])->name('default-avatar');
         Route::post('update-default-avatar', [ContentController::class, 'updateDefaultAvatar'])->name('update-default-avatar');
 
-        Route::get('seller-conditions', [ContentController::class, 'sellerCondition'])->name('seller-conditions');
-        Route::put('update-seller-conditions', [ContentController::class, 'updatesellerCondition'])->name('update-seller-conditions');
 
         Route::get('subscription-banner', [ContentController::class, 'subscriptionBanner'])->name('subscription-banner');
         Route::post('update-subscription-banner', [ContentController::class, 'updatesubscriptionBanner'])->name('update-subscription-banner');
@@ -598,12 +564,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::resource('withdraw-method', WithdrawMethodController::class);
         Route::put('withdraw-method-status/{id}', [WithdrawMethodController::class, 'changeStatus'])->name('withdraw-method-status');
 
-        Route::get('seller-withdraw', [SellerWithdrawController::class, 'index'])->name('seller-withdraw');
-        Route::get('pending-seller-withdraw', [SellerWithdrawController::class, 'pendingSellerWithdraw'])->name('pending-seller-withdraw');
 
-        Route::get('show-seller-withdraw/{id}', [SellerWithdrawController::class, 'show'])->name('show-seller-withdraw');
-        Route::delete('delete-seller-withdraw/{id}', [SellerWithdrawController::class, 'destroy'])->name('delete-seller-withdraw');
-        Route::put('approved-seller-withdraw/{id}', [SellerWithdrawController::class, 'approvedWithdraw'])->name('approved-seller-withdraw');
 
         Route::get('all-order', [OrderController::class, 'index'])->name('all-order');
         Route::get('pending-order', [OrderController::class, 'pendingOrder'])->name('pending-order');
