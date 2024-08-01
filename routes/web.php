@@ -44,7 +44,6 @@ use App\Http\Controllers\WEB\Admin\FooterLinkController;
 use App\Http\Controllers\WEB\Admin\SubscriberController;
 use App\Http\Controllers\WEB\Admin\BlogCommentController;
 use App\Http\Controllers\WEB\Admin\ContactPageController;
-use App\Http\Controllers\WEB\Admin\DeliveryManController;
 use App\Http\Controllers\WEB\Admin\PopularBlogController;
 use App\Http\Controllers\WEB\Admin\TestimonialController;
 use App\Http\Controllers\WEB\Admin\AdminProfileController;
@@ -77,16 +76,13 @@ use App\Http\Controllers\WEB\Admin\EmailConfigurationController;
 use App\Http\Controllers\WEB\Admin\HomepageVisibilityController;
 use App\Http\Controllers\WEB\Admin\ProductSubCategoryController;
 use App\Http\Controllers\WEB\Admin\ProductVariantItemController;
-use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawController;
 use App\Http\Controllers\WEB\Admin\MegaMenuSubCategoryController;
 
 
 
 use App\Http\Controllers\WEB\Admin\ProductChildCategoryController;
 use App\Http\Controllers\WEB\Admin\PosController;
-use App\Http\Controllers\WEB\Admin\DeliveryManOrderAmountController;
 use App\Http\Controllers\WEB\Admin\Auth\AdminForgotPasswordController;
-use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawMethodController;
 
 use Illuminate\Support\Facades\Broadcast;
 
@@ -589,33 +585,6 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('add-stock', [InventoryController::class, 'add_stock'])->name('add-stock');
         Route::delete('delete-stock/{id}', [InventoryController::class, 'delete_stock'])->name('delete-stock');
 
-        //Delivery man route
-        Route::resource('delivery-man', DeliveryManController::class);
-        Route::put('delivery-man-status/{id}', [DeliveryManController::class, 'changeStatus'])->name('delivery-man-status');
-
-        Route::get('delivery-man-review', [DeliveryManController::class, 'review'])->name('delivery-man-review');
-        Route::put('delivery-man-review-status/{id}', [DeliveryManController::class, 'changeReviewStatus'])->name('delivery-man-review-status');
-        Route::delete('delete-delivery-man-review/{id}', [DeliveryManController::class, 'deleteReview'])->name('delete-delivery-man-review');
-
-        Route::resource('delivery-man-withdraw-method', DeliveryManWithdrawMethodController::class);
-        Route::put('delivery-man-withdraw-method-status/{id}', [DeliveryManWithdrawMethodController::class, 'changeStatus']);
-
-        Route::get('delivery-man-withdraw', [DeliveryManWithdrawController::class, 'index'])->name('delivery-man-withdraw');
-        Route::get('pending-delivery-man-withdraw', [DeliveryManWithdrawController::class, 'pendingDeliveryManWithdraw'])->name('pending-delivery-man-withdraw');
-
-        Route::get('show-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'show'])->name('show-delivery-man-withdraw');
-        Route::delete('delete-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'destroy'])->name('delete-delivery-man-withdraw');
-        Route::put('approved-delivery-man-withdraw/{id}', [DeliveryManWithdrawController::class, 'approvedWithdraw'])->name('approved-delivery-man-withdraw');
-        Route::get('delivery-man-withdraw-list/{id}', [DeliveryManWithdrawController::class, 'withdrawList'])->name('delivery-man-withdraw-list');
-
-
-        Route::get('delivery-man-order-amount', [DeliveryManOrderAmountController::class, 'index'])->name('delivery-man-order-amount');
-        Route::get('get-deliveryman-account-info/{id}', [DeliveryManOrderAmountController::class, 'getWithDeliveryManAccountInfo'])->name('get-deliveryman-account-info');
-
-        Route::get('delivery-man-order-amount/create', [DeliveryManOrderAmountController::class, 'create'])->name('delivery-man-order-amount.create');
-        Route::post('delivery-man-order-amount', [DeliveryManOrderAmountController::class, 'store'])->name('delivery-man-order-amount.store');
-
-        Route::delete('delete-delivery-order-amount/{id}', [DeliveryManOrderAmountController::class, 'destroy'])->name('delivery-man-order-amount.delete');
 
         // Pos Routes........
         Route::get('/pos', [PosController::class, 'Index'])->name('pos.index');
