@@ -207,32 +207,8 @@ Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
         Route::get('/payment', [CheckoutController::class, 'payment'])->name('payment');
 
         Route::post('/cash-on-delivery', [PaymentController::class, 'cashOnDelivery'])->name('cash-on-delivery');
-        Route::post('/pay-with-stripe', [PaymentController::class, 'payWithStripe'])->name('pay-with-stripe');
 
-        Route::get('/paypal-web-view', [PaypalController::class, 'paypalWebView'])->name('paypal-web-view');
-
-        Route::get('/pay-with-paypal-from-api', [PaypalController::class, 'payWithPaypalFromApi'])->name('pay-with-paypal-from-api');
-        Route::get('/paypal-payment-success-from-api', [PaypalController::class, 'paypalPaymentSuccessFromApi'])->name('paypal-payment-success-from-api');
-        Route::get('/paypal-payment-cancled-from-api', [PaypalController::class, 'paypalPaymentCancledFromApi'])->name('paypal-payment-cancled-from-api');
-
-        Route::get('/pay-with-paypal', [PaypalController::class, 'payWithPaypal'])->name('pay-with-paypal');
-        Route::get('/paypal-payment-success', [PaypalController::class, 'paypalPaymentSuccess'])->name('paypal-payment-success');
-        Route::get('/paypal-payment-cancled', [PaypalController::class, 'paypalPaymentCancled'])->name('paypal-payment-cancled');
-        Route::post('/pay-with-razorpay', [PaymentController::class, 'payWithRazorpay'])->name('pay-with-razorpay');
-        Route::post('/pay-with-flutterwave', [PaymentController::class, 'payWithFlutterwave'])->name('pay-with-flutterwave');
-        Route::get('/pay-with-mollie', [PaymentController::class, 'payWithMollie'])->name('pay-with-mollie');
-        Route::get('/mollie-payment-success', [PaymentController::class, 'molliePaymentSuccess'])->name('mollie-payment-success');
-        Route::post('/pay-with-paystack', [PaymentController::class, 'payWithPayStack'])->name('pay-with-paystack');
-        Route::get('/pay-with-instamojo', [PaymentController::class, 'payWithInstamojo'])->name('pay-with-instamojo');
-        Route::get('/instamojo-response', [PaymentController::class, 'instamojoResponse'])->name('instamojo-response');
         Route::post('/pay-with-bank', [PaymentController::class, 'payWithBank'])->name('pay-with-bank');
-
-
-        Route::post('/pay-with-paymongo', [PaymentController::class, 'payWithPaymongo'])->name('pay-with-paymongo');
-        Route::get('/pay-with-grab-pay', [PaymentController::class, 'payWithPaymongoGrabPay'])->name('pay-with-grab-pay');
-        Route::get('/pay-with-gcash', [PaymentController::class, 'payWithPaymongoGcash'])->name('pay-with-gcash');
-        Route::get('/paymongo-payment-success', [PaymentController::class, 'paymongoPaymentSuccess'])->name('paymongo-payment-success');
-        Route::get('/paymongo-payment-cancled', [PaymentController::class, 'paymongoPaymentCancled'])->name('paymongo-payment-cancled');
     });
 
     Route::get('state-by-country/{id}', [UserProfileController::class, 'stateByCountry'])->name('state-by-country');
@@ -499,18 +475,11 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('city-import', [CityController::class, 'city_import'])->name('city-import');
 
         Route::get('payment-method', [PaymentMethodController::class, 'index'])->name('payment-method');
-        Route::put('update-paypal', [PaymentMethodController::class, 'updatePaypal'])->name('update-paypal');
-        Route::put('update-stripe', [PaymentMethodController::class, 'updateStripe'])->name('update-stripe');
-        Route::put('update-razorpay', [PaymentMethodController::class, 'updateRazorpay'])->name('update-razorpay');
+
         Route::put('update-bank', [PaymentMethodController::class, 'updateBank'])->name('update-bank');
-        Route::put('update-mobile', [PaymentMethodController::class, 'updateMobile'])->name('update-mobile');
-        Route::put('update-mollie', [PaymentMethodController::class, 'updateMollie'])->name('update-mollie');
-        Route::put('update-paystack', [PaymentMethodController::class, 'updatePayStack'])->name('update-paystack');
-        Route::put('update-flutterwave', [PaymentMethodController::class, 'updateflutterwave'])->name('update-flutterwave');
-        Route::put('update-instamojo', [PaymentMethodController::class, 'updateInstamojo'])->name('update-instamojo');
         Route::put('update-cash-on-delivery', [PaymentMethodController::class, 'updateCashOnDelivery'])->name('update-cash-on-delivery');
         Route::put('update-sslcommerz', [PaymentMethodController::class, 'updateSslcommerz'])->name('update-sslcommerz');
-        Route::put('update-myfatoorah', [PaymentMethodController::class, 'update_myfatoorah'])->name('update-myfatoorah');
+
 
         Route::resource('mega-menu-category', MegaMenuController::class);
         Route::put('mega-menu-category-status/{id}', [MegaMenuController::class, 'changeStatus'])->name('mega-menu-category-status');
