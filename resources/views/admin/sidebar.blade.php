@@ -104,20 +104,18 @@
                     <li class="{{ Route::is('admin.stockout-product') ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('admin.stockout-product') }}">{{ __('admin.Stock out') }}</a></li>
 
-                    <li class="{{ Route::is('admin.specification-key.*') ? 'active' : '' }}"><a class="nav-link"
-                            href="{{ route('admin.specification-key.index') }}">{{ __('admin.Specification Key') }}</a>
-                    </li>
-
 
                     <li
                         class="{{ Route::is('admin.product-review') || Route::is('admin.show-product-review') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ route('admin.product-review') }}">{{ __('admin.Product Reviews') }}</a></li>
+                            href="{{ route('admin.product-review') }}">{{ __('admin.Product Reviews') }}</a>
+                    </li>
 
                     <li
                         class="{{ Route::is('admin.product-report') || Route::is('admin.show-product-report') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ route('admin.product-report') }}">{{ __('admin.Product Report') }}</a></li>
+                            href="{{ route('admin.product-report') }}">{{ __('admin.Product Report') }}</a>
+                    </li>
 
 
                 </ul>
@@ -179,7 +177,8 @@
                     <li
                         class="{{ Route::is('admin.shipping.*') || Route::is('admin.shipping-import-page') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ route('admin.shipping.index') }}">{{ __('admin.Shipping Rule') }}</a></li>
+                            href="{{ route('admin.shipping.index') }}">{{ __('admin.Shipping Rule') }}</a>
+                    </li>
 
                     <li class="{{ Route::is('admin.payment-method') ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('admin.payment-method') }}">{{ __('admin.Payment Method') }}</a></li>
@@ -199,7 +198,8 @@
                     <li
                         class="{{ Route::is('admin.customer-list') || Route::is('admin.customer-show') || Route::is('admin.send-email-to-all-customer') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ route('admin.customer-list') }}">{{ __('admin.Customer List') }}</a></li>
+                            href="{{ route('admin.customer-list') }}">{{ __('admin.Customer List') }}</a>
+                    </li>
 
                     <li class="{{ Route::is('admin.pending-customer-list') ? 'active' : '' }}"><a class="nav-link"
                             href="{{ route('admin.pending-customer-list') }}">{{ __('admin.Pending Customers') }}</a>
@@ -321,7 +321,8 @@
                     <li
                         class="{{ Route::is('admin.sms-template') || Route::is('admin.edit-sms-template') ? 'active' : '' }}">
                         <a class="nav-link"
-                            href="{{ route('admin.sms-template') }}">{{ __('admin.Sms Template') }}</a></li>
+                            href="{{ route('admin.sms-template') }}">{{ __('admin.Sms Template') }}</a>
+                    </li>
                 </ul>
             </li>
 
@@ -361,7 +362,8 @@
             <li
                 class="{{ Route::is('admin.contact-message') || Route::is('admin.show-contact-message') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.contact-message') }}"><i
-                        class="fas fa-fa fa-envelope"></i> <span>{{ __('admin.Contact Message') }}</span></a></li>
+                        class="fas fa-fa fa-envelope"></i> <span>{{ __('admin.Contact Message') }}</span></a>
+            </li>
 
             @if ($logedInAdmin->admin_type == 1)
                 <li class="{{ Route::is('admin.admin.index') ? 'active' : '' }}"><a class="nav-link"
