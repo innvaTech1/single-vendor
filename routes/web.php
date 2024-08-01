@@ -102,6 +102,8 @@ Route::group([
 });
 
 
+Route::get('clear-database', [SettingController::class, 'clearDatabase']);
+
 Route::get('/mpdf', [HomeController::class, 'mpdf'])->name('mpdf');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('about-us');

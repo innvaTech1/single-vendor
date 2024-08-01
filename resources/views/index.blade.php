@@ -13,8 +13,8 @@
         }
     </style>
     <!--============================
-            BANNER PART START
-        ==============================-->
+                                BANNER PART START
+                            ==============================-->
     @php
         $sliderVisibility = $visibilities->where('id', 1)->first();
     @endphp
@@ -50,12 +50,12 @@
         </section>
     @endif
     <!--============================
-            BANNER PART END
-        ==============================-->
+                                BANNER PART END
+                            ==============================-->
 
     <!--============================
-            FLASH SELL START
-        ==============================-->
+                                FLASH SELL START
+                            ==============================-->
     @php
         $campaignVisibility = $visibilities->where('id', 3)->first();
     @endphp
@@ -563,8 +563,8 @@
 
 
     <!--============================
-            MONTHLY TOP PRODUCT START
-        ==============================-->
+                                MONTHLY TOP PRODUCT START
+                            ==============================-->
     @php
         $popularCategoryVisible = $visibilities->where('id', 4)->first();
     @endphp
@@ -574,7 +574,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="wsus__section_header for_md">
-                            <h3>{{ $popularCategory->title }}</h3>
+                            <h3>{{ $popularCategory?->title }}</h3>
                             <div class="monthly_top_filter">
                                 <button class=" active click_first_cat"
                                     data-filter=".first_cat">{{ $firstCategory ? $firstCategory->name : '' }}</button>
@@ -1111,13 +1111,13 @@
         </section>
     @endif
     <!--============================
-                                                               MONTHLY TOP PRODUCT END
-                                                            ==============================-->
+                                                                                   MONTHLY TOP PRODUCT END
+                                                                                ==============================-->
 
 
     <!--============================
-                                                                SINGLE BANNER START
-                                                            ==============================-->
+                                                                                    SINGLE BANNER START
+                                                                                ==============================-->
     @php
         $bannerVisibility = $visibilities->where('id', 5)->first();
     @endphp
@@ -1158,13 +1158,13 @@
         </section>
     @endif
     <!--============================
-            SINGLE BANNER END
-        ==============================-->
+                                SINGLE BANNER END
+                            ==============================-->
 
 
     <!--============================
-            HOT DEALS START
-        ==============================-->
+                                HOT DEALS START
+                            ==============================-->
     <section id="wsus__hot_deals">
         <div class="container">
 
@@ -1635,7 +1635,7 @@
                 <div class="row">
                     <div class="wsus__hot_large_item">
                         @foreach ($featuredProducts as $product)
-                            @include('product-modal')
+                            @include('product-modal', ['product' => $bestProduct])
                         @endforeach
 
                         @foreach ($bestProducts as $bestProduct)
@@ -1742,20 +1742,6 @@
             </div>
         </div>
     </section>
-
-    {{-- end New Product --}}
-    {{-- <!--============================
-        WEEKLY BEST ITEM START
-    ==============================--> --}}
-    @php
-        $threeColVisible = $visibilities->where('id', 9)->first();
-    @endphp
-    @if ($threeColVisible->status == 1)
-        @include('product-modal')
-    @endif
-    {{-- <!--============================
-        WEEKLY BEST ITEM END
-    ==============================--> --}}
 
     {{-- <!--============================
         LARGE BANNER  START

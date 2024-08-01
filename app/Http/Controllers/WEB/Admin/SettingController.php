@@ -452,6 +452,7 @@ class SettingController extends Controller
         return view('admin.clear_database');
     }
 
+
     public function updateSocialLogin(Request $request)
     {
 

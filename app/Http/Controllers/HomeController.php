@@ -79,42 +79,42 @@ class HomeController extends Controller
         }
 
         $popularCategory = PopularCategory::first();
-        $firstCategory = Category::find($popularCategory->category_id_one);
-        $firstCategoryproducts = Product::where('category_id', $popularCategory->category_id_one);
-        if ($popularCategory->sub_category_id_one != 0) {
+        $firstCategory = Category::find($popularCategory?->category_id_one);
+        $firstCategoryproducts = Product::where('category_id', $popularCategory?->category_id_one);
+        if ($popularCategory?->sub_category_id_one != 0) {
             $firstCategoryproducts = $firstCategoryproducts->where('sub_category_id', $popularCategory->sub_category_id_one);
         }
-        if ($popularCategory->child_category_id_one != 0) {
+        if ($popularCategory?->child_category_id_one != 0) {
             $firstCategoryproducts = $firstCategoryproducts->where('child_category_id', $popularCategory->child_category_id_one);
         }
-        $firstCategoryproducts = $firstCategoryproducts->limit(6)->get()->take($popularCategory->product_qty);
+        $firstCategoryproducts = $firstCategoryproducts->limit(6)->get()->take($popularCategory?->product_qty);
 
-        $secondCategory = Category::find($popularCategory->category_id_two);
-        $secondCategoryproducts = Product::where('category_id', $popularCategory->category_id_two);
-        if ($popularCategory->sub_category_id_two != 0) {
+        $secondCategory = Category::find($popularCategory?->category_id_two);
+        $secondCategoryproducts = Product::where('category_id', $popularCategory?->category_id_two);
+        if ($popularCategory?->sub_category_id_two != 0) {
             $secondCategoryproducts = $secondCategoryproducts->where('sub_category_id', $popularCategory->sub_category_id_two);
         }
-        if ($popularCategory->child_category_id_two != 0) {
+        if ($popularCategory?->child_category_id_two != 0) {
             $secondCategoryproducts = $secondCategoryproducts->where('child_category_id', $popularCategory->child_category_id_two);
         }
-        $secondCategoryproducts = $secondCategoryproducts->limit(6)->get()->take($popularCategory->product_qty);
+        $secondCategoryproducts = $secondCategoryproducts->limit(6)->get()->take($popularCategory?->product_qty);
 
-        $thirdCategory = Category::find($popularCategory->category_id_three);
-        $thirdCategoryproducts = Product::where('category_id', $popularCategory->category_id_three);
-        if ($popularCategory->sub_category_id_three != 0) {
+        $thirdCategory = Category::find($popularCategory?->category_id_three);
+        $thirdCategoryproducts = Product::where('category_id', $popularCategory?->category_id_three);
+        if ($popularCategory?->sub_category_id_three != 0) {
             $thirdCategoryproducts = $thirdCategoryproducts->where('sub_category_id', $popularCategory->sub_category_id_three);
         }
-        if ($popularCategory->child_category_id_three != 0) {
+        if ($popularCategory?->child_category_id_three != 0) {
             $thirdCategoryproducts = $thirdCategoryproducts->where('child_category_id', $popularCategory->child_category_id_three);
         }
-        $thirdCategoryproducts = $thirdCategoryproducts->limit(6)->get()->take($popularCategory->product_qty);
+        $thirdCategoryproducts = $thirdCategoryproducts->limit(6)->get()->take($popularCategory?->product_qty);
 
-        $fourthCategory = Category::find($popularCategory->category_id_four);
-        $fourthCategoryproducts = Product::where('category_id', $popularCategory->category_id_four);
-        if ($popularCategory->sub_category_id_four != 0) {
+        $fourthCategory = Category::find($popularCategory?->category_id_four);
+        $fourthCategoryproducts = Product::where('category_id', $popularCategory?->category_id_four);
+        if ($popularCategory?->sub_category_id_four != 0) {
             $fourthCategoryproducts = $fourthCategoryproducts->where('sub_category_id', $popularCategory->sub_category_id_four);
         }
-        if ($popularCategory->child_category_id_four != 0) {
+        if ($popularCategory?->child_category_id_four != 0) {
             $fourthCategoryproducts = $fourthCategoryproducts->where('child_category_id', $popularCategory->child_category_id_four);
         }
         $fourthCategoryproducts = $fourthCategoryproducts->limit(6)->get()->take(6);
