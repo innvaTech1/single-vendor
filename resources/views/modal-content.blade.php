@@ -141,8 +141,8 @@
                     class="btn btn-danger btn-sm">-</button>
                 <input id="productModalQty-{{ $product->id }}" name="quantity" readonly class="form-control"
                     type="text" min="1" max="100" value="1" />
-                <button onclick="productModalIncrement('{{ $product->id }}','{{ $product->qty }}')"
-                    type="button" class="btn btn-success btn-sm">+</button>
+                <button onclick="productModalIncrement('{{ $product->id }}','{{ $product->qty }}')" type="button"
+                    class="btn btn-success btn-sm">+</button>
             </div>
             <h3 class="d-none">{{ $currencySetting->currency_icon }}<span
                     id="productModalPrice-{{ $product->id }}">{{ sprintf('%.2f', $productPrice) }}</span>
@@ -194,7 +194,8 @@
         <ul class="wsus__button_area">
             <li><button type="button" onclick="addToCartInProductModal('{{ $product->id }}')"
                     class="add_cart">{{ __('user.add to cart') }}</button></li>
-            <li><a class="buy_now" href="javascript:;" onclick="addToBuyNow('{{ $product->id }}')">অর্ডার করুন
+            <li><a class="buy_now" href="javascript:;"
+                    onclick="addToBuyNow('{{ $product->id }}')">{{ __('user.Order Now') }}
                 </a></li>
 
         </ul>
